@@ -1,0 +1,10 @@
+run:
+    tags:
+      - docker_jfrog
+    image: ubuntu:20.04
+    script:
+      - mkdir build
+      - cd build
+      - cmake -DCMAKE_INSTALL_PREFIX=/opt/hello ..
+      - make -j2
+      - make install
