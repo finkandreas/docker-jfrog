@@ -1,4 +1,7 @@
-run:
+include:
+  - remote: 'https://gitlab.com/cscs-ci/recipes/-/raw/master/templates/v2/.cscs.yml'
+
+build:
     tags:
       - docker_jfrog
     image: ubuntu:20.04
@@ -10,3 +13,11 @@ run:
       - cmake -DCMAKE_INSTALL_PREFIX=/opt/hello ..
       - make -j2
       - make install
+
+run:
+  extends: .daint
+  image: art.cscs.ch/contbuild/anfink/testing/${CI_PROJECT_NAME}:1.0
+  script:
+    - /opt/hello/bin/hello
+  variables:
+    PULL_IMAGE: 'YES'
