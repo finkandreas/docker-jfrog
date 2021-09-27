@@ -28,3 +28,4 @@ run:
     - /opt/hello/bin/hello
   variables:
     PULL_IMAGE: 'YES'
+    CSCS_REGISTRY_LOGIN: 'YES'
