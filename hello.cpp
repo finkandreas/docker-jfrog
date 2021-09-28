@@ -8,5 +8,6 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     std::cout << "Hello from " << hostname << std::endl;
+
     return 0;
 }
