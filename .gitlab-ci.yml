@@ -29,3 +29,4 @@ run:
   variables:
     PULL_IMAGE: 'YES'
     CSCS_REGISTRY_LOGIN: 'YES'
+    SLURM_JOB_NUM_NODES: 2
