@@ -6,6 +6,10 @@ stages:
   - build
   - run
 
+variables:
+  # CI_PROJECT_NAME==docker-jfrog - 1:0 is the version tag, if you want to tag each run, also use CI_COMMIT_SHA
+  - PERSIST_IMAGE_NAME: ${CI_PROJECT_NAME}:1.0
+
 build:
     tags:
       - docker_jfrog
@@ -23,7 +27,8 @@ build:
 run:
   extends: .daint
   stage: run
-  image: art.cscs.ch/contbuild/testing/anfink/${CI_PROJECT_NAME}:1.0
+  # TODO: hard-coded path to the artifactory base-path. This should be changed, where the sarus-runner would use the same default path as the builder-runner pushes to
+  image: art.cscs.ch/contbuild/testing/anfink/${PERSIST_IMAGE_NAME}
   script:
     - /opt/hello/bin/hello
   variables:
