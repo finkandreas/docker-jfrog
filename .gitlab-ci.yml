@@ -14,15 +14,10 @@ build:
     tags:
       - docker_jfrog
     stage: build
-    image: ubuntu:20.04
     script:
-      - apt-get update
-      - env DEBIAN_FRONTEND=noninteractive TZ=Europe/Zurich apt-get -yqq install --no-install-recommends build-essential cmake
-      - mkdir build
-      - cd build
-      - cmake -DCMAKE_INSTALL_PREFIX=/opt/hello ..
-      - make -j2
-      - make install
+      - "true"
+    variables:
+      DOCKERFILE: docker/Dockerfile
 
 run:
   extends: .daint
