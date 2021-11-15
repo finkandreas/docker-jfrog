@@ -16,6 +16,7 @@ build:
     stage: build
     image: art.cscs.ch/cray-ccpe/cray/ccpe-devel-sles15sp2-x86_64:21.09-101921
     script:
+      - CC --version
       - mkdir build
       - cd build
       - cmake ../
