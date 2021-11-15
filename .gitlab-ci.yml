@@ -14,10 +14,12 @@ build:
     tags:
       - docker_jfrog
     stage: build
+    image: art.cscs.ch/cray-ccpe/cray/ccpe-devel-sles15sp2-x86_64:21.09-101921
     script:
-      - "true"
-    variables:
-      DOCKERFILE: docker/Dockerfile
+      - mkdir build
+      - cd build
+      - cmake ../
+      - make -j2
 
 run:
   extends: .daint
