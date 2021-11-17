@@ -16,12 +16,18 @@ build:
     stage: build
     image: art.cscs.ch/cray-ccpe/cray/ccpe-devel-sles15sp2-x86_64:21.09-101921
     before_script:
+      - echo "before_script start"
       - cat /etc/os-release
+      - echo "before_script done"
     script:
+      - echo "script start"
       - cat /etc/os-release
       - CC --version
+      - echo "script end"
     after_script:
+      - echo "after_script start"
       - cat /etc/os-release
+      - echo "after_script end"
 
 run:
   extends: .daint
