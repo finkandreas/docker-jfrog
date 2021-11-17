@@ -15,7 +15,7 @@ build:
       - docker_jfrog
     stage: build
     image: art.cscs.ch/cray-ccpe/cray/ccpe-devel-sles15sp2-x86_64:21.09-101921
-    pre_script:
+    before_script:
       - cat /etc/os-release
     script:
       - cat /etc/os-release
