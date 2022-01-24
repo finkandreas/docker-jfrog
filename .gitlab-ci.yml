@@ -25,7 +25,7 @@ build:
       - make install
 
 run:
-  tags: ault-container
+  tags: [ault-container]
   stage: run
   # TODO: hard-coded path to the artifactory base-path. This should be changed, where the sarus-runner would use the same default path as the builder-runner pushes to
   image: art.cscs.ch/contbuild/testing/anfink/${PERSIST_IMAGE_NAME}
