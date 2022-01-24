@@ -25,7 +25,7 @@ build:
       - make install
 
 run:
-  extends: .daint
+  tags: ault-container
   stage: run
   # TODO: hard-coded path to the artifactory base-path. This should be changed, where the sarus-runner would use the same default path as the builder-runner pushes to
   image: art.cscs.ch/contbuild/testing/anfink/${PERSIST_IMAGE_NAME}
@@ -35,5 +35,5 @@ run:
     PULL_IMAGE: 'YES'
     CSCS_REGISTRY_LOGIN: 'YES'
     SLURM_JOB_NUM_NODES: 2
-    SLURM_PARTITION: normal
+    SLURM_PARTITION: amdvega
     SLURM_NTASKS: 2
