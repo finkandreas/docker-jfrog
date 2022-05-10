@@ -7,7 +7,7 @@ stages:
 
 variables:
   # CI_PROJECT_NAME==docker-jfrog - 1:0 is the version tag, if you want to tag each run, also use CI_COMMIT_SHA
-  PERSIST_IMAGE_NAME: ${CSCS_REGISTRY_PATH}/${CI_PROJECT_NAME}:1.0
+  PERSIST_IMAGE_NAME: ${CSCS_REGISTRY_PATH}/${CI_PROJECT_NAME}_P100:1.0
 
 build:
     tags:
@@ -19,7 +19,7 @@ build:
       - env DEBIAN_FRONTEND=noninteractive TZ=Europe/Zurich apt-get -yqq install --no-install-recommends build-essential cmake
       - mkdir build
       - cd build
-      - cmake -DCMAKE_INSTALL_PREFIX=/opt/hello ..
+      - cmake -DCMAKE_INSTALL_PREFIX=/opt/hello2 ..
       - make -j2
       - make install
 
@@ -28,7 +28,7 @@ run:
   stage: run
   image: ${PERSIST_IMAGE_NAME}
   script:
-    - /opt/hello/bin/hello
+    - /opt/hello2/bin/hello
   variables:
     PULL_IMAGE: 'YES'
     CSCS_REGISTRY_LOGIN: 'YES'
