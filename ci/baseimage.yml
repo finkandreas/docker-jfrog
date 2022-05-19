@@ -1,0 +1,13 @@
+stages:
+  - build
+
+build_baseimage:
+    tags: [docker_jfrog]
+    stage: build
+    image: ubuntu:22.04
+    script:
+      - apt-get update
+      - env DEBIAN_FRONTEND=noninteractive TZ=Europe/Zurich apt-get -yqq install --no-install-recommends build-essential cmake
+    variables:
+      PERSIST_IMAGE_NAME: ${CSCS_REGISTRY_PATH}/baseimage:1.0
+
