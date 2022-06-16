@@ -4,7 +4,7 @@ stages:
 
 variables:
   # CI_PROJECT_NAME==docker-jfrog - 1:0 is the version tag, if you want to tag each run, also use CI_COMMIT_SHA
-  PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/my_cool_image:1.0
+  PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/buildah_image:1.0
 
 build:
     tags:
@@ -22,7 +22,7 @@ build:
 
 run:
   tags:
-    - daint-container
+    - hohgant-container
   stage: run
   image: ${PERSIST_IMAGE_NAME}
   script:
