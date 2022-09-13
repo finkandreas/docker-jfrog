@@ -1,3 +1,6 @@
+include:
+  - remote: 'https://gitlab.com/cscs-ci/recipes/-/raw/master/templates/v2/.ci-ext.yml'
+
 stages:
   - build
   - run
@@ -7,8 +10,7 @@ variables:
   PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/my_cool_image:1.0
 
 build:
-    tags:
-      - docker_jfrog
+    extends: .container-builder
     stage: build
     image: ubuntu:22.04
     script:
@@ -21,15 +23,12 @@ build:
       - make install
 
 run:
-  tags:
-    - daint-container
+  extends: container-runner-muttler
   stage: run
   image: ${PERSIST_IMAGE_NAME}
   script:
     - /opt/hello/bin/hello
   variables:
-    PULL_IMAGE: 'YES'
-    CSCS_REGISTRY_LOGIN: 'YES'
     SLURM_JOB_NUM_NODES: 2
     SLURM_PARTITION: normal
     SLURM_NTASKS: 2
