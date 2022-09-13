@@ -10,7 +10,7 @@ variables:
   PERSIST_IMAGE_NAME: ${CSCS_REGISTRY_PATH}/my_p100_image:1.0
 
 build:
-    extends: .container-builder
+    tags: ["buildah-jfrog"]
     stage: build
     image: $CSCS_REGISTRY_PATH/baseimage:1.0
     script:
