@@ -23,7 +23,7 @@ build:
       - make install
 
 run:
-  extends: container-runner-muttler
+  extends: .container-runner-muttler
   stage: run
   image: ${PERSIST_IMAGE_NAME}
   script:
