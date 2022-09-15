@@ -12,6 +12,7 @@ variables:
 build:
   tags: [buildah_jfrog]
   stage: build
+  script: ['true']
   variables:
     DOCKERFILE: docker/Dockerfile.p100
     DOCKER_BUILD_ARGS: '["BASEIMAGE=$CSCS_REGISTRY_PATH/baseimage:1.0"]'
