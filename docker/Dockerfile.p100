@@ -1,9 +1,11 @@
 ARG BASEIMAGE
 FROM $BASEIMAGE
 
-RUN mkdir build \
-  && cd build \
-  && cmake -DCMAKE_INSTALL_PREFIX=/opt/hello2 \
+COPY . /hello.src
+
+RUN mkdir /hello.build \
+  && cd /hello.build \
+  && cmake -DCMAKE_INSTALL_PREFIX=/opt/hello2 /hello.src \
   && make -j2 \
   && make install
 
