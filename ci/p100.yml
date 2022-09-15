@@ -1,5 +1,5 @@
 include:
-  - remote: 'https://gitlab.com/cscs-ci/recipes/-/raw/master/templates/v2/.cscs.yml'
+  - remote: 'https://gitlab.com/cscs-ci/recipes/-/raw/master/templates/v2/.ci-ext.yml'
 
 stages:
   - build
@@ -10,21 +10,18 @@ variables:
   PERSIST_IMAGE_NAME: ${CSCS_REGISTRY_PATH}/my_p100_image:1.0
 
 build:
-    tags:
-      - docker_jfrog
+  extends: container-builder
     stage: build
     variables:
       DOCKERFILE: docker/Dockerfile.p100
 
 run:
-  extends: .daint
+  extends: .container-runner-muttler
   stage: run
   image: ${PERSIST_IMAGE_NAME}
   script:
     - /opt/hello2/bin/hello
   variables:
-    PULL_IMAGE: 'YES'
-    CSCS_REGISTRY_LOGIN: 'YES'
     SLURM_JOB_NUM_NODES: 2
     SLURM_PARTITION: normal
     SLURM_NTASKS: 2
