@@ -1,0 +1,8 @@
+FROM $CSCS_REGISTRY_PATH/baseimage:1.0
+
+RUN mkdir build \
+  && cd build \
+  && cmake -DCMAKE_INSTALL_PREFIX=/opt/hello2 \
+  && make -j2 \
+  && make install
+

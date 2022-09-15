@@ -13,13 +13,8 @@ build:
     tags:
       - docker_jfrog
     stage: build
-    image: $CSCS_REGISTRY_PATH/baseimage:1.0
-    script:
-      - mkdir build
-      - cd build
-      - cmake -DCMAKE_INSTALL_PREFIX=/opt/hello2 ..
-      - make -j2
-      - make install
+    variables:
+      DOCKERFILE: docker/Dockerfile.p100
 
 run:
   extends: .daint
