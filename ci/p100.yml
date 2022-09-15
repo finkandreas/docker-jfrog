@@ -10,7 +10,7 @@ variables:
   PERSIST_IMAGE_NAME: ${CSCS_REGISTRY_PATH}/my_p100_image:1.0
 
 build:
-  extends: .container-builder
+  tags: [buildah_jfrog]
   stage: build
   variables:
     DOCKERFILE: docker/Dockerfile.p100
