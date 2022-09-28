@@ -9,21 +9,9 @@ variables:
   PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/my_cool_image:1.0
 
 build:
-    tags: [minikube-anfink-laptop]
-    stage: build
-    image:
-      name: gcr.io/kaniko-project/executor:debug
-      entrypoint: [""]
-    script:
-      - mkdir -p /kaniko/.docker
-      - echo "{\"auths\":{\"${CSCS_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CSCS_REGISTRY_USER}" "${CSCS_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
-      - '/kaniko/executor
-        --context "${CI_PROJECT_DIR}"
-        --dockerfile "${CI_PROJECT_DIR}/${DOCKERFILE}"
-        --destination ${PERSIST_IMAGE_NAME}
-        --build-arg NUM_PROCS=$(echo "$(cat /sys/fs/cgroup/cpu/cpu.cfs_quota_us) $(cat /sys/fs/cgroup/cpu/cpu.cfs_period_us) $(nproc)" | awk ''{ print ($1/$2 > 0) ? int($1/$2+0.5) : $3; }'')'
-    variables:
-      DOCKERFILE: docker/Dockerfile.ubuntu
+  extends: .container-builder-kaniko
+  variables:
+    DOCKERFILE: docker/Dockerfile.ubuntu
 
 # run:
 #   extends: .container-runner-muttler
