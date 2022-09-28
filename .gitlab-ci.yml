@@ -14,6 +14,8 @@ build:
     image: ubuntu:22.04
     script:
       - cat /proc/cpuinfo
+      - cat /sys/fs/cgroup/cpuset/cpuset.cpus
+      - nproc
       - apt-get update
       - env DEBIAN_FRONTEND=noninteractive TZ=Europe/Zurich apt-get -yqq install --no-install-recommends build-essential cmake
       - mkdir build
