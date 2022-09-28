@@ -13,19 +13,14 @@ build:
     stage: build
     image: ubuntu:22.04
     script:
-      - cat /proc/cpuinfo
-      - cat /sys/fs/cgroup/cpu/cpu.shares
-      - cat /sys/fs/cgroup/cpu/cpu.cfs_quota_us
-      - cat /sys/fs/cgroup/cpu/cpu.cfs_period_us
-      - cat /sys/fs/cgroup/cpuset/cpuset.cpus
-      - nproc
+      - NUM_PROCS=$(awk '{ print ($1/$2 > 0) ? $1/$2 : $3; }' <<< "$(cat /sys/fs/cgroup/cpu/cpu.cfs_quota_us) $(cat /sys/fs/cgroup/cpu/cpu.cfs_period_us) $(nproc)")
+      - echo "found $NUM_PROCS processors for build job"
       - apt-get update
-      - env DEBIAN_FRONTEND=noninteractive TZ=Europe/Zurich apt-get -yqq install --no-install-recommends build-essential cmake python3
-      - python3 -c "import math; a = $(cat /sys/fs/cgroup/cpu/cpu.cfs_quota_us) / $(cat /sys/fs/cgroup/cpu/cpu.cfs_period_us); print(math.ceil(a)) if a>0 else print($(nproc))"
+      - env DEBIAN_FRONTEND=noninteractive TZ=Europe/Zurich apt-get -yqq install --no-install-recommends build-essential cmake
       - mkdir build
       - cd build
       - cmake -DCMAKE_INSTALL_PREFIX=/opt/hello ..
-      - make -j2
+      - make -j$NUM_PROCS
       - make install
 
 # run:
