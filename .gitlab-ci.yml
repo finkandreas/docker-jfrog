@@ -13,6 +13,7 @@ build:
     stage: build
     image: ubuntu:22.04
     script:
+      - cat /proc/cpuinfo
       - apt-get update
       - env DEBIAN_FRONTEND=noninteractive TZ=Europe/Zurich apt-get -yqq install --no-install-recommends build-essential cmake
       - mkdir build
