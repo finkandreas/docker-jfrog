@@ -21,6 +21,7 @@ build:
       - nproc
       - apt-get update
       - env DEBIAN_FRONTEND=noninteractive TZ=Europe/Zurich apt-get -yqq install --no-install-recommends build-essential cmake
+      - python3 -c "import math; a = $(cat /sys/fs/cgroup/cpu/cpu.cfs_quota_us) / $(cat /sys/fs/cgroup/cpu/cpu.cfs_period_us); print(math.ceil(a)) if a>0 else print($(nproc))"
       - mkdir build
       - cd build
       - cmake -DCMAKE_INSTALL_PREFIX=/opt/hello ..
