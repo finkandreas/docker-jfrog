@@ -10,6 +10,7 @@ variables:
 
 build:
   extends: .container-builder-kaniko
+  stage: build
   variables:
     DOCKERFILE: docker/Dockerfile.ubuntu
 
