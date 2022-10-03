@@ -3,6 +3,7 @@ include:
 
 stages:
   - build
+  - run
 
 variables:
   # CI_PROJECT_NAME==docker-jfrog - 1:0 is the version tag, if you want to tag each run, also use CI_COMMIT_SHA
@@ -14,13 +15,13 @@ build:
   variables:
     DOCKERFILE: docker/Dockerfile.ubuntu
 
-# run:
-#   extends: .container-runner-muttler
-#   stage: run
-#   image: ${PERSIST_IMAGE_NAME}
-#   script:
-#     - /opt/hello/bin/hello
-#   variables:
-#     SLURM_JOB_NUM_NODES: 2
-#     SLURM_PARTITION: normal
-#     SLURM_NTASKS: 2
+run:
+  extends: .container-runner-hohgant
+  stage: run
+  image: ${PERSIST_IMAGE_NAME}
+  script:
+    - /opt/hello/bin/hello
+  variables:
+    SLURM_JOB_NUM_NODES: 2
+    SLURM_PARTITION: normal
+    SLURM_NTASKS: 2
