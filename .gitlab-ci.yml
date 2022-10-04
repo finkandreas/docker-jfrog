@@ -12,6 +12,7 @@ variables:
 build:
   extends: .container-builder-kaniko
   tags: [rosa-k8s]
+  image: quay.io/podman/stable:latest
   script:
     - podman login -u $CSCS_REGISTRY_USER -p $CSCS_REGISTRY_PASSWORD $CSCS_REGISTRY
     - podman build -f $DOCKERFILE -t $PERSIST_IMAGE_NAME --layers --isolation chroot --cache-from $CSCS_REGISTRY_PATH/podman_cache --cache-to $CSCS_REGISTRY_PATH/podman_cache --cache-ttl=600h .
