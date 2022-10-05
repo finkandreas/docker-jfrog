@@ -11,9 +11,13 @@ variables:
 
 build:
   tags: [rosa-k8s]
-  image: quay.io/podman/stable:latest
+  image: docker.io/docker:dind
+  #  image: quay.io/podman/stable:latest
   stage: build
   script:
+    - docker login -u $CSCS_REGISTRY_USER -p $CSCS_REGISTRY_PASSWORD $CSCS_REGISTRY
+    - docker build -f $DOCKERFILE -t $PERSIST_IMAGE_NAME --build-arg NUM_PROCS=16 --build-arg CSCS_REGISTRY_PATH=$CSCS_REGISTRY_PATH .
+    - 'docker run $PERSIST_IMAGE_NAME /bin/bash -c "echo 123"'
     - podman login -u $CSCS_REGISTRY_USER -p $CSCS_REGISTRY_PASSWORD $CSCS_REGISTRY
     - 'podman build
        -f $DOCKERFILE
