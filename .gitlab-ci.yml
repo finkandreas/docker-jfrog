@@ -14,9 +14,8 @@ build:
   image: quay.io/podman/stable:latest
   stage: build
   script:
-    - id
-    - env
     - podman login -u $CSCS_REGISTRY_USER -p $CSCS_REGISTRY_PASSWORD $CSCS_REGISTRY
+    - sleep 10000
     - 'podman build
        -f $DOCKERFILE
        -t $PERSIST_IMAGE_NAME
@@ -30,7 +29,6 @@ build:
        --cache-ttl=600h .'
     - podman push $PERSIST_IMAGE_NAME
     - 'podman run $PERSIST_IMAGE_NAME /bin/bash -c "echo 123"'
-    - sleep 10000
   variables:
     DOCKERFILE: docker/Dockerfile.ubuntu
 
