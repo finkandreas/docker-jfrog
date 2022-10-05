@@ -10,7 +10,7 @@ variables:
   PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/my_cool_image:1.0
 
 build:
-  extends: container-builder-podman
+  extends: .container-builder-podman
   stage: build
   variables:
     DOCKERFILE: docker/Dockerfile.ubuntu
