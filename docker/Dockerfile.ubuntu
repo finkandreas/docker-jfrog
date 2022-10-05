@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM docker.io/finkandreas/ubuntu:22.04
 
 ARG NUM_PROCS=1
 
