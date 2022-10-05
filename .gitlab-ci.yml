@@ -15,7 +15,6 @@ build:
   stage: build
   script:
     - podman login -u $CSCS_REGISTRY_USER -p $CSCS_REGISTRY_PASSWORD $CSCS_REGISTRY
-    - sleep 10000
     - 'podman build
        -f $DOCKERFILE
        -t $PERSIST_IMAGE_NAME
