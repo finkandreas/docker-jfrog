@@ -29,6 +29,7 @@ build:
        --cache-to $CSCS_REGISTRY_PATH/podman_cache
        --cache-ttl=600h .'
     - podman push $PERSIST_IMAGE_NAME
+    - 'podman run $PERSIST_IMAGE_NAME /bin/bash -c "echo 123"'
     - sleep 10000
   variables:
     DOCKERFILE: docker/Dockerfile.ubuntu
