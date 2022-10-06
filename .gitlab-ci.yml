@@ -16,7 +16,7 @@ build:
     DOCKERFILE: docker/Dockerfile.ubuntu
 
 run:
-  extends: .container-runner-hohgant
+  extends: .container-runner-muttler
   stage: run
   image: ${PERSIST_IMAGE_NAME}
   script:
