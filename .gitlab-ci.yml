@@ -22,6 +22,7 @@ run:
   script:
     - /opt/hello/bin/hello
   variables:
+    USE_MPI: YES
     SLURM_JOB_NUM_NODES: 2
     SLURM_PARTITION: normal
     SLURM_NTASKS: 2
