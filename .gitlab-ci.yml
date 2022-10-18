@@ -7,7 +7,7 @@ stages:
 
 variables:
   # CI_PROJECT_NAME==docker-jfrog - 1:0 is the version tag, if you want to tag each run, also use CI_COMMIT_SHA
-  PERSIST_IMAGE_NAME: $CI_REGISTRY/subdirectory/my_cool_image:1.0
+  PERSIST_IMAGE_NAME: $CI_REGISTRY_IMAGE/subdirectory/my_cool_image:1.0
 
 build:
   tags: [rosa-k8s]
@@ -20,6 +20,7 @@ build:
        -f $DOCKERFILE
        -t $PERSIST_IMAGE_NAME
        --format docker
+       --cache-from=$CI_REGISTRY_IMAGE/podman_cache --cache-to=$CI_REGISTRY_IMAGE/podman_cache
        --layers
        --isolation chroot
        --build-arg NUM_PROCS=$(echo "$(cat /sys/fs/cgroup/cpu/cpu.cfs_quota_us) $(cat /sys/fs/cgroup/cpu/cpu.cfs_period_us) $(nproc)" | awk ''{ print ($1/$2 > 0) ? int($1/$2+0.5) : $3; }'')
