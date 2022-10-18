@@ -11,7 +11,7 @@ variables:
 
 build:
   tags: [rosa-k8s]
-  image: quay.io/buildah/upstream:latest
+  image: quay.io/podman/stable:latest
   stage: build
   script:
     - podman login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
