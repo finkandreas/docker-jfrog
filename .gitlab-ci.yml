@@ -4,7 +4,6 @@ include:
 stages:
   - build
   - run
-  - clone
 
 variables:
   # CI_PROJECT_NAME==docker-jfrog - 1:0 is the version tag, if you want to tag each run, also use CI_COMMIT_SHA
@@ -30,7 +29,7 @@ run:
 
 clone:
   tags: ['docker_jfrog']
-  stage: clone
+  stage: build
   script:
     - 'true'
   when: manual
