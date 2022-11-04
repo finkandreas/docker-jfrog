@@ -7,7 +7,7 @@ stages:
 
 variables:
   # CI_PROJECT_NAME==docker-jfrog - 1:0 is the version tag, if you want to tag each run, also use CI_COMMIT_SHA
-  PERSIST_IMAGE_NAME: $CI_REGISTRY_IMAGE/subdirectory/my_cool_image:1.0
+  PERSIST_IMAGE_NAME: $CI_REGISTRY_PATH/subdirectory/my_cool_image:1.0
 
 build:
   extends: .container-builder
@@ -29,7 +29,7 @@ run:
 
 clone:
   tags: ['docker_jfrog']
-  stage: build
+  stage: run
   script:
     - 'true'
   when: manual
