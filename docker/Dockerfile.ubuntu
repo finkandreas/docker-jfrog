@@ -8,6 +8,11 @@ ARG NUM_PROCS=1
 
 # build software - COPY as late as possible such that previous RUN commands can hit the cache
 COPY . /opt/hello.src
+
+RUN --mount=type=ssh \
+  cd /opt/hello.src \
+  && git submodule update --init --recursive
+
 RUN mkdir /tmp/build && cd /tmp/build \
   && cmake -DCMAKE_INSTALL_PREFIX=/opt/hello -DCMAKE_CXX_COMPILER=mpic++ /opt/hello.src \
   && make -j$NUM_PROCS \
