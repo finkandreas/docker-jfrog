@@ -10,12 +10,6 @@ variables:
   PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/subdirectory/my_cool_image:1.0
 
 build:
-  extends: .container-builder-podman
-  stage: build
-  variables:
-    DOCKERFILE: docker/Dockerfile.ubuntu
-
-run:
   tags: [rosa-k8s]
   image: quay.io/podman/stable:latest
   script:
@@ -36,6 +30,11 @@ run:
        --cache-to $CSCS_REGISTRY_PATH/podman_cache
        --cache-ttl=600h .'
     - podman push $PERSIST_IMAGE_NAME
+  stage: build
+  variables:
+    DOCKERFILE: docker/Dockerfile.ubuntu
+
+run:
   extends: .container-runner-hohgant
   stage: run
   image: ${PERSIST_IMAGE_NAME}
