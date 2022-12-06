@@ -10,13 +10,13 @@ variables:
   PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/subdirectory/my_cool_image:1.0
 
 build:
-  extends: .container-builder
+  extends: .container-builder-podman
   stage: build
   variables:
     DOCKERFILE: docker/Dockerfile.ubuntu
 
 run:
-  extends: .container-runner-daint
+  extends: .container-runner-hohgant
   stage: run
   image: ${PERSIST_IMAGE_NAME}
   script:
@@ -27,13 +27,13 @@ run:
     SLURM_PARTITION: normal
     SLURM_NTASKS: 2
 
-clone:
-  tags: ['docker_jfrog']
-  stage: run
-  script:
-    - 'true'
-  when: manual
-  variables:
-    CLONE_IMAGE_NAME: finkandreas/skopeo_copy_test:1.0
-    CLONE_REGISTRY_USER: finkandreas
-    RUNNER_MODE: CLONE_IMAGE
+# clone:
+#   tags: ['docker_jfrog']
+#   stage: run
+#   script:
+#     - 'true'
+#   when: manual
+#   variables:
+#     CLONE_IMAGE_NAME: finkandreas/skopeo_copy_test:1.0
+#     CLONE_REGISTRY_USER: finkandreas
+#     RUNNER_MODE: CLONE_IMAGE
