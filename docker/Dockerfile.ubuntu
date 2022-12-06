@@ -11,7 +11,7 @@ COPY . /opt/hello.src
 
 RUN --mount=type=ssh \
   cd /opt/hello.src \
-  && env GIT_SSH_COMMAND="-o StrictHostKeyChecking=no" git submodule update --init --recursive \
+  && env GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" git submodule update --init --recursive \
   && ls -lh --recursive
 
 RUN mkdir /tmp/build && cd /tmp/build \
