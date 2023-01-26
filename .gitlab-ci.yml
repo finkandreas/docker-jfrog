@@ -10,13 +10,15 @@ variables:
   PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/subdirectory/my_cool_image:1.0
 
 build:
-  tags: [rosa-k8s]
+  tags: [rosa-k8s-development]
   image: quay.io/podman/stable:latest
   script:
     - echo "Running with public IP address $(curl -s ifconfig.me)"
-    - podman login -u $CSCS_REGISTRY_USER -p $CSCS_REGISTRY_PASSWORD $CSCS_REGISTRY
     - env
     - ls -lh $SSH_KEYFILE
+    - ls -lh --recursive
+    - ls -lh test_submodule/test_file
+    - podman login -u $CSCS_REGISTRY_USER -p $CSCS_REGISTRY_PASSWORD $CSCS_REGISTRY
     - 'podman build
        -f $DOCKERFILE
        -t $PERSIST_IMAGE_NAME
@@ -24,15 +26,15 @@ build:
        --layers
        --isolation chroot
        --build-arg NUM_PROCS=$(echo "$(cat /sys/fs/cgroup/cpu/cpu.cfs_quota_us) $(cat /sys/fs/cgroup/cpu/cpu.cfs_period_us) $(nproc)" | awk ''{ print ($1/$2 > 0) ? int($1/$2+0.5) : $3; }'')
-       --build-arg CSCS_REGISTRY_PATH=$CSCS_REGISTRY_PATH
        --ssh default=$SSH_KEYFILE
-       --cache-from $CSCS_REGISTRY_PATH/podman_cache
-       --cache-to $CSCS_REGISTRY_PATH/podman_cache
+       --build-arg CSCS_REGISTRY_PATH=$CSCS_REGISTRY_PATH
        --cache-ttl=600h .'
     - podman push $PERSIST_IMAGE_NAME
   stage: build
   variables:
     DOCKERFILE: docker/Dockerfile.ubuntu
+    GIT_SUBMODULE_STRATEGY: recursive
+
 
 run:
   extends: .container-runner-hohgant

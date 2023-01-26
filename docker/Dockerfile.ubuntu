@@ -9,10 +9,9 @@ ARG NUM_PROCS=1
 # build software - COPY as late as possible such that previous RUN commands can hit the cache
 COPY . /opt/hello.src
 
-RUN --mount=type=ssh \
-  cd /opt/hello.src \
-  && env GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" git submodule update --init --recursive \
-  && ls -lh --recursive
+RUN cd /opt/hello.src \
+  && ls -lh --recursive \
+  && ls -lh test_submodule/test_file
 
 RUN mkdir /tmp/build && cd /tmp/build \
   && cmake -DCMAKE_INSTALL_PREFIX=/opt/hello -DCMAKE_CXX_COMPILER=mpic++ /opt/hello.src \
