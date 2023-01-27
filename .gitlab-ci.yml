@@ -29,6 +29,7 @@ run:
   stage: run
   image: ${PERSIST_IMAGE_NAME}
   script:
+    - echo $CSCS_SKIP_GIT_CLONE_SARUS_RUNNER
     - /opt/hello/bin/hello
   variables:
     USE_MPI: 'YES'
