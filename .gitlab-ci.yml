@@ -17,6 +17,7 @@ build:
   stage: build
   variables:
     DOCKERFILE: docker/Dockerfile.ubuntu
+    CSCS_REBUILD_POLICY: always
     GIT_SUBMODULE_STRATEGY: recursive
 
 
