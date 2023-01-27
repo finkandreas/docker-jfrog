@@ -1,6 +1,12 @@
 include:
   - remote: 'https://gitlab.com/cscs-ci/recipes/-/raw/master/templates/v2/.ci-ext.yml'
 
+.container-builder-k8s:
+  tags: [rosa-k8s-development]
+  image: docker.io/finkandreas/cicd-ext-k8s-container-image-builder:podman-4.3.1
+  script:
+    - build_new_container
+
 stages:
   - build_base
   - build
@@ -11,15 +17,12 @@ variables:
   PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/subdirectory/my_cool_image:$CI_COMMIT_SHA
 
 build baseimage:
-  tags: [rosa-k8s-development]
-  image: docker.io/finkandreas/cicd-ext-k8s-container-image-builder:podman-4.3.1
+  extends: .container-builder-k8s
   stage: build_base
   pre_script:
     - DOCKER_TAG=`sha256 docker/Dockerfile.base | head -c 16`
     - export PERSIST_IMAGE_NAME=$CSCS_REGISTRY_PATH/baseimage/cpu_base:$DOCKER_TAG
     - echo "BASE_IMAGE=$PERSIST_IMAGE_NAME" >> build.env
-  script:
-    - build_new_container
   artifacts:
     reports:
       dotenv: build.env
@@ -28,11 +31,10 @@ build baseimage:
 
 
 build:
-  tags: [rosa-k8s-development]
-  image: docker.io/finkandreas/cicd-ext-k8s-container-image-builder:podman-4.3.1
-  script:
-    - build_new_container
+  extends: .container-builder-k8s
   stage: build
+  before_script:
+    - env
   variables:
     DOCKERFILE: docker/Dockerfile.ubuntu
     DOCKER_BUILD_ARGS: '["BASE_IMAGE=$BASE_IMAGE"]'
