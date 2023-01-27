@@ -2,6 +2,7 @@ include:
   - remote: 'https://gitlab.com/cscs-ci/recipes/-/raw/master/templates/v2/.ci-ext.yml'
 
 stages:
+  - build_base
   - build
   - run
 
@@ -9,18 +10,32 @@ variables:
   # CI_PROJECT_NAME==docker-jfrog - 1:0 is the version tag, if you want to tag each run, also use CI_COMMIT_SHA
   PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/subdirectory/my_cool_image:$CI_COMMIT_SHA
 
+build baseimage:
+  tags: [rosa-k8s-development]
+  image: docker.io/finkandreas/cicd-ext-k8s-container-image-builder:podman-4.3.1
+  stage: build_base
+  pre_script:
+    - DOCKER_TAG=`sha256 docker/Dockerfile.base | head -c 16`
+    - export PERSIST_IMAGE_NAME=$CSCS_REGISTRY_PATH/baseimage/cpu_base:$DOCKER_TAG
+    - echo "BASE_IMAGE=$PERSIST_IMAGE_NAME" >> build.env
+  script:
+    - build_new_container
+  artifacts:
+    reports:
+      dotenv: build.env
+  variables:
+    DOCKERFILE: docker/Dockerfile.base
+
+
 build:
   tags: [rosa-k8s-development]
   image: docker.io/finkandreas/cicd-ext-k8s-container-image-builder:podman-4.3.1
   script:
     - build_new_container
-    - podman images
-  after_script:
-    - podman images
-    - ls -lh /sourcecode
   stage: build
   variables:
     DOCKERFILE: docker/Dockerfile.ubuntu
+    DOCKER_BUILD_ARGS: '["BASE_IMAGE=$BASE_IMAGE"]'
     GIT_SUBMODULE_STRATEGY: recursive
 
 

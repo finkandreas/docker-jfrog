@@ -1,4 +1,5 @@
-FROM docker.io/finkandreas/ubuntu-quicc-buildbase:22.04
+ARG BASE_IMAGE
+FROM $BASE_IMAGE
 
 ARG NUM_PROCS=1
 
