@@ -11,25 +11,9 @@ variables:
 
 build:
   tags: [rosa-k8s-development]
-  image: quay.io/podman/stable:latest
+  image: docker.io/finkandreas/cicd-ext-container-image-builder:podman-4.3.1
   script:
-    - echo "Running with public IP address $(curl -s ifconfig.me)"
-    - env
-    - ls -lh $SSH_KEYFILE
-    - ls -lh --recursive
-    - ls -lh test_submodule/test_file
-    - podman login -u $CSCS_REGISTRY_USER -p $CSCS_REGISTRY_PASSWORD $CSCS_REGISTRY
-    - 'podman build
-       -f $DOCKERFILE
-       -t $PERSIST_IMAGE_NAME
-       --format docker
-       --layers
-       --isolation chroot
-       --build-arg NUM_PROCS=$(echo "$(cat /sys/fs/cgroup/cpu/cpu.cfs_quota_us) $(cat /sys/fs/cgroup/cpu/cpu.cfs_period_us) $(nproc)" | awk ''{ print ($1/$2 > 0) ? int($1/$2+0.5) : $3; }'')
-       --ssh default=$SSH_KEYFILE
-       --build-arg CSCS_REGISTRY_PATH=$CSCS_REGISTRY_PATH
-       --cache-ttl=600h .'
-    - podman push $PERSIST_IMAGE_NAME
+    - build_new_container
   stage: build
   variables:
     DOCKERFILE: docker/Dockerfile.ubuntu
