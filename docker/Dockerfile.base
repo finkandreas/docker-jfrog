@@ -4,7 +4,7 @@ ARG NUM_PROCS
 
 RUN --mount=type=secret,id=s3_creds,target=/root/.aws/credentials,required=true \
     --mount=type=secret,id=spack_sign_key,target=/tmp/spack_sign_key.gpg,required=true \
-    spack-install-helper hohgant cmake
+    spack-install-helper hohgant cmake mpich
 
 
 FROM docker.io/finkandreas/spack:base-ubuntu22.04
