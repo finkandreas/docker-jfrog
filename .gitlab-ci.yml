@@ -17,7 +17,7 @@ build:
     - podman images
   after_script:
     - podman images
-    - ls -lh
+    - ls -lh /sourcecode
   stage: build
   variables:
     DOCKERFILE: docker/Dockerfile.ubuntu

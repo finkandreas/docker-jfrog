@@ -2,18 +2,11 @@ FROM docker.io/finkandreas/ubuntu-quicc-buildbase:22.04
 
 ARG NUM_PROCS=1
 
-## update system
-#RUN echo "found $NUM_PROCS processors for build job" \
-#  && apt-get update && env DEBIAN_FRONTEND=noninteractive TZ=Europe/Zurich apt-get -yqq install --no-install-recommends build-essential cmake
-
-# build software - COPY as late as possible such that previous RUN commands can hit the cache
-COPY . /opt/hello.src
-
-RUN cd /opt/hello.src \
+RUN cd /sourcecode \
   && ls -lh --recursive \
   && ls -lh test_submodule/test_file
 
 RUN mkdir /tmp/build && cd /tmp/build \
-  && cmake -DCMAKE_INSTALL_PREFIX=/opt/hello -DCMAKE_CXX_COMPILER=mpic++ /opt/hello.src \
+  && cmake -DCMAKE_INSTALL_PREFIX=/opt/hello -DCMAKE_CXX_COMPILER=mpic++ /sourcecode \
   && make -j$NUM_PROCS \
   && make install
