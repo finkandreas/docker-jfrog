@@ -32,6 +32,7 @@ run:
     - echo $CSCS_SKIP_GIT_CLONE_SARUS_RUNNER
     - /opt/hello/bin/hello
   variables:
+    CSCS_SKIP_GIT_CLONE_SARUS_RUNNER: 'NO'
     USE_MPI: 'YES'
     SLURM_JOB_NUM_NODES: 2
     SLURM_PARTITION: normal
