@@ -4,26 +4,20 @@ ARG NUM_PROCS
 
 RUN --mount=type=secret,id=s3_creds,target=/root/.aws/credentials,required=true \
     --mount=type=secret,id=spack_sign_key,target=/tmp/spack_sign_key.gpg,required=true \
-    spack-install-helper hohgant cmake mpich
+    spack-install-helper hohgant-cpu cmake
 
 
 FROM docker.io/finkandreas/spack:base-ubuntu22.04
 
+# it is important to keep the paths, otherwise your installation is broken
+# all these paths are created with the above `spack-install-helper` invocation
 COPY --from=builder /opt/spack-environment /opt/spack-environment
 COPY --from=builder /opt/software /opt/software
 COPY --from=builder /opt/._view /opt/._view
 COPY --from=builder /etc/profile.d/z10_spack_environment.sh /etc/profile.d/z10_spack_environment.sh
 
-RUN ln -s /opt/._view/* /opt/view
+RUN fix_spack_install
 
 RUN apt-get -yqq update && apt-get -yqq upgrade \
  && apt-get -yqq install build-essential \
  && rm -rf /var/lib/apt/lists/*
-
-RUN (echo "/opt/view/lib" \
-&&   echo "/opt/view/lib64") > /etc/ld.so.conf.d/spack.conf \
-&& ldconfig
-
-ENTRYPOINT ["/bin/bash", "--rcfile", "/etc/profile", "-l", "-c"]
-CMD ["/bin/bash"]
-SHELL ["/bin/bash", "--rcfile", "/etc/profile", "-l", "-c"]

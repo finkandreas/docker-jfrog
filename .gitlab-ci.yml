@@ -50,9 +50,10 @@ run:
     - /opt/hello/bin/hello
   variables:
     CSCS_SKIP_GIT_CLONE_SARUS_RUNNER: 'NO'
+    CSCS_RUN_BARE_METAL: 'YES'
     USE_MPI: 'YES'
-    SLURM_JOB_NUM_NODES: 2
-    SLURM_PARTITION: normal
+    SLURM_JOB_NUM_NODES: 1
+    SLURM_CONSTRAINT: cpu
     SLURM_NTASKS: 2
 
 # clone:
