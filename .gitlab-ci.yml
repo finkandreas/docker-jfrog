@@ -67,7 +67,7 @@ run test:
     CSCS_SKIP_GIT_CLONE_SARUS_RUNNER: 'NO'
     CSCS_RUN_BARE_METAL: 'YES'
     SLURM_JOB_NUM_NODES: 1
-    SLURM_CONSTRAINT: cpu
+    SLURM_PARTITION: cpu
 
 # clone:
 #   tags: ['docker_jfrog']
