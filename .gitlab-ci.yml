@@ -56,6 +56,19 @@ run:
     SLURM_CONSTRAINT: cpu
     SLURM_NTASKS: 2
 
+run test:
+  extends: .container-runner-hohgant
+  stage: build_base
+  image: ${PERSIST_IMAGE_NAME}
+  script:
+    - echo $CSCS_SKIP_GIT_CLONE_SARUS_RUNNER
+    - ls -lh $SCRATCH
+  variables:
+    CSCS_SKIP_GIT_CLONE_SARUS_RUNNER: 'NO'
+    CSCS_RUN_BARE_METAL: 'YES'
+    SLURM_JOB_NUM_NODES: 1
+    SLURM_CONSTRAINT: cpu
+
 # clone:
 #   tags: ['docker_jfrog']
 #   stage: run
