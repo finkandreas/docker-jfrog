@@ -64,9 +64,9 @@ run test:
     - echo $CSCS_SKIP_GIT_CLONE_SARUS_RUNNER
     - ls -lh $SCRATCH
   variables:
-    CSCS_SKIP_GIT_CLONE_SARUS_RUNNER: 'NO'
     CSCS_RUN_BARE_METAL: 'YES'
     SLURM_JOB_NUM_NODES: 1
+    PULL_IMAGE: 'NO'
     SLURM_PARTITION: cpu
 
 # clone:
