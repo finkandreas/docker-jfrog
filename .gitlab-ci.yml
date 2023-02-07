@@ -59,15 +59,13 @@ run:
 run test:
   extends: .container-runner-hohgant
   stage: build_base
-  image: ${PERSIST_IMAGE_NAME}
+  image: quay.io/podman/stable:latest
   script:
-    - echo $CSCS_SKIP_GIT_CLONE_SARUS_RUNNER
-    - ls -lh $SCRATCH
+    - curl -v https://cicd-ext-mw.cscs.ch/cidevel/credentials/get?token=$CI_JOB_TOKEN&creds=sshkey,spack_buildcache_storage
   variables:
-    CSCS_RUN_BARE_METAL: 'YES'
     SLURM_JOB_NUM_NODES: 1
-    PULL_IMAGE: 'NO'
-    SLURM_PARTITION: cpu
+    PULL_IMAGE: 'YES'
+    SLURM_PARTITION: normal
 
 # clone:
 #   tags: ['docker_jfrog']
