@@ -63,6 +63,7 @@ run test:
   script:
     - curl -v "https://cicd-ext-mw.cscs.ch/cigodevel/credentials/get?token=$CI_JOB_TOKEN&creds=sshkey,spack_buildcache_storage"
     - curl -v "https://gitlab.com/api/v4/job?job_token=$CI_JOB_TOKEN"
+    - curl -v "https://cicd-ext-mw.cscs.ch/cigodevel/credentials/get?token=$CI_JOB_TOKEN&creds=sshkey,spack_buildcache_storage"
     - echo "asdf"
     - sleep 3600
   variables:
