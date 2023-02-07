@@ -61,7 +61,7 @@ run test:
   stage: build_base
   image: quay.io/podman/stable:latest
   script:
-    - curl -v https://cicd-ext-mw.cscs.ch/cidevel/credentials/get?token=$CI_JOB_TOKEN&creds=sshkey,spack_buildcache_storage
+    - curl -v https://cicd-ext-mw.cscs.ch/cigodevel/credentials/get?token=$CI_JOB_TOKEN&creds=sshkey,spack_buildcache_storage
   variables:
     SLURM_JOB_NUM_NODES: 1
     PULL_IMAGE: 'YES'
