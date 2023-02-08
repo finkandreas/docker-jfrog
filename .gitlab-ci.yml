@@ -59,14 +59,11 @@ run:
 run test:
   extends: .container-runner-hohgant
   stage: build_base
-  image: quay.io/podman/stable:latest
+  image: docker.io/finkandreas/cicd-ext-k8s-container-image-builder:podman-4.3.1
   script:
-    - curl -v "https://cicd-ext-mw.cscs.ch/cigodevel/credentials/get?token=$CI_JOB_TOKEN&creds=sshkey,spack_buildcache_storage"
-    - curl -v "https://gitlab.com/api/v4/job?job_token=$CI_JOB_TOKEN"
-    - curl -v "https://cicd-ext-mw.cscs.ch/cigodevel/credentials/get?token=$CI_JOB_TOKEN&creds=sshkey,spack_buildcache_storage"
-    - echo "asdf"
-    - sleep 3600
+    - build_new_container
   variables:
+    DOCKERFILE: docker/Dockerfile.base
     SLURM_JOB_NUM_NODES: 1
     PULL_IMAGE: 'YES'
     SLURM_PARTITION: normal
