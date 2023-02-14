@@ -56,19 +56,6 @@ run:
     SLURM_CONSTRAINT: cpu
     SLURM_NTASKS: 2
 
-run test:
-  extends: .container-runner-hohgant
-  stage: build_base
-  image: docker.io/finkandreas/cicd-ext-k8s-container-image-builder:podman-4.3.1
-  script:
-    - curl -v "https://cicd-ext-mw.cscs.ch/cigodevel/credentials/get?job_token=$CI_JOB_TOKEN&creds=sshkey"
-    - build_new_container
-  variables:
-    DOCKERFILE: docker/Dockerfile.base
-    SLURM_JOB_NUM_NODES: 1
-    PULL_IMAGE: 'YES'
-    SLURM_PARTITION: normal
-
 # clone:
 #   tags: ['docker_jfrog']
 #   stage: run
