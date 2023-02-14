@@ -36,6 +36,7 @@ build:
   stage: build
   before_script:
     - env
+    - capsh --print
   variables:
     DOCKERFILE: docker/Dockerfile.ubuntu
     DOCKER_BUILD_ARGS: '["BASE_IMAGE=$BASE_IMAGE"]'
@@ -54,7 +55,7 @@ run:
     CSCS_RUN_BARE_METAL: 'YES'
     USE_MPI: 'YES'
     SLURM_JOB_NUM_NODES: 1
-    SLURM_CONSTRAINT: cpu
+    SLURM_PARTITION: cpu
     SLURM_NTASKS: 2
 
 # clone:
