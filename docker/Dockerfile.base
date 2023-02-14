@@ -5,7 +5,6 @@ ARG NUM_PROCS
 RUN ls -lh /
 RUN spack-install-helper hohgant-cpu cmake
 
-
 FROM docker.io/finkandreas/spack:base-ubuntu22.04
 
 # it is important to keep the paths, otherwise your installation is broken
