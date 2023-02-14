@@ -42,6 +42,7 @@ build:
     DOCKERFILE: docker/Dockerfile.ubuntu
     DOCKER_BUILD_ARGS: '["BASE_IMAGE=$BASE_IMAGE"]'
     GIT_SUBMODULE_STRATEGY: recursive
+    CSCS_REBUILD_POLICY: always
 
 
 run:
