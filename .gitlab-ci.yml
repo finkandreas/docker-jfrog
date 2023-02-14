@@ -23,6 +23,7 @@ build baseimage:
     - DOCKER_TAG=`sha256sum docker/Dockerfile.base | head -c 16`
     - export PERSIST_IMAGE_NAME=$CSCS_REGISTRY_PATH/baseimage/cpu_base:$DOCKER_TAG
     - echo "BASE_IMAGE=$PERSIST_IMAGE_NAME" >> build.env
+    - id
   artifacts:
     reports:
       dotenv: build.env
