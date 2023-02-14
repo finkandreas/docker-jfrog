@@ -37,6 +37,7 @@ build:
   before_script:
     - env
     - capsh --print
+    - podman run --rm ubuntu:22.04
   variables:
     DOCKERFILE: docker/Dockerfile.ubuntu
     DOCKER_BUILD_ARGS: '["BASE_IMAGE=$BASE_IMAGE"]'
