@@ -16,6 +16,15 @@ variables:
   # CI_PROJECT_NAME==docker-jfrog - 1:0 is the version tag, if you want to tag each run, also use CI_COMMIT_SHA
   PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/subdirectory/my_cool_image:$CI_COMMIT_SHA
 
+
+test muttler:
+  tags: ["muttler-container"]
+  image: docker.io/ubuntu:22.04
+  script:
+    - cat /etc/os-release
+    - hostname
+  stage: build_base
+
 build baseimage:
   extends: .container-builder-k8s
   stage: build_base
