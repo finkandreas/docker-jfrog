@@ -19,7 +19,7 @@ variables:
 
 test muttler:
   extends: .container-runner-muttler
-  image: docker.io/ubuntu:22.04
+  image: $CSCS_REGISTRY_PATH/subdirectory/my_cool_image:1.0
   script:
     - cat /etc/os-release
     - hostname
