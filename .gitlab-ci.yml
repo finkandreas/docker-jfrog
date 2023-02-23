@@ -1,5 +1,5 @@
 include:
-  - remote: 'https://gitlab.com/cscs-ci/recipes/-/raw/master/templates/v2/.ci-ext.yml'
+  - remote: 'https://gitlab.com/cscs-ci/recipes/-/raw/master/templates/v2/.ci-ext-devel.yml'
 
 .container-builder-k8s:
   tags: [rosa-k8s-development]
@@ -18,7 +18,7 @@ variables:
 
 
 test muttler:
-  tags: ["muttler-container"]
+  extends: .container-runner-muttler
   image: docker.io/ubuntu:22.04
   script:
     - cat /etc/os-release
