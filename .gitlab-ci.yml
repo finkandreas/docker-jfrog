@@ -28,6 +28,7 @@ test muttler:
   stage: build_base
   variables:
     SLURM_JOB_NUM_NODES: 4
+    SLURM_NTASKS: 4
 
 build baseimage:
   extends: .container-builder-k8s
