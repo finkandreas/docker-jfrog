@@ -60,7 +60,6 @@ run:
   stage: run
   image: ${PERSIST_IMAGE_NAME}
   script:
-    - env
     - echo $CSCS_SKIP_GIT_CLONE_SARUS_RUNNER
     - /opt/hello/bin/hello
   variables:
