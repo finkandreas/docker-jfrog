@@ -23,6 +23,7 @@ test muttler:
   script:
     - cat /etc/os-release
     - hostname
+    - env
   stage: build_base
 
 build baseimage:
