@@ -67,7 +67,7 @@ run:
     CSCS_SKIP_GIT_CLONE_SARUS_RUNNER: 'NO'
     USE_MPI: 'YES'
     SLURM_JOB_NUM_NODES: 1
-    SLURM_PARTITION: cpu
+    SLURM_PARTITION: amdgpu
     SLURM_NTASKS: 2
 
 # clone:
