@@ -18,11 +18,11 @@ variables:
 
 
 test muttler:
-  extends: .container-runner-zinal
-  image: $CSCS_REGISTRY_PATH/subdirectory/my_cool_image:1.0
+  extends: .baremetal-runner-zinal
   script:
     - cat /etc/os-release
     - hostname
+    - ls -lh /scratch/e1000/
     - env
   stage: build_base
 
