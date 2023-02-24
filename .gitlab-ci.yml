@@ -18,13 +18,15 @@ variables:
 
 
 test muttler:
-  extends: .baremetal-runner-zinal
+  extends: .container-runner-zinal
   script:
     - cat /etc/os-release
     - hostname
     - ls -lh /scratch/e1000/
     - env
   stage: build_base
+  variables:
+    SLURM_JOB_NUM_NODES: 8
 
 build baseimage:
   extends: .container-builder-k8s
