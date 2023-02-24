@@ -18,7 +18,7 @@ variables:
 
 
 test muttler:
-  extends: .container-runner-muttler
+  extends: .container-runner-zinal
   image: $CSCS_REGISTRY_PATH/subdirectory/my_cool_image:1.0
   script:
     - cat /etc/os-release
