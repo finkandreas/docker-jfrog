@@ -30,7 +30,21 @@ test muttler:
   variables:
     SLURM_JOB_NUM_NODES: 1
     SLURM_NTASKS: 1
-    GIT_STRATEGY: fetch
+test muttler 2:
+  tags: [zinal-container-runner]
+  image: $CSCS_REGISTRY_PATH/subdirectory/my_cool_image:1.0
+  script:
+    - echo $CSCS_CI_MW_URL
+    - cat /etc/os-release
+    - hostname
+    - ls -lh /scratch/e1000/
+    - env
+  stage: build_base
+  variables:
+    CSCS_REGISTRY_LOGIN: 'YES'
+    PULL_IMAGE: 'YES'
+    SLURM_JOB_NUM_NODES: 1
+    SLURM_NTASKS: 1
 
 build baseimage:
   extends: .container-builder-k8s
@@ -69,7 +83,6 @@ run:
     - echo $CSCS_SKIP_GIT_CLONE_SARUS_RUNNER
     - /opt/hello/bin/hello
   variables:
-    CSCS_SKIP_GIT_CLONE_SARUS_RUNNER: 'NO'
     USE_MPI: 'YES'
     SLURM_JOB_NUM_NODES: 1
     SLURM_PARTITION: amdgpu
