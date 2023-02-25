@@ -30,7 +30,6 @@ test muttler:
   variables:
     SLURM_JOB_NUM_NODES: 1
     SLURM_NTASKS: 1
-    CSCS_SKIP_GIT_CLONE_SARUS_RUNNER: 'NO'
 
 build baseimage:
   extends: .container-builder-k8s
