@@ -21,14 +21,16 @@ test muttler:
   extends: .container-runner-zinal
   image: $CSCS_REGISTRY_PATH/subdirectory/my_cool_image:1.0
   script:
+    - echo $CSCS_CI_MW_URL
     - cat /etc/os-release
     - hostname
     - ls -lh /scratch/e1000/
     - env
   stage: build_base
   variables:
-    SLURM_JOB_NUM_NODES: 4
-    SLURM_NTASKS: 4
+    SLURM_JOB_NUM_NODES: 1
+    SLURM_NTASKS: 1
+    CSCS_SKIP_GIT_CLONE_SARUS_RUNNER: 'NO'
 
 build baseimage:
   extends: .container-builder-k8s
