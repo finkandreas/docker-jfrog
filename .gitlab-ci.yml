@@ -17,35 +17,6 @@ variables:
   PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/subdirectory/my_cool_image:$CI_COMMIT_SHA
 
 
-test muttler:
-  extends: .container-runner-zinal
-  image: $CSCS_REGISTRY_PATH/subdirectory/my_cool_image:1.0
-  script:
-    - echo $CSCS_CI_MW_URL
-    - cat /etc/os-release
-    - hostname
-    - ls -lh /scratch/e1000/
-    - env
-  stage: build_base
-  variables:
-    SLURM_JOB_NUM_NODES: 1
-    SLURM_NTASKS: 1
-test muttler 2:
-  tags: [zinal-container-runner]
-  image: $CSCS_REGISTRY_PATH/subdirectory/my_cool_image:1.0
-  script:
-    - echo $CSCS_CI_MW_URL
-    - cat /etc/os-release
-    - hostname
-    - ls -lh /scratch/e1000/
-    - env
-  stage: build_base
-  variables:
-    CSCS_REGISTRY_LOGIN: 'YES'
-    PULL_IMAGE: 'YES'
-    SLURM_JOB_NUM_NODES: 1
-    SLURM_NTASKS: 1
-
 build baseimage:
   extends: .container-builder-k8s
   stage: build_base
