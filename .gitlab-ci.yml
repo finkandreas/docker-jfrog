@@ -17,6 +17,15 @@ variables:
   PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/subdirectory/my_cool_image:$CI_COMMIT_SHA
 
 
+test mounts daint:
+  extends: .daint-container-runner-gpu
+  stage: build_base
+  image: ubuntu:22.04
+  script:
+    - ls -lh /users/icontest/pool/data
+  variables:
+    CSCS_NEEDED_DATA: icondata
+
 build baseimage:
   extends: .container-builder-k8s
   stage: build_base
