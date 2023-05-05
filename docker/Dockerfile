@@ -25,7 +25,7 @@ RUN dnf -y install cmake gcc git make autogen automake vim \
                    wget gnupg tar gcc-c++ boost-devel gfortran doxygen libtool \
                    m4 libpciaccess-devel clingo xz bzip2 gzip unzip zlib-devel \
                    ncurses-devel libxml2-devel gsl-devel zstd openblas-devel \
-                   flexiblas-devel patch bzip2-devel mpich-devel ninja-build Lmod
+                   flexiblas-devel patch bzip2-devel mpich-devel ninja-build Lmod perl-FindBin
 
 RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_386 && chmod a+x /usr/local/bin/yq
 # get latest version of spack
