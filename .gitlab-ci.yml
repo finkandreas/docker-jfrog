@@ -13,3 +13,4 @@ build:
     stage: build
     variables:
       DOCKERFILE: docker/Dockerfile
+      CSCS_REBUILD_POLICY: always
