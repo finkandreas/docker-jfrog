@@ -24,13 +24,13 @@ build:
       - make -j2
       - make install
 
-run:
-  extends: .container-runner-muttler
-  stage: run
-  image: ${PERSIST_IMAGE_NAME}
-  script:
-    - /opt/hello/bin/hello
-  variables:
-    SLURM_JOB_NUM_NODES: 2
-    SLURM_PARTITION: normal
-    SLURM_NTASKS: 2
+        #run:
+        #  extends: .container-runner-muttler
+        #  stage: run
+        #  image: ${PERSIST_IMAGE_NAME}
+        #  script:
+        #    - /opt/hello/bin/hello
+        #  variables:
+        #    SLURM_JOB_NUM_NODES: 2
+        #    SLURM_PARTITION: normal
+        #    SLURM_NTASKS: 2
