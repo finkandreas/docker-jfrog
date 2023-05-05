@@ -12,6 +12,8 @@ variables:
 build:
     extends: .container-builder
     stage: build
+    variables:
+      DOCKERFILE: docker/Dockerfile
     image: ubuntu:22.04
     script:
       - apt-get update
