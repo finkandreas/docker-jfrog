@@ -3,7 +3,6 @@ include:
 
 stages:
   - build
-  - run
 
 variables:
   # CI_PROJECT_NAME==docker-jfrog - 1:0 is the version tag, if you want to tag each run, also use CI_COMMIT_SHA
@@ -14,23 +13,3 @@ build:
     stage: build
     variables:
       DOCKERFILE: docker/Dockerfile
-    image: ubuntu:22.04
-    script:
-      - apt-get update
-      - env DEBIAN_FRONTEND=noninteractive TZ=Europe/Zurich apt-get -yqq install --no-install-recommends build-essential cmake
-      - mkdir build
-      - cd build
-      - cmake -DCMAKE_INSTALL_PREFIX=/opt/hello ..
-      - make -j2
-      - make install
-
-        #run:
-        #  extends: .container-runner-muttler
-        #  stage: run
-        #  image: ${PERSIST_IMAGE_NAME}
-        #  script:
-        #    - /opt/hello/bin/hello
-        #  variables:
-        #    SLURM_JOB_NUM_NODES: 2
-        #    SLURM_PARTITION: normal
-        #    SLURM_NTASKS: 2
