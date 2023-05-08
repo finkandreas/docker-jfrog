@@ -31,7 +31,8 @@ test osu hohgant:
   stage: run
   image: $PERSIST_IMAGE_NAME_HOHGANT
   script:
-    - ls -alh /opt/view/bin
+    - /opt/hello_mpi
+    - /opt/hello_mpi
     - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_latency
     - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_latency
     - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_bw
@@ -46,7 +47,8 @@ test osu daint:
   stage: run
   image: $PERSIST_IMAGE_NAME_DAINT
   script:
-    - ls -alh /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt
+    - /opt/hello_mpi
+    - /opt/hello_mpi
     - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_latency
     - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_latency
     - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_bw

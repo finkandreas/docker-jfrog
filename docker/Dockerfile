@@ -20,3 +20,6 @@ RUN fix_spack_install
 RUN apt-get -yqq update && apt-get -yqq upgrade \
  && apt-get -yqq install build-essential \
  && rm -rf /var/lib/apt/lists/*
+
+RUN ls -alh /sourcecode \
+  && mpic++ -o /opt/hello_mpi /sourcecode/hello.cpp
