@@ -3,14 +3,28 @@ include:
 
 stages:
   - build
+  - run
 
 variables:
   # CI_PROJECT_NAME==docker-jfrog - 1:0 is the version tag, if you want to tag each run, also use CI_COMMIT_SHA
-  PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/my_cool_image:1.0
+  PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/osu-micro-benchmarks:$CI_COMMIT_SHA
 
 build:
     extends: .container-builder
     stage: build
     variables:
       DOCKERFILE: docker/Dockerfile
-      CSCS_REBUILD_POLICY: always
+      CSCS_REBUILD_POLICY: if-not-exists
+
+test osu:
+  extends: .container-runner-hohgant-cpu
+  stage: run
+  image: $CSCS_REGISTRY_PATH/osu-micro-benchmarks:$CI_COMMIT_SHA
+  script:
+    - ls -alh /opt/view/bin
+    - osu_latency
+    - osu_bw
+  variables:
+    SLURM_JOB_NUM_NODES: 1
+    SLURM_NTASKS: 2
+    SLURM_CPUS_PER_TASK: 8
