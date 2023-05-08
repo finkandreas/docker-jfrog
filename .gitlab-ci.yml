@@ -7,23 +7,50 @@ stages:
 
 variables:
   # CI_PROJECT_NAME==docker-jfrog - 1:0 is the version tag, if you want to tag each run, also use CI_COMMIT_SHA
-  PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/osu-micro-benchmarks:$CI_COMMIT_SHA
+  PERSIST_IMAGE_NAME_HOHGANT: $CSCS_REGISTRY_PATH/osu-micro-benchmarks:hohgant-$CI_COMMIT_SHA
+  PERSIST_IMAGE_NAME_DAINT: $CSCS_REGISTRY_PATH/osu-micro-benchmarks:daint-$CI_COMMIT_SHA
 
 build:
     extends: .container-builder
     stage: build
     variables:
       DOCKERFILE: docker/Dockerfile
-      CSCS_REBUILD_POLICY: if-not-exists
+      PERSIST_IMAGE_NAME: $PERSIST_IMAGE_NAME_HOHGANT
+      DOCKER_BUILD_ARGS: '["SYSTEM=hohgant-cpu"]'
 
-test osu:
+build:
+    extends: .container-builder
+    stage: build
+    variables:
+      DOCKERFILE: docker/Dockerfile
+      PERSIST_IMAGE_NAME: $PERSIST_IMAGE_NAME_DAINT
+      DOCKER_BUILD_ARGS: '["SYSTEM=daint-mc"]'
+
+test osu hohgant:
   extends: .container-runner-hohgant-zen2
   stage: run
-  image: $CSCS_REGISTRY_PATH/osu-micro-benchmarks:$CI_COMMIT_SHA
+  image: $PERSIST_IMAGE_NAME_HOHGANT
   script:
     - ls -alh /opt/view/bin
-    - osu_latency
-    - osu_bw
+    - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_latency
+    - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_latency
+    - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_bw
+    - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_bw
+  variables:
+    SLURM_JOB_NUM_NODES: 1
+    SLURM_NTASKS: 2
+    SLURM_CPUS_PER_TASK: 8
+
+test osu daint:
+  extends: .container-runner-daint-mc
+  stage: run
+  image: $PERSIST_IMAGE_NAME_DAINT
+  script:
+    - ls -alh /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt
+    - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_latency
+    - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_latency
+    - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_bw
+    - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_bw
   variables:
     SLURM_JOB_NUM_NODES: 1
     SLURM_NTASKS: 2
