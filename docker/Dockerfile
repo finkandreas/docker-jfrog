@@ -2,7 +2,7 @@ FROM docker.io/finkandreas/spack:0.19.2-ubuntu22.04 as builder
 
 RUN spack-install-helper \
     hohgant-cpu \
-    osu-micro-benchmarks
+    'osu-micro-benchmarks@6.2'
 
 FROM docker.io./finkandreas/spack:base-ubuntu22.04
 
