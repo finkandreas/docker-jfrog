@@ -17,7 +17,7 @@ build:
       CSCS_REBUILD_POLICY: if-not-exists
 
 test osu:
-  extends: .container-runner-hohgant-cpu
+  extends: .container-runner-hohgant-zen2
   stage: run
   image: $CSCS_REGISTRY_PATH/osu-micro-benchmarks:$CI_COMMIT_SHA
   script:
