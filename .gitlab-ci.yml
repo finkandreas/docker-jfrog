@@ -10,7 +10,7 @@ variables:
   PERSIST_IMAGE_NAME_HOHGANT: $CSCS_REGISTRY_PATH/osu-micro-benchmarks:hohgant-$CI_COMMIT_SHA
   PERSIST_IMAGE_NAME_DAINT: $CSCS_REGISTRY_PATH/osu-micro-benchmarks:daint-$CI_COMMIT_SHA
 
-build:
+build hohgant:
     extends: .container-builder
     stage: build
     variables:
@@ -18,7 +18,7 @@ build:
       PERSIST_IMAGE_NAME: $PERSIST_IMAGE_NAME_HOHGANT
       DOCKER_BUILD_ARGS: '["SYSTEM=hohgant-cpu"]'
 
-build:
+build daint:
     extends: .container-builder
     stage: build
     variables:

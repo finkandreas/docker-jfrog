@@ -6,7 +6,7 @@ RUN spack-install-helper \
     $SYSTEM \
     'osu-micro-benchmarks@6.2'
 
-FROM docker.io./finkandreas/spack:base-ubuntu22.04
+FROM docker.io/finkandreas/spack:base-ubuntu22.04
 
 # it is important to keep the paths, otherwise your installation is broken
 # all these paths are created with the above `spack-install-helper` invocation
