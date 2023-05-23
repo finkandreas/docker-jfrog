@@ -33,6 +33,7 @@ test osu hohgant:
   script:
     - /opt/hello_mpi
     - /opt/hello_mpi
+    - sleep 800
     - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_latency
     - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_latency
     - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_bw
