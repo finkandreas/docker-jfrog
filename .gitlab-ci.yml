@@ -19,6 +19,7 @@ build:
 run:
   stage: run
   tags: [clariden-container-runner]
+  image: $PERSIST_IMAGE_NAME
   variables:
     GIT_STRATEGY: 'none'
     PULL_IMAGE: 'YES'
