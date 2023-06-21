@@ -3,6 +3,7 @@ include:
 
 stages:
   - build
+  - run
 
 variables:
   # CI_PROJECT_NAME==docker-jfrog - 1:0 is the version tag, if you want to tag each run, also use CI_COMMIT_SHA
@@ -14,3 +15,14 @@ build:
     variables:
       DOCKERFILE: docker/Dockerfile
       CSCS_REBUILD_POLICY: always
+
+run:
+  stage: run
+  tags: [clariden-container-runner]
+  variables:
+    GIT_STRATEGY: 'none'
+    PULL_IMAGE: 'YES'
+  script:
+    - echo test
+    - hostname
+    - ls -alh $HOME
