@@ -16,14 +16,36 @@ build:
       DOCKERFILE: docker/Dockerfile
       CSCS_REBUILD_POLICY: always
 
-run:
+run container:
   stage: run
   tags: [clariden-container-runner]
   image: $PERSIST_IMAGE_NAME
   variables:
-    GIT_STRATEGY: 'none'
     PULL_IMAGE: 'YES'
+    SLURM_PARTITION: amdgpu
   script:
-    - echo test
+    - pwd
+    - ls -alh
     - hostname
-    - ls -alh $HOME
+    - cat /etc/os-release
+
+run baremetal slurm:
+  stage: run
+  tags: [clariden-slurm-baremetal]
+  variables:
+    SLURM_PARTITION: nvgpu
+  script:
+    - pwd
+    - ls -alh
+    - env | grep SLURM_
+    - hostname
+    - cat /etc/os-release
+
+run baremetal:
+  stage: run
+  tags: [clariden-login-baremetal]
+  script:
+    - pwd
+    - ls -alh
+    - hostname
+    - cat /etc/os-release
