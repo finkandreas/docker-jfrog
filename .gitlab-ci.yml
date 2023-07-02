@@ -7,7 +7,7 @@ stages:
 
 variables:
   # CI_PROJECT_NAME==docker-jfrog - 1:0 is the version tag, if you want to tag each run, also use CI_COMMIT_SHA
-  PERSIST_IMAGE_NAME_HOHGANT: $CSCS_REGISTRY_PATH/osu-micro-benchmarks:hohgant-$CI_COMMIT_SHA
+  PERSIST_IMAGE_NAME_HOHGANT: jfrog.svc.cscs.ch/contbuild/testing/anfink/123456/osu-micro-benchmarks:hohgant-$CI_COMMIT_SHA
   PERSIST_IMAGE_NAME_DAINT: $CSCS_REGISTRY_PATH/osu-micro-benchmarks:daint-$CI_COMMIT_SHA
 
 build hohgant:
