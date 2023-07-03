@@ -2,6 +2,7 @@ include:
   - remote: 'https://gitlab.com/cscs-ci/recipes/-/raw/master/templates/v2/.ci-ext.yml'
 
 stages:
+  - build_base
   - build
   - run
 
@@ -10,21 +11,40 @@ variables:
   PERSIST_IMAGE_NAME_HOHGANT: $CSCS_REGISTRY_PATH/osu-micro-benchmarks:hohgant-$CI_COMMIT_SHA
   PERSIST_IMAGE_NAME_DAINT: $CSCS_REGISTRY_PATH/osu-micro-benchmarks:daint-$CI_COMMIT_SHA
 
-build hohgant:
-    extends: .container-builder
-    stage: build
-    variables:
-      DOCKERFILE: docker/Dockerfile
-      PERSIST_IMAGE_NAME: $PERSIST_IMAGE_NAME_HOHGANT
-      DOCKER_BUILD_ARGS: '["SYSTEM=hohgant-cpu"]'
+build base hohgant:
+  extends: .container-builder-dynamic-name
+  stage: build_base
+  variables:
+    DOCKERFILE: docker/Dockerfile.base
+    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/base/osu-micro-benchmarks-hohgant
+    DOCKER_BUILD_ARGS: '["SYSTEM=hohgant-cpu"]'
 
-build daint:
-    extends: .container-builder
-    stage: build
+
+build hohgant:
+  extends: .container-builder
+  stage: build
+  dependencies: ['build hohgant base']
+  variables:
+    DOCKERFILE: docker/Dockerfile
+    PERSIST_IMAGE_NAME: $PERSIST_IMAGE_NAME_HOHGANT
+    DOCKER_BUILD_ARGS: '["BASE_IMAGE=$BASE_IMAGE"]'
+
+build base daint:
+    extends: .container-builder-dynamic-name
+    stage: build_base
     variables:
-      DOCKERFILE: docker/Dockerfile
-      PERSIST_IMAGE_NAME: $PERSIST_IMAGE_NAME_DAINT
+      DOCKERFILE: docker/Dockerfile.base
+      PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/base/osu-micro-benchmarks-daint
       DOCKER_BUILD_ARGS: '["SYSTEM=daint-mc"]'
+
+build hohgant:
+  extends: .container-builder
+  stage: build
+  dependencies: ['build daint base']
+  variables:
+    DOCKERFILE: docker/Dockerfile
+    PERSIST_IMAGE_NAME: $PERSIST_IMAGE_NAME_DAINT
+    DOCKER_BUILD_ARGS: '["BASE_IMAGE=$BASE_IMAGE"]'
 
 test osu hohgant:
   extends: .container-runner-hohgant-zen2
