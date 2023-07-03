@@ -14,19 +14,10 @@ variables:
 build base hohgant:
   extends: .container-builder-dynamic-name
   stage: build_base
-  before_script:
-    - echo "WATCH_FILECHANGES=$WATCH_FILECHANGES"
-    - echo "with eval $(eval echo $WATCH_FILECHANGES)"
-    - DOCKER_TAG=`eval cat $WATCH_FILECHANGES | sha256sum head -c 16`
-    - export PERSIST_IMAGE_NAME=$PERSIST_IMAGE_NAME:$DOCKER_TAG
-    - echo "BASE_IMAGE=$PERSIST_IMAGE_NAME" > build.env
-  artifacts:
-    reports:
-      dotenv: build.env
   variables:
     DOCKERFILE: docker/Dockerfile.base
     PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/base/osu-micro-benchmarks-hohgant
-    WATCH_FILECHANGES: 'docker/Dockerfile.base "path/to/another/hohgant with whitespaces.txt"'
+    WATCH_FILECHANGES: 'docker/Dockerfile.base'
     DOCKER_BUILD_ARGS: '["SYSTEM=hohgant-cpu"]'
 
 
@@ -40,12 +31,13 @@ build hohgant:
     DOCKER_BUILD_ARGS: '["BASE_IMAGE=$BASE_IMAGE"]'
 
 build base daint:
-    extends: .container-builder-dynamic-name
-    stage: build_base
-    variables:
-      DOCKERFILE: docker/Dockerfile.base
-      PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/base/osu-micro-benchmarks-daint
-      DOCKER_BUILD_ARGS: '["SYSTEM=daint-mc"]'
+  extends: .container-builder-dynamic-name
+  stage: build_base
+  variables:
+    DOCKERFILE: docker/Dockerfile.base
+    WATCH_FILECHANGES: 'docker/Dockerfile.base'
+    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/base/osu-micro-benchmarks-daint
+    DOCKER_BUILD_ARGS: '["SYSTEM=daint-mc"]'
 
 build hohgant:
   extends: .container-builder
