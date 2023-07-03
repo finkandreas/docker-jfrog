@@ -28,6 +28,7 @@ build hohgant:
     DOCKERFILE: docker/Dockerfile
     PERSIST_IMAGE_NAME: $PERSIST_IMAGE_NAME_HOHGANT
     DOCKER_BUILD_ARGS: '["BASE_IMAGE=$BASE_IMAGE"]'
+    WATCH_FILECHANGES: 'docker/Dockerfile.base path/to/file\ with\ whitespace.txt'
 
 build base daint:
     extends: .container-builder-dynamic-name
