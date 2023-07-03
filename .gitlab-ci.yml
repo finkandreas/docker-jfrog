@@ -23,7 +23,7 @@ build base hohgant:
 build hohgant:
   extends: .container-builder
   stage: build
-  dependencies: ['build hohgant base']
+  dependencies: ['build base hohgant']
   variables:
     DOCKERFILE: docker/Dockerfile
     PERSIST_IMAGE_NAME: $PERSIST_IMAGE_NAME_HOHGANT
@@ -40,7 +40,7 @@ build base daint:
 build hohgant:
   extends: .container-builder
   stage: build
-  dependencies: ['build daint base']
+  dependencies: ['build base daint']
   variables:
     DOCKERFILE: docker/Dockerfile
     PERSIST_IMAGE_NAME: $PERSIST_IMAGE_NAME_DAINT
