@@ -39,7 +39,7 @@ build base daint:
     PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/base/osu-micro-benchmarks-daint
     DOCKER_BUILD_ARGS: '["SYSTEM=daint-mc"]'
 
-build hohgant:
+build daint:
   extends: .container-builder
   stage: build
   dependencies: ['build base daint']
