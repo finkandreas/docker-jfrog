@@ -13,6 +13,7 @@ variables:
 
 build base hohgant:
   extends: .container-builder-dynamic-name
+  tags: [rosa-k8s-replacement]
   stage: build_base
   variables:
     DOCKERFILE: docker/Dockerfile.base
@@ -23,6 +24,7 @@ build base hohgant:
 
 build hohgant:
   extends: .container-builder
+  tags: [rosa-k8s-replacement]
   stage: build
   dependencies: ['build base hohgant']
   variables:
@@ -32,6 +34,7 @@ build hohgant:
 
 build base daint:
   extends: .container-builder-dynamic-name
+  tags: [rosa-k8s-replacement]
   stage: build_base
   variables:
     DOCKERFILE: docker/Dockerfile.base
@@ -41,6 +44,7 @@ build base daint:
 
 build daint:
   extends: .container-builder
+  tags: [rosa-k8s-replacement]
   stage: build
   dependencies: ['build base daint']
   variables:
