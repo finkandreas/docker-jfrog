@@ -64,6 +64,7 @@ test osu hohgant:
     SLURM_JOB_NUM_NODES: 1
     SLURM_NTASKS: 2
     SLURM_CPUS_PER_TASK: 8
+    USE_MPI: 'YES'
 
 test osu daint:
   extends: .container-runner-daint-mc
@@ -80,3 +81,4 @@ test osu daint:
     SLURM_JOB_NUM_NODES: 1
     SLURM_NTASKS: 2
     SLURM_CPUS_PER_TASK: 8
+    USE_MPI: 'YES'
