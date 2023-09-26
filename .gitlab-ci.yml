@@ -43,6 +43,8 @@ build daint:
   extends: .container-builder
   stage: build
   dependencies: ['build base daint']
+  before_script:
+    - env | grep MY_TEST_VAR
   variables:
     DOCKERFILE: docker/Dockerfile
     PERSIST_IMAGE_NAME: $PERSIST_IMAGE_NAME_DAINT
