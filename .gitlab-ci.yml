@@ -73,6 +73,7 @@ test osu daint:
   stage: run
   image: $PERSIST_IMAGE_NAME_DAINT
   script:
+    - env | grep $CI_RUNNER_SHORT_TOKEN
     - /opt/hello_mpi
     - /opt/hello_mpi
     - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_latency
