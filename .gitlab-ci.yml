@@ -44,7 +44,7 @@ build daint:
   stage: build
   dependencies: ['build base daint']
   before_script:
-    - env | grep MY_TEST_VAR
+    - env | grep MY_TEST_VAR || true
   variables:
     DOCKERFILE: docker/Dockerfile
     PERSIST_IMAGE_NAME: $PERSIST_IMAGE_NAME_DAINT
