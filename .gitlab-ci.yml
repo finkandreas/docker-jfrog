@@ -67,6 +67,8 @@ test osu hohgant:
     SLURM_NTASKS: 2
     SLURM_CPUS_PER_TASK: 8
     USE_MPI: 'YES'
+  rules:
+    - if: $CRON_RUN != "true"
 
 test osu daint:
   extends: .container-runner-daint-mc
