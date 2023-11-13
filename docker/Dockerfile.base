@@ -1,0 +1,21 @@
+FROM docker.io/finkandreas/spack:0.20.2-ubuntu2204 as builder
+
+RUN spack-install-helper daint-mc cmake
+
+# copy only relevant parts to the final container
+FROM docker.io/finkandreas/spack:base-ubuntu22.04
+
+# it is important to keep the paths, otherwise your installation is broken
+# all these paths are created with the above `spack-install-helper` invocation
+COPY --from=builder /opt/spack-environment /opt/spack-environment
+COPY --from=builder /opt/software /opt/software
+COPY --from=builder /opt/._view /opt/._view
+COPY --from=builder /etc/profile.d/z10_spack_environment.sh /etc/profile.d/z10_spack_environment.sh
+
+# Some boilerplate to get all paths correctly - fix_spack_install is part of the base image
+# and makes sure that all important things are being correctly setup
+RUN fix_spack_install
+
+RUN apt-get -yqq update && apt-get -yqq upgrade \
+ && apt-get -yqq install build-essential \
+ && rm -rf /var/lib/apt/lists/*
