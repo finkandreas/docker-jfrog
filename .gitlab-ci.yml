@@ -23,7 +23,7 @@ build:
   stage: build
   variables:
     DOCKERFILE: docker/Dockerfile
-    BUILD_ARGS: '["BASE_IMG=$BASE_IMAGE"]'
+    DOCKER_BUILD_ARGS: '["BASE_IMG=$BASE_IMAGE"]'
 
 run:
   tags: ['f7t-runner']
