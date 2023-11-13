@@ -41,3 +41,4 @@ run:
     SLURM_CONSTRAINT: mc
     CSCS_GLR_DIR: '/apps/daint/UES/anfink/glr'
     FIRECREST_SYSTEM: 'daint'
+    SLURM_ACCOUNT: 'csstaff'
