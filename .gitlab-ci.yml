@@ -44,7 +44,7 @@ run:
     USE_MPI: 'YES'
     SLURM_ACCOUNT: 'csstaff'
 
-run:
+run 2:
   tags: ['f7t-runner']
   stage: run
   image: ${PERSIST_IMAGE_NAME}
