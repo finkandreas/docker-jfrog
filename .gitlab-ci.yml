@@ -50,6 +50,7 @@ run 2:
   image: ${PERSIST_IMAGE_NAME}
   script:
     - /opt/hello/bin/hello
+    - sleep 180
     - echo "second job"
   variables:
     SLURM_JOB_NUM_NODES: 2
