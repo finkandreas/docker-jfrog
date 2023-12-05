@@ -40,6 +40,7 @@ run:
     SLURM_TIMELIMIT: '00:15:00'
     SLURM_CONSTRAINT: mc
     FIRECREST_SYSTEM: 'daint'
+    MODE: 'container-runner'
     USE_MPI: 'YES'
     SLURM_ACCOUNT: 'csstaff'
 
