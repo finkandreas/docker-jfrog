@@ -47,18 +47,16 @@ run:
 run 2:
   tags: ['f7t-runner']
   stage: run
-  image: ${PERSIST_IMAGE_NAME}
   script:
-    - /opt/hello/bin/hello
-    - echo "second job"
+    - ls -alh $SCRATCH
+    - pwd
   variables:
-    SLURM_JOB_NUM_NODES: 2
+    SLURM_JOB_NUM_NODES: 1
     SLURM_PARTITION: normal
-    SLURM_NTASKS: 2
-    PULL_IMAGE: 'YES'
+    SLURM_NTASKS: 1
     GIT_STRATEGY: 'fetch'
     SLURM_TIMELIMIT: '00:15:00'
     SLURM_CONSTRAINT: mc
     FIRECREST_SYSTEM: 'daint'
-    USE_MPI: 'YES'
+    MODE: 'baremetal'
     SLURM_ACCOUNT: 'csstaff'
