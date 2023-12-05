@@ -39,7 +39,6 @@ run:
     GIT_STRATEGY: 'fetch'
     SLURM_TIMELIMIT: '00:15:00'
     SLURM_CONSTRAINT: mc
-    CSCS_GLR_DIR: '/apps/daint/UES/anfink/glr'
     FIRECREST_SYSTEM: 'daint'
     USE_MPI: 'YES'
     SLURM_ACCOUNT: 'csstaff'
@@ -59,7 +58,6 @@ run 2:
     GIT_STRATEGY: 'fetch'
     SLURM_TIMELIMIT: '00:15:00'
     SLURM_CONSTRAINT: mc
-    CSCS_GLR_DIR: '/apps/daint/UES/anfink/glr'
     FIRECREST_SYSTEM: 'daint'
     USE_MPI: 'YES'
     SLURM_ACCOUNT: 'csstaff'
