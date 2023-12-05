@@ -33,13 +33,13 @@ run:
     - /opt/hello/bin/hello
   variables:
     SLURM_JOB_NUM_NODES: 2
-    SLURM_PARTITION: normal
+    SLURM_PARTITION: debug
     SLURM_NTASKS: 2
     PULL_IMAGE: 'YES'
     GIT_STRATEGY: 'fetch'
     SLURM_TIMELIMIT: '00:15:00'
     SLURM_CONSTRAINT: mc
-    FIRECREST_SYSTEM: 'daint'
+    FIRECREST_SYSTEM: 'eiger'
     MODE: 'container-runner'
     USE_MPI: 'YES'
     SLURM_ACCOUNT: 'csstaff'
@@ -52,11 +52,11 @@ run 2:
     - pwd
   variables:
     SLURM_JOB_NUM_NODES: 1
-    SLURM_PARTITION: normal
+    SLURM_PARTITION: debug
     SLURM_NTASKS: 1
     GIT_STRATEGY: 'fetch'
     SLURM_TIMELIMIT: '00:15:00'
     SLURM_CONSTRAINT: mc
-    FIRECREST_SYSTEM: 'daint'
+    FIRECREST_SYSTEM: 'eiger'
     MODE: 'baremetal'
     SLURM_ACCOUNT: 'csstaff'
