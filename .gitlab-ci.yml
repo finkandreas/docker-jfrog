@@ -34,7 +34,7 @@ run vial:
     - pwd
     - hostname
     - env
-  variablse:
+  variables:
     SLURM_JOB_NUM_NODES: 1
 
       #run:
