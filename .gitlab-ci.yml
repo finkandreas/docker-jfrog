@@ -25,38 +25,50 @@ build:
     DOCKERFILE: docker/Dockerfile
     DOCKER_BUILD_ARGS: '["BASE_IMG=$BASE_IMAGE"]'
 
-run:
-  tags: ['f7t-runner']
-  stage: run
-  image: ${PERSIST_IMAGE_NAME}
-  script:
-    - /opt/hello/bin/hello
-  variables:
-    SLURM_JOB_NUM_NODES: 2
-    SLURM_PARTITION: debug
-    SLURM_NTASKS: 2
-    PULL_IMAGE: 'YES'
-    GIT_STRATEGY: 'fetch'
-    SLURM_TIMELIMIT: '00:15:00'
-    SLURM_CONSTRAINT: mc
-    FIRECREST_SYSTEM: 'eiger'
-    MODE: 'container-runner'
-    USE_MPI: 'YES'
-    SLURM_ACCOUNT: 'csstaff'
-
-run 2:
-  tags: ['f7t-runner']
+run vial:
+  tags: ['vial-spack-stack-builder']
   stage: run
   script:
     - ls -alh $SCRATCH
+    - ls -alh
     - pwd
-  variables:
+    - hostname
+    - env
+  variablse:
     SLURM_JOB_NUM_NODES: 1
-    SLURM_PARTITION: debug
-    SLURM_NTASKS: 1
-    GIT_STRATEGY: 'fetch'
-    SLURM_TIMELIMIT: '00:15:00'
-    SLURM_CONSTRAINT: mc
-    FIRECREST_SYSTEM: 'eiger'
-    MODE: 'baremetal'
-    SLURM_ACCOUNT: 'csstaff'
+
+      #run:
+      #  tags: ['f7t-runner']
+      #  stage: run
+      #  image: ${PERSIST_IMAGE_NAME}
+      #  script:
+      #    - /opt/hello/bin/hello
+      #  variables:
+      #    SLURM_JOB_NUM_NODES: 2
+      #    SLURM_PARTITION: debug
+      #    SLURM_NTASKS: 2
+      #    PULL_IMAGE: 'YES'
+      #    GIT_STRATEGY: 'fetch'
+      #    SLURM_TIMELIMIT: '00:15:00'
+      #    SLURM_CONSTRAINT: mc
+      #    FIRECREST_SYSTEM: 'eiger'
+      #    MODE: 'container-runner'
+      #    USE_MPI: 'YES'
+      #    SLURM_ACCOUNT: 'csstaff'
+      #
+      #run 2:
+      #  tags: ['f7t-runner']
+      #  stage: run
+      #  script:
+      #    - ls -alh $SCRATCH
+      #    - pwd
+      #  variables:
+      #    SLURM_JOB_NUM_NODES: 1
+      #    SLURM_PARTITION: debug
+      #    SLURM_NTASKS: 1
+      #    GIT_STRATEGY: 'fetch'
+      #    SLURM_TIMELIMIT: '00:15:00'
+      #    SLURM_CONSTRAINT: mc
+      #    FIRECREST_SYSTEM: 'eiger'
+      #    MODE: 'baremetal'
+      #    SLURM_ACCOUNT: 'csstaff'
