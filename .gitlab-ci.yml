@@ -59,4 +59,4 @@ run 2:
     SLURM_CONSTRAINT: mc
     FIRECREST_SYSTEM: 'daint'
     MODE: 'baremetal'
-    SLURM_ACCOUNT: 'djenkssl'
+    SLURM_ACCOUNT: 'gitcicd'
