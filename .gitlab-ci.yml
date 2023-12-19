@@ -45,6 +45,7 @@ run 2:
   script:
     - ls -alh $SCRATCH
     - pwd
+    - echo '<script>alert()</script>'
   variables:
     SLURM_JOB_NUM_NODES: 1
     SLURM_PARTITION: debug
