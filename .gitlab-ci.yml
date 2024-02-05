@@ -26,6 +26,14 @@ build:
     DOCKER_BUILD_ARGS: '["BASE_IMG=$BASE_IMAGE"]'
 
 
+run uenv:
+  extends: .baremetal-runner-eiger-mc-f7t
+  stage: run
+  script:
+    - g++ --version
+  variables:
+    UENV: '$$SCRATCH/PrgEnv-gnu-23.11.squashfs'
+
 run:
   extends: .container-runner-eiger-mc-f7t
   stage: run
