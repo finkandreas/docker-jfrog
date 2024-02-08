@@ -8,10 +8,40 @@ stages:
 
 variables:
   # CI_PROJECT_NAME==docker-jfrog - 1:0 is the version tag, if you want to tag each run, also use CI_COMMIT_SHA
-  PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/my_cool_image:${CI_COMMIT_SHORT_SHA}
+  PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/my_cool_image:${CI_COMMIT_SHORT_SHA}-${ARCH}
+
+.cscs-container-builder-gh200:
+  # See for customization and possible variables https://gitlab.com/cscs-ci/ci-testing/webhook-ci/gitlab-runner-k8s-container-builder
+  tags: [santis-container-builder]
+  script:
+    - build_new_container
+  variables:
+    CSCS_REBUILD_POLICY: "if-not-exists"
+    ARCH: 'aarch64'
+
+.cscs-container-builder-dynamic-name-gh200:
+  extends: .cscs-container-builder-gh200
+  before_script:
+    - DOCKER_TAG=`eval cat $WATCH_FILECHANGES | sha256sum | head -c 16`
+    - export PERSIST_IMAGE_NAME=$PERSIST_IMAGE_NAME:$DOCKER_TAG-$ARCH
+    - echo "BASE_IMAGE=$PERSIST_IMAGE_NAME" > build.env
+  artifacts:
+    reports:
+      dotenv: build.env
+  variables:
+    # the variables below MUST be set to a sane value. They are mentioned here, to see
+    # which variables should be set.
+    DOCKERFILE: ci/docker/Dockerfile.base # overwrite with the real path of the Dockerfile
+    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/base/my_base_image # Important: No version-tag
+    WATCH_FILECHANGES: 'ci/docker/Dockerfile.base "path/to/another/file with whitespaces.txt"'
+
+.container-runner-santis-gh200:
+  extends: .container-runner
+  variables:
+    ARCH: 'aarch64'
 
 build base:
-  extends: .container-builder-dynamic-name
+  extends: .cscs-container-builder-dynamic-name-gh200
   stage: build_base
   variables:
     DOCKERFILE: docker/Dockerfile.base
@@ -19,45 +49,19 @@ build base:
     PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/base/base_image
 
 build:
-  extends: .container-builder
+  extends: .cscs-container-builder-gh200
   stage: build
   variables:
     DOCKERFILE: docker/Dockerfile
     DOCKER_BUILD_ARGS: '["BASE_IMG=$BASE_IMAGE"]'
 
 
-run uenv:
-  extends: .baremetal-runner-eiger-mc-f7t
-  stage: run
-  script:
-    - g++ --version
-  variables:
-    UENV: '$$SCRATCH/PrgEnv-gnu-23.11.squashfs'
-
 run:
-  extends: .container-runner-eiger-mc-f7t
+  extends: .container-runner-santis-gh200
   stage: run
   image: ${PERSIST_IMAGE_NAME}
   script:
     - /opt/hello/bin/hello
   variables:
-    SLURM_JOB_NUM_NODES: 2
-    SLURM_PARTITION: debug
-    SLURM_NTASKS: 2
-    GIT_STRATEGY: 'fetch'
-    USE_MPI: 'YES'
-
-run 2:
-  extends: .baremetal-runner-daint-mc-f7t
-  stage: run
-  script:
-    - ls -alh $SCRATCH
-    - pwd
-    - echo '<script>alert()</script>'
-  variables:
     SLURM_JOB_NUM_NODES: 1
-    SLURM_PARTITION: debug
     SLURM_NTASKS: 1
-    GIT_STRATEGY: 'fetch'
-    SLURM_TIMELIMIT: '00:15:00'
-    SLURM_ACCOUNT: 'gitcicd'
