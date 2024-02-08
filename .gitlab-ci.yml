@@ -46,6 +46,7 @@ stages:
 
 .make-multiarch-image:
   tags: [rosa-k8s]
+  stage: build_multiarch
   script:
     - !reference [.fetch-registry-tokens, script]
     - podman login -u $CSCS_REGISTRY_USER -p $CSCS_REGISTRY_PASSWORD $CSCS_REGISTRY
