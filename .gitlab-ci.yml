@@ -8,7 +8,7 @@ stages:
 
 variables:
   # CI_PROJECT_NAME==docker-jfrog - 1:0 is the version tag, if you want to tag each run, also use CI_COMMIT_SHA
-  PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/my_cool_image:${CI_COMMIT_SHORT_SHA}-${ARCH}
+  PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/${ARCH}/my_cool_image:${CI_COMMIT_SHORT_SHA}
 
 .cscs-container-builder-gh200:
   # See for customization and possible variables https://gitlab.com/cscs-ci/ci-testing/webhook-ci/gitlab-runner-k8s-container-builder
@@ -23,7 +23,7 @@ variables:
   extends: .cscs-container-builder-gh200
   before_script:
     - DOCKER_TAG=`eval cat $WATCH_FILECHANGES | sha256sum | head -c 16`
-    - export PERSIST_IMAGE_NAME=$PERSIST_IMAGE_NAME:$DOCKER_TAG-$ARCH
+    - export PERSIST_IMAGE_NAME=$PERSIST_IMAGE_NAME:$DOCKER_TAG
     - echo "BASE_IMAGE=$PERSIST_IMAGE_NAME" > build.env
   artifacts:
     reports:
@@ -36,6 +36,7 @@ variables:
     WATCH_FILECHANGES: 'ci/docker/Dockerfile.base "path/to/another/file with whitespaces.txt"'
 
 .container-runner-santis-gh200:
+  tags: [santis-container-runner]
   extends: .container-runner
   variables:
     ARCH: 'aarch64'
@@ -46,7 +47,7 @@ build base:
   variables:
     DOCKERFILE: docker/Dockerfile.base
     WATCH_FILECHANGES: $DOCKERFILE
-    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/base/base_image
+    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/${ARCH}/base//base_image
 
 build:
   extends: .cscs-container-builder-gh200
