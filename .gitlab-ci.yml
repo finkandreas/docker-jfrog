@@ -63,8 +63,10 @@ stages:
     PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/${ARCH}/base/base_image
 build base aarch64:
   extends: [.container-builder-cscs-gh200, .dynamic-image-name, .build-base]
+  DOCKER_BUILD_ARGS: '["TARGET_SYSTEM=alps-gh200-cpu"]'
 build base x86_64:
   extends: [.container-builder-cscs-zen2, .dynamic-image-name, .build-base]
+  DOCKER_BUILD_ARGS: '["TARGET_SYSTEM=daint-mc"]'
 
 .build:
   stage: build
