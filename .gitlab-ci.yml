@@ -54,7 +54,7 @@ stages:
     - podman manifest create $PERSIST_IMAGE_NAME
     - podman manifest add $PERSIST_IMAGE_NAME docker://$PERSIST_IMAGE_NAME_AARCH64
     - podman manifest add $PERSIST_IMAGE_NAME docker://$PERSIST_IMAGE_NAME_X86_64
-    - podman manifes push --all $PERSIST_IMAGE_NAME docker://$PERSIST_IMAGE_NAME
+    - podman manifest push --all $PERSIST_IMAGE_NAME docker://$PERSIST_IMAGE_NAME
 
 .build-base:
   stage: build_base
