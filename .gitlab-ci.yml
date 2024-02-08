@@ -47,7 +47,7 @@ build base:
   variables:
     DOCKERFILE: docker/Dockerfile.base
     WATCH_FILECHANGES: $DOCKERFILE
-    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/${ARCH}/base//base_image
+    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/${ARCH}/base/base_image
 
 build:
   extends: .cscs-container-builder-gh200
