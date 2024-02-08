@@ -46,6 +46,7 @@ stages:
 
 .make-multiarch-image:
   tags: [rosa-k8s]
+  image: docker.io/finkandreas/cicd-ext-k8s-container-image-builder:podman-4.9.0
   stage: build_multiarch
   script:
     - !reference [.fetch-registry-tokens, script]
