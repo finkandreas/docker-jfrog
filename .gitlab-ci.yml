@@ -20,6 +20,7 @@ build base aarch64:
 build base x86_64:
   extends: [.container-builder-cscs-zen2, .dynamic-image-name, .build-base]
   tags: [rosa-k8s-development]
+  image: docker.io/finkandreas/cicd-ext-k8s-container-image-builder:podman-4.9.0
   variables:
     DOCKER_BUILD_ARGS: '["TARGET_SYSTEM=daint-mc"]'
 
@@ -35,6 +36,7 @@ build aarch64:
 build x86_64:
   extends: [.container-builder-cscs-zen2, .build]
   tags: [rosa-k8s-development]
+  image: docker.io/finkandreas/cicd-ext-k8s-container-image-builder:podman-4.9.0
   needs: ['build base x86_64']
 
 make multiarch:
