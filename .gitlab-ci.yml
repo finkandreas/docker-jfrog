@@ -39,6 +39,7 @@ build x86_64:
 
 make multiarch:
   extends: .make-multiarch-image
+  stage: build_multiarch
   variables:
     PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/my_cool_image:${CI_COMMIT_SHORT_SHA}
     PERSIST_IMAGE_NAME_AARCH64: $CSCS_REGISTRY_PATH/aarch64/my_cool_image:${CI_COMMIT_SHORT_SHA}
