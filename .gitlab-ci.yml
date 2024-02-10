@@ -19,6 +19,7 @@ build base aarch64:
     DOCKER_BUILD_ARGS: '["TARGET_SYSTEM=alps-gh200-cpu"]'
 build base x86_64:
   extends: [.container-builder-cscs-zen2, .dynamic-image-name, .build-base]
+  tags: [rosa-k8s-development]
   variables:
     DOCKER_BUILD_ARGS: '["TARGET_SYSTEM=daint-mc"]'
 
@@ -33,6 +34,7 @@ build aarch64:
   needs: ['build base aarch64']
 build x86_64:
   extends: [.container-builder-cscs-zen2, .build]
+  tags: [rosa-k8s-development]
   needs: ['build base x86_64']
 
 make multiarch:
