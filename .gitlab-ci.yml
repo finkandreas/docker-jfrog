@@ -11,44 +11,44 @@ variables:
   CUSTOM_REGISTRY_USERNAME: 'finkandreas'
   CUSTOM_REGISTRY_PASSWORD: $DOCKERHUB_ACCESS_TOKEN
 
-.build-base:
-  stage: build_base
-  image: docker.io/finkandreas/cicd-ext-k8s-container-image-builder:podman-4.9.0-devel
-  variables:
-    DOCKERFILE: docker/Dockerfile.base
-    WATCH_FILECHANGES: $DOCKERFILE
-    PERSIST_IMAGE_NAME: docker.io/finkandreas/docker_jfrog_base_image_$ARCH
-    #PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/${ARCH}/base/base_image
-build base aarch64:
-  extends: [.container-builder-cscs-gh200, .dynamic-image-name, .build-base]
-  variables:
-    DOCKER_BUILD_ARGS: '["TARGET_SYSTEM=alps-gh200-cpu"]'
-build base x86_64:
-  extends: [.container-builder-cscs-zen2, .dynamic-image-name, .build-base]
-  variables:
-    DOCKER_BUILD_ARGS: '["TARGET_SYSTEM=daint-mc"]'
-
-.build:
-  stage: build
-  image: docker.io/finkandreas/cicd-ext-k8s-container-image-builder:podman-4.9.0-devel
-  variables:
-    DOCKERFILE: docker/Dockerfile
-    DOCKER_BUILD_ARGS: '["BASE_IMG=$BASE_IMAGE"]'
-    PERSIST_IMAGE_NAME: docker.io/finkandreas/docker_jfrog:${CI_COMMIT_SHORT_SHA}-${ARCH}
-    #PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/${ARCH}/my_cool_image:${CI_COMMIT_SHORT_SHA}
-build aarch64:
-  extends: [.container-builder-cscs-gh200, .build]
-  needs: ['build base aarch64']
-build x86_64:
-  extends: [.container-builder-cscs-zen2, .build]
-  needs: ['build base x86_64']
+    #.build-base:
+    #  stage: build_base
+    #  image: docker.io/finkandreas/cicd-ext-k8s-container-image-builder:podman-4.9.0-devel
+    #  variables:
+    #    DOCKERFILE: docker/Dockerfile.base
+    #    WATCH_FILECHANGES: $DOCKERFILE
+    #    PERSIST_IMAGE_NAME: docker.io/finkandreas/docker_jfrog_base_image_$ARCH
+    #    #PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/${ARCH}/base/base_image
+    #build base aarch64:
+    #  extends: [.container-builder-cscs-gh200, .dynamic-image-name, .build-base]
+    #  variables:
+    #    DOCKER_BUILD_ARGS: '["TARGET_SYSTEM=alps-gh200-cpu"]'
+    #build base x86_64:
+    #  extends: [.container-builder-cscs-zen2, .dynamic-image-name, .build-base]
+    #  variables:
+    #    DOCKER_BUILD_ARGS: '["TARGET_SYSTEM=daint-mc"]'
+    #
+    #.build:
+    #  stage: build
+    #  image: docker.io/finkandreas/cicd-ext-k8s-container-image-builder:podman-4.9.0-devel
+    #  variables:
+    #    DOCKERFILE: docker/Dockerfile
+    #    DOCKER_BUILD_ARGS: '["BASE_IMG=$BASE_IMAGE"]'
+    #    PERSIST_IMAGE_NAME: docker.io/finkandreas/docker_jfrog:${CI_COMMIT_SHORT_SHA}-${ARCH}
+    #    #PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/${ARCH}/my_cool_image:${CI_COMMIT_SHORT_SHA}
+    #build aarch64:
+    #  extends: [.container-builder-cscs-gh200, .build]
+    #  needs: ['build base aarch64']
+    #build x86_64:
+    #  extends: [.container-builder-cscs-zen2, .build]
+    #  needs: ['build base x86_64']
 
 .make-multiarch-image-new:
   tags: [rosa-k8s]
   image: docker.io/finkandreas/cicd-ext-k8s-container-image-builder:podman-4.9.0
   script:
-    - set -x
-    - 'if [[ ! -v CUSTOM_REGISTRY_USER ]] ; then !reference [.fetch-registry-tokens, script] ; else CSCS_REGISTRY_USER=$CUSTOM_REGISTRY_USER ; CSCS_REGISTRY_PASSWORD=$CUSTOM_REGISTRY_PASSWORD ; CSCS_REGISTRY=(echo $PERSIST_IMAGE_NAME | sed -e "s|\([^/]*\)/.*|\1|") ; fi'
+    - !reference [.fetch-registry-tokens, script]
+    - 'if [[ -v CUSTOM_REGISTRY_USER ]] ; then CSCS_REGISTRY_USER=$CUSTOM_REGISTRY_USER ; CSCS_REGISTRY_PASSWORD=$CUSTOM_REGISTRY_PASSWORD ; CSCS_REGISTRY=(echo $PERSIST_IMAGE_NAME | sed -e "s|\([^/]*\)/.*|\1|") ; fi'
     - podman login -u $CSCS_REGISTRY_USER -p $CSCS_REGISTRY_PASSWORD $CSCS_REGISTRY
     - podman manifest create $PERSIST_IMAGE_NAME
     - podman manifest add $PERSIST_IMAGE_NAME docker://$PERSIST_IMAGE_NAME_AARCH64
