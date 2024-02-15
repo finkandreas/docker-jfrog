@@ -62,6 +62,7 @@ make multiarch:
   extends: .make-multiarch-image-new
   stage: build_multiarch
   variables:
+    CI_COMMIT_SHORT_SHA: 48a91372
     PERSIST_IMAGE_NAME: docker.io/finkandreas/docker_jfrog:${CI_COMMIT_SHORT_SHA}
     PERSIST_IMAGE_NAME_AARCH64: docker.io/finkandreas/docker_jfrog:${CI_COMMIT_SHORT_SHA}-aarch64
     PERSIST_IMAGE_NAME_X86_64: docker.io/finkandreas/docker_jfrog:${CI_COMMIT_SHORT_SHA}-x86_64
