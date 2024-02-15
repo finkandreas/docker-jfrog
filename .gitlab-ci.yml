@@ -43,14 +43,31 @@ build x86_64:
   extends: [.container-builder-cscs-zen2, .build]
   needs: ['build base x86_64']
 
-    #make multiarch:
-    #  extends: .make-multiarch-image
-    #  stage: build_multiarch
-    #  variables:
-    #    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/my_cool_image:${CI_COMMIT_SHORT_SHA}
-    #    PERSIST_IMAGE_NAME_AARCH64: $CSCS_REGISTRY_PATH/aarch64/my_cool_image:${CI_COMMIT_SHORT_SHA}
-    #    PERSIST_IMAGE_NAME_X86_64: $CSCS_REGISTRY_PATH/x86_64/my_cool_image:${CI_COMMIT_SHORT_SHA}
-    #
+.make-multiarch-image-new:
+  tags: [rosa-k8s]
+  image: docker.io/finkandreas/cicd-ext-k8s-container-image-builder:podman-4.9.0
+  script:
+    - 'if [[ ! -v CUSTOM_REGISTRY_USER ]] ; then !reference [.fetch-registry-tokens, script] ; else CSCS_REGISTRY_USER=$CUSTOM_REGISTRY_USER ; CSCS_REGISTRY_PASSWORD=$CUSTOM_REGISTRY_PASSWORD ; CSCS_REGISTRY=(echo $PERSIST_IMAGE_NAME | sed -e "s|\([^/]*\)/.*|\1|) ; fi'
+    - podman login -u $CSCS_REGISTRY_USER -p $CSCS_REGISTRY_PASSWORD $CSCS_REGISTRY
+    - podman manifest create $PERSIST_IMAGE_NAME
+    - podman manifest add $PERSIST_IMAGE_NAME docker://$PERSIST_IMAGE_NAME_AARCH64
+    - podman manifest add $PERSIST_IMAGE_NAME docker://$PERSIST_IMAGE_NAME_X86_64
+    - podman manifest push --all $PERSIST_IMAGE_NAME docker://$PERSIST_IMAGE_NAME
+  variables:
+    # request less CPU than the default - this is not CPU heavy, only IO (disk, network)
+    KUBERNETES_CPU_REQUEST: "2"
+    KUBERNETES_CPU_LIMIT: "3"
+make multiarch:
+  extends: .make-multiarch-image-new
+  stage: build_multiarch
+  variables:
+    PERSIST_IMAGE_NAME: docker.io/finkandreas/docker_jfrog:${CI_COMMIT_SHORT_SHA}
+    PERSIST_IMAGE_NAME_AARCH64: docker.io/finkandreas/docker_jfrog:${CI_COMMIT_SHORT_SHA}-aarch64
+    PERSIST_IMAGE_NAME_X86_64: docker.io/finkandreas/docker_jfrog:${CI_COMMIT_SHORT_SHA}-x86_64
+    #PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/my_cool_image:${CI_COMMIT_SHORT_SHA}
+    #PERSIST_IMAGE_NAME_AARCH64: $CSCS_REGISTRY_PATH/aarch64/my_cool_image:${CI_COMMIT_SHORT_SHA}
+    #PERSIST_IMAGE_NAME_X86_64: $CSCS_REGISTRY_PATH/x86_64/my_cool_image:${CI_COMMIT_SHORT_SHA}
+
     #.run:
     #  stage: run
     #  # use the multi-arch image
