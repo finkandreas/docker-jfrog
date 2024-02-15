@@ -28,6 +28,9 @@ build base x86_64:
     DOCKERFILE: docker/Dockerfile
     DOCKER_BUILD_ARGS: '["BASE_IMG=$BASE_IMAGE"]'
     PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/${ARCH}/my_cool_image:${CI_COMMIT_SHORT_SHA}
+    SECONDARY_IMAGE_NAME: docker.io/finkandreas/docker_jfrog:${CI_COMMIT_SHORT_SHA}-${ARCH}
+    SECONDARY_IMAGE_USERNAME: finkandreas
+    SECONDARY_IMAGE_PASSWORD: $DOCKERHUB_ACCESS_TOKEN
 build aarch64:
   extends: [.container-builder-cscs-gh200, .build]
   needs: ['build base aarch64']
