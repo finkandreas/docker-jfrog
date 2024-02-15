@@ -17,7 +17,7 @@ variables:
   variables:
     DOCKERFILE: docker/Dockerfile.base
     WATCH_FILECHANGES: $DOCKERFILE
-    PERSIST_IMAGE_NAME: docker.io/finkandreas/docker_jfrog_base_image
+    PERSIST_IMAGE_NAME: docker.io/finkandreas/docker_jfrog_base_image_$ARCH
     #PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/${ARCH}/base/base_image
 build base aarch64:
   extends: [.container-builder-cscs-gh200, .dynamic-image-name, .build-base]
@@ -33,7 +33,7 @@ build base x86_64:
   variables:
     DOCKERFILE: docker/Dockerfile
     DOCKER_BUILD_ARGS: '["BASE_IMG=$BASE_IMAGE"]'
-    PERSIST_IMAGE_NAME: docker.io/finkandreas/docker_jfrog:${CI_COMMIT_SHORT_SHA}
+    PERSIST_IMAGE_NAME: docker.io/finkandreas/docker_jfrog:${CI_COMMIT_SHORT_SHA}-${ARCH}
     #PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/${ARCH}/my_cool_image:${CI_COMMIT_SHORT_SHA}
 build aarch64:
   extends: [.container-builder-cscs-gh200, .build]
