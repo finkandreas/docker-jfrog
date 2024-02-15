@@ -47,7 +47,8 @@ build x86_64:
   tags: [rosa-k8s]
   image: docker.io/finkandreas/cicd-ext-k8s-container-image-builder:podman-4.9.0
   script:
-    - 'if [[ ! -v CUSTOM_REGISTRY_USER ]] ; then !reference [.fetch-registry-tokens, script] ; else CSCS_REGISTRY_USER=$CUSTOM_REGISTRY_USER ; CSCS_REGISTRY_PASSWORD=$CUSTOM_REGISTRY_PASSWORD ; CSCS_REGISTRY=(echo $PERSIST_IMAGE_NAME | sed -e "s|\([^/]*\)/.*|\1|) ; fi'
+    - set -x
+    - 'if [[ ! -v CUSTOM_REGISTRY_USER ]] ; then !reference [.fetch-registry-tokens, script] ; else CSCS_REGISTRY_USER=$CUSTOM_REGISTRY_USER ; CSCS_REGISTRY_PASSWORD=$CUSTOM_REGISTRY_PASSWORD ; CSCS_REGISTRY=(echo $PERSIST_IMAGE_NAME | sed -e "s|\([^/]*\)/.*|\1|") ; fi'
     - podman login -u $CSCS_REGISTRY_USER -p $CSCS_REGISTRY_PASSWORD $CSCS_REGISTRY
     - podman manifest create $PERSIST_IMAGE_NAME
     - podman manifest add $PERSIST_IMAGE_NAME docker://$PERSIST_IMAGE_NAME_AARCH64
