@@ -30,6 +30,7 @@ build base x86_64:
 
 .build:
   stage: build
+  image: docker.io/finkandreas/cicd-ext-k8s-container-image-builder:podman-4.9.0-devel
   variables:
     DOCKERFILE: docker/Dockerfile
     DOCKER_BUILD_ARGS: '["BASE_IMG=$BASE_IMAGE"]'
