@@ -7,17 +7,12 @@ stages:
   - build_multiarch
   - run
 
-variables:
-  CUSTOM_REGISTRY_USERNAME: 'finkandreas'
-  CUSTOM_REGISTRY_PASSWORD: $DOCKERHUB_ACCESS_TOKEN
-
 .build-base:
   stage: build_base
   variables:
     DOCKERFILE: docker/Dockerfile.base
     WATCH_FILECHANGES: $DOCKERFILE
-    PERSIST_IMAGE_NAME: docker.io/finkandreas/docker_jfrog_base_image_$ARCH
-    #PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/${ARCH}/base/base_image
+    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/${ARCH}/base/base_image
 build base aarch64:
   extends: [.container-builder-cscs-gh200, .dynamic-image-name, .build-base]
   variables:
@@ -32,8 +27,7 @@ build base x86_64:
   variables:
     DOCKERFILE: docker/Dockerfile
     DOCKER_BUILD_ARGS: '["BASE_IMG=$BASE_IMAGE"]'
-    PERSIST_IMAGE_NAME: docker.io/finkandreas/docker_jfrog:${CI_COMMIT_SHORT_SHA}-${ARCH}
-    #PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/${ARCH}/my_cool_image:${CI_COMMIT_SHORT_SHA}
+    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/${ARCH}/my_cool_image:${CI_COMMIT_SHORT_SHA}
 build aarch64:
   extends: [.container-builder-cscs-gh200, .build]
   needs: ['build base aarch64']
@@ -45,18 +39,14 @@ make multiarch:
   extends: .make-multiarch-image
   stage: build_multiarch
   variables:
-    PERSIST_IMAGE_NAME: docker.io/finkandreas/docker_jfrog:${CI_COMMIT_SHORT_SHA}
-    PERSIST_IMAGE_NAME_AARCH64: docker.io/finkandreas/docker_jfrog:${CI_COMMIT_SHORT_SHA}-aarch64
-    PERSIST_IMAGE_NAME_X86_64: docker.io/finkandreas/docker_jfrog:${CI_COMMIT_SHORT_SHA}-x86_64
-    #PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/my_cool_image:${CI_COMMIT_SHORT_SHA}
-    #PERSIST_IMAGE_NAME_AARCH64: $CSCS_REGISTRY_PATH/aarch64/my_cool_image:${CI_COMMIT_SHORT_SHA}
-    #PERSIST_IMAGE_NAME_X86_64: $CSCS_REGISTRY_PATH/x86_64/my_cool_image:${CI_COMMIT_SHORT_SHA}
+    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/my_cool_image:${CI_COMMIT_SHORT_SHA}
+    PERSIST_IMAGE_NAME_AARCH64: $CSCS_REGISTRY_PATH/aarch64/my_cool_image:${CI_COMMIT_SHORT_SHA}
+    PERSIST_IMAGE_NAME_X86_64: $CSCS_REGISTRY_PATH/x86_64/my_cool_image:${CI_COMMIT_SHORT_SHA}
 
 .run:
   stage: run
   # use the multi-arch image
-  image: docker.io/finkandreas/docker_jfrog:${CI_COMMIT_SHORT_SHA}
-  #image: $CSCS_REGISTRY_PATH/my_cool_image:${CI_COMMIT_SHORT_SHA}
+  image: $CSCS_REGISTRY_PATH/my_cool_image:${CI_COMMIT_SHORT_SHA}
   script:
     - /opt/hello/bin/hello
   variables:
