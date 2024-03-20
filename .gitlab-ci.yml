@@ -60,4 +60,3 @@ run 2:
     SLURM_NTASKS: 1
     GIT_STRATEGY: 'fetch'
     SLURM_TIMELIMIT: '00:15:00'
-    SLURM_ACCOUNT: 'gitcicd'
