@@ -55,7 +55,7 @@ run daint 1:
     - pwd
   variables:
     SLURM_JOB_NUM_NODES: 1
-    SLURM_PARTITION: debug
+    SLURM_PARTITION: normal
     SLURM_NTASKS: 1
     GIT_STRATEGY: 'fetch'
     SLURM_TIMELIMIT: '00:15:00'
@@ -68,7 +68,7 @@ run daint 2:
     - pwd
   variables:
     SLURM_JOB_NUM_NODES: 1
-    SLURM_PARTITION: debug
+    SLURM_PARTITION: normal
     SLURM_NTASKS: 1
     GIT_STRATEGY: 'fetch'
     SLURM_TIMELIMIT: '00:15:00'
@@ -81,7 +81,7 @@ run daint 3:
     - pwd
   variables:
     SLURM_JOB_NUM_NODES: 1
-    SLURM_PARTITION: debug
+    SLURM_PARTITION: normal
     SLURM_NTASKS: 1
     GIT_STRATEGY: 'fetch'
     SLURM_TIMELIMIT: '00:15:00'
