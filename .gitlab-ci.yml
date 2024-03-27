@@ -47,13 +47,38 @@ run:
     GIT_STRATEGY: 'fetch'
     USE_MPI: 'YES'
 
-run 2:
+run daint 1:
   extends: .baremetal-runner-daint-mc-f7t
   stage: run
   script:
     - ls -alh $SCRATCH
     - pwd
-    - echo '<script>alert()</script>'
+  variables:
+    SLURM_JOB_NUM_NODES: 1
+    SLURM_PARTITION: debug
+    SLURM_NTASKS: 1
+    GIT_STRATEGY: 'fetch'
+    SLURM_TIMELIMIT: '00:15:00'
+
+run daint 2:
+  extends: .baremetal-runner-daint-mc-f7t
+  stage: run
+  script:
+    - ls -alh $SCRATCH
+    - pwd
+  variables:
+    SLURM_JOB_NUM_NODES: 1
+    SLURM_PARTITION: debug
+    SLURM_NTASKS: 1
+    GIT_STRATEGY: 'fetch'
+    SLURM_TIMELIMIT: '00:15:00'
+
+run daint 3:
+  extends: .baremetal-runner-daint-mc-f7t
+  stage: run
+  script:
+    - ls -alh $SCRATCH
+    - pwd
   variables:
     SLURM_JOB_NUM_NODES: 1
     SLURM_PARTITION: debug
