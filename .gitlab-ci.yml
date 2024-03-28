@@ -51,7 +51,7 @@ run daint 1:
   extends: .baremetal-runner-daint-mc-f7t
   stage: run
   script:
-    - ls -alh $SCRATCH
+    - ls -alh $SCRATCH > mylog
     - pwd
   variables:
     SLURM_JOB_NUM_NODES: 1
@@ -59,6 +59,9 @@ run daint 1:
     SLURM_NTASKS: 1
     GIT_STRATEGY: 'fetch'
     SLURM_TIMELIMIT: '00:15:00'
+  artifacts:
+    paths:
+      - mylog
 
 run daint 2:
   extends: .baremetal-runner-daint-mc-f7t
