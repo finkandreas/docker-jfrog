@@ -59,9 +59,10 @@ run daint 1:
     SLURM_JOB_NUM_NODES: 1
     SLURM_PARTITION: normal
     SLURM_NTASKS: 1
+    SLURM_TIMELIMIT: '00:15:00'
     GIT_STRATEGY: 'fetch'
     GIT_SUBMODULE_STRATEGY: 'recursive'
-    SLURM_TIMELIMIT: '00:15:00'
+    CSCS_REWRITE_RELATIVE_SUBMODULES: 'YES'
   artifacts:
     paths:
       - mylog
