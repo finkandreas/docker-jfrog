@@ -7,8 +7,10 @@ stages:
 run reframe:
     extends: .reframe-runner-daint
     stage: reframe-run
+    timeout: 8h
     variables:
       FIRECREST_BASEDIR: /scratch/snx3000/jenkssl/reframe-runner/$CI_JOB_ID
       RFM_FIRECREST: '1'
       RFM_CONFIG: config/cscs.py
       RFM_CHECKPATH: checks/prgenv
+      SLURM_PARTITION: debug

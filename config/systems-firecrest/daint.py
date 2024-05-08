@@ -31,6 +31,7 @@ base_config = {
             'modules': ['daint-gpu'],
             'access': [
                 f'--constraint=gpu',
+                f'--partition={os.environ.get("SLURM_PARTITION", "normal")}',
                 f'--account={os.environ.get("SLURM_ACCOUNT", os.environ.get("CSCS_CI_DEFAULT_SLURM_ACCOUNT", "csstaff"))}',
             ],
             'environs': [
@@ -82,6 +83,7 @@ base_config = {
             'modules': ['daint-mc'],
             'access': [
                 f'--constraint=mc',
+                f'--partition={os.environ.get("SLURM_PARTITION", "normal")}',
                 f'--account={os.environ.get("SLURM_ACCOUNT", os.environ.get("CSCS_CI_DEFAULT_SLURM_ACCOUNT", "csstaff"))}',
             ],
             'environs': [
