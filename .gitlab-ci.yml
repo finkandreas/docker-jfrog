@@ -2,33 +2,12 @@ include:
   - remote: 'https://gitlab.com/cscs-ci/recipes/-/raw/master/templates/v2/.ci-ext.yml'
 
 stages:
-  - build
-  - run
+  - reframe-run
 
-variables:
-  # CI_PROJECT_NAME==docker-jfrog - 1:0 is the version tag, if you want to tag each run, also use CI_COMMIT_SHA
-  PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/my_cool_image:1.0
-
-build:
-    extends: .container-builder
-    stage: build
-    image: ubuntu:22.04
-    script:
-      - apt-get update
-      - env DEBIAN_FRONTEND=noninteractive TZ=Europe/Zurich apt-get -yqq install --no-install-recommends build-essential cmake
-      - mkdir build
-      - cd build
-      - cmake -DCMAKE_INSTALL_PREFIX=/opt/hello ..
-      - make -j2
-      - make install
-
-run:
-  extends: .container-runner-muttler
-  stage: run
-  image: ${PERSIST_IMAGE_NAME}
-  script:
-    - /opt/hello/bin/hello
-  variables:
-    SLURM_JOB_NUM_NODES: 2
-    SLURM_PARTITION: normal
-    SLURM_NTASKS: 2
+run reframe:
+    extends: .reframe-runner-daint
+    stage: reframe-run
+    variables:
+      RFM_FIRECREST: '1'
+      RFM_CONFIG: config/cscs.py
+      RFM_CHECKPATH: checks/prgenv
