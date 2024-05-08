@@ -31,7 +31,7 @@ base_config = {
             'modules': ['daint-gpu'],
             'access': [
                 f'--constraint=gpu',
-                f'--account=csstaff'
+                f'--account={os.environ.get("SLURM_ACCOUNT", os.environ.get("CSCS_CI_DEFAULT_SLURM_ACCOUNT", "csstaff"))}',
             ],
             'environs': [
                 'builtin',
@@ -82,7 +82,7 @@ base_config = {
             'modules': ['daint-mc'],
             'access': [
                 f'--constraint=mc',
-                f'--account=csstaff'
+                f'--account={os.environ.get("SLURM_ACCOUNT", os.environ.get("CSCS_CI_DEFAULT_SLURM_ACCOUNT", "csstaff"))}',
             ],
             'environs': [
                 'builtin',
@@ -117,7 +117,7 @@ base_config = {
             'access': [
                 f'-Cgpu',
                 f'--reservation=interact_gpu',
-                f'--account=csstaff'
+                f'--account={os.environ.get("SLURM_ACCOUNT", os.environ.get("CSCS_CI_DEFAULT_SLURM_ACCOUNT", "csstaff"))}',
             ],
             'descr': 'JupyterHub GPU nodes',
             'max_jobs': 10,
@@ -132,7 +132,7 @@ base_config = {
             'access': [
                 f'-Cmc',
                 f'--reservation=interact_mc',
-                f'--account=csstaff'
+                f'--account={os.environ.get("SLURM_ACCOUNT", os.environ.get("CSCS_CI_DEFAULT_SLURM_ACCOUNT", "csstaff"))}',
             ],
             'descr': 'JupyterHub multicore nodes',
             'max_jobs': 10,
@@ -146,7 +146,7 @@ base_config = {
             'environs': ['builtin'],
             'access': [
                 f'--partition=xfer',
-                f'--account=csstaff'
+                f'--account={os.environ.get("SLURM_ACCOUNT", os.environ.get("CSCS_CI_DEFAULT_SLURM_ACCOUNT", "csstaff"))}',
             ],
             'descr': 'Nordend nodes for internal transfers',
             'max_jobs': 10,
