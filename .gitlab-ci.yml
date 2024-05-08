@@ -13,4 +13,4 @@ run reframe:
       RFM_FIRECREST: '1'
       RFM_CONFIG: config/cscs.py
       RFM_CHECKPATH: checks/prgenv
-      SLURM_PARTITION: debug
+      SLURM_PARTITION: cscsci
