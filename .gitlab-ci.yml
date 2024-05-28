@@ -51,11 +51,12 @@ make multiarch:
   # use the multi-arch image
   image: $CSCS_REGISTRY_PATH/my_cool_image:${CI_COMMIT_SHORT_SHA}
   script:
+    - declare -x
     - /opt/hello/bin/hello
   variables:
     SLURM_JOB_NUM_NODES: 2
     SLURM_NTASKS: 2
-    #USE_MPI: 'YES'
+    USE_MPI: 'YES'
 run aarch64:
   extends: [.container-runner-santis-gh200, .run]
 run x86_64:
