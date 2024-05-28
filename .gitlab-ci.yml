@@ -53,10 +53,9 @@ make multiarch:
   script:
     - /opt/hello/bin/hello
   variables:
-    SLURM_JOB_NUM_NODES: 1
-    SLURM_NTASKS: 1
-    #USE_MPI: 'YES'
-    USE_CE: 'YES'
+    SLURM_JOB_NUM_NODES: 2
+    SLURM_NTASKS: 2
+    USE_MPI: 'YES'
 run aarch64:
   extends: [.container-runner-santis-gh200, .run]
 run x86_64:
