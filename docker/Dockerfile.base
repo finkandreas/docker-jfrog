@@ -19,7 +19,7 @@ COPY --from=builder /etc/profile.d/z10_spack_environment.sh /etc/profile.d/z10_s
 RUN fix_spack_install
 
 RUN apt-get -yqq update && apt-get -yqq upgrade \
- && apt-get -yqq install build-essential \
+ && ( apt-get -yqq install build-essential || apt-get -yqq install build-essential || apt-get -yqq install build-essential || apt-get -yqq install build-essential ) \
  && rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT ["/entrypoint.sh"]
