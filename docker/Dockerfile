@@ -8,5 +8,3 @@ RUN mkdir /opt/hello.src/build \
   && cmake -DCMAKE_INSTALL_PREFIX=/opt/hello ../ \
   && make \
   && make install
-
-ENTRYPOINT []
