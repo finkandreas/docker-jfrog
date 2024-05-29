@@ -22,4 +22,5 @@ RUN apt-get -yqq update && apt-get -yqq upgrade \
  && ( apt-get -yqq install build-essential || apt-get -yqq install build-essential || apt-get -yqq install build-essential || apt-get -yqq install build-essential ) \
  && rm -rf /var/lib/apt/lists/*
 
+ADD docker/entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
