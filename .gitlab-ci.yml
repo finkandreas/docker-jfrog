@@ -1,64 +1,16 @@
 include:
-  - remote: 'https://gitlab.com/cscs-ci/recipes/-/raw/master/templates/v2/.ci-ext-devel.yml'
+  - remote: 'https://gitlab.com/cscs-ci/recipes/-/raw/master/templates/v2/.ci-ext.yml'
 
 stages:
-  - build_base
-  - build
-  - build_multiarch
   - run
 
-.build-base:
-  stage: build_base
-  variables:
-    DOCKERFILE: docker/Dockerfile.base
-    WATCH_FILECHANGES: $DOCKERFILE
-    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/${ARCH}/base/base_image
-build base aarch64:
-  extends: [.container-builder-cscs-gh200, .dynamic-image-name, .build-base]
-  variables:
-    DOCKER_BUILD_ARGS: '["TARGET_SYSTEM=alps-gh200-cpu"]'
-build base x86_64:
-  extends: [.container-builder-cscs-zen2, .dynamic-image-name, .build-base]
-  variables:
-    DOCKER_BUILD_ARGS: '["TARGET_SYSTEM=daint-mc"]'
-
-.build:
-  stage: build
-  variables:
-    DOCKERFILE: docker/Dockerfile
-    DOCKER_BUILD_ARGS: '["BASE_IMG=$BASE_IMAGE"]'
-    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/${ARCH}/my_cool_image:${CI_COMMIT_SHORT_SHA}
-    SECONDARY_IMAGE_NAME: docker.io/finkandreas/docker_jfrog:${CI_COMMIT_SHORT_SHA}-${ARCH}
-    SECONDARY_IMAGE_USERNAME: finkandreas
-    SECONDARY_IMAGE_PASSWORD: $DOCKERHUB_ACCESS_TOKEN
-build aarch64:
-  extends: [.container-builder-cscs-gh200, .build]
-  needs: ['build base aarch64']
-build x86_64:
-  extends: [.container-builder-cscs-zen2, .build]
-  needs: ['build base x86_64']
-
-make multiarch:
-  extends: .make-multiarch-image
-  stage: build_multiarch
-  variables:
-    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/my_cool_image:${CI_COMMIT_SHORT_SHA}
-    PERSIST_IMAGE_NAME_AARCH64: $CSCS_REGISTRY_PATH/aarch64/my_cool_image:${CI_COMMIT_SHORT_SHA}
-    PERSIST_IMAGE_NAME_X86_64: $CSCS_REGISTRY_PATH/x86_64/my_cool_image:${CI_COMMIT_SHORT_SHA}
-
-.run:
+run:
+  extends: .f7t-baremetal-runner
   stage: run
-  # use the multi-arch image
-  image: $CSCS_REGISTRY_PATH/my_cool_image:${CI_COMMIT_SHORT_SHA}
   script:
-    - declare -x
-    - cmake --version
-    - /opt/hello/bin/hello
+    - echo $PWD
+    - echo $CLUSTERNAME
+    - ls -alh $SCRATCH
   variables:
-    SLURM_JOB_NUM_NODES: 2
-    SLURM_NTASKS: 2
-    USE_MPI: 'YES'
-run aarch64:
-  extends: [.container-runner-santis-gh200, .run]
-run x86_64:
-  extends: [.container-runner-daint-gpu, .run]
+    F7T_URL: 'https://firecrest-todi.v1.tds.cscs.ch'
+    FIRECREST_SYSTEM: 'todi'
