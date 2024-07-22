@@ -11,4 +11,5 @@ run:
   variables:
     DOCKERFILE: docker/Dockerfile.base
     PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/test:latest
+    DOCKER_BUILD_ARGS: '["TARGET_SYSTEM=daint-mc"]'
     CSCS_REBUILD_POLICY: 'always'
