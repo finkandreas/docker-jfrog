@@ -27,14 +27,14 @@ variables:
 
 
 run:
-  extends: .container-runner-eiger-mc-f7t
+  extends: .container-runner-eiger-mc
   tags: [f7t-runner-tds]
   stage: run
-  image: docker.io/ubuntu:24.04
+  image: ubuntu:24.04
   script:
-    - cat /etc/os-release
+    - cat /etc/os-release | grep "Ubuntu 24.04"
   variables:
-    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:f571c10d
+    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:4d52443a
     CSCS_GLR_F7T_URL_PREFIX: /citest/glr_f7t
 
   #run:
