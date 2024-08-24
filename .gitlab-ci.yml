@@ -26,14 +26,15 @@ variables:
   #    DOCKER_BUILD_ARGS: '["BASE_IMG=$BASE_IMAGE"]'
 
 
-run baremetal:
-  extends: .baremetal-runner-eiger-mc-f7t
+run:
+  extends: .container-runner-eiger-mc-f7t
   tags: [f7t-runner-tds]
   stage: run
+  image: docker.io/ubuntu:24.04
   script:
-    - g++ --version
+    - cat /etc/os-release
   variables:
-    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:e8f68741
+    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:f571c10d
     CSCS_GLR_F7T_URL_PREFIX: /citest/glr_f7t
 
   #run:
