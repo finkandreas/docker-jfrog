@@ -33,7 +33,7 @@ run:
   script:
     - set -x
     - echo -e "#!/bin/bash\n\nhostname | grep nid" > script.sh
-    - JOBID=$(firecrest submit --system eiger --account $CSCS_CI_DEFAULT_SLURM_ACCOUNT script.sh | jq .jobid)
+    - JOBID=$(firecrest submit --system eiger --account $CSCS_CI_DEFAULT_SLURM_ACCOUNT script.sh | jq -r '.jobid')
     - |
       while firecrest poll-active --raw --system eiger | grep $JOBID ; do
         echo "job is still in queue/running"
