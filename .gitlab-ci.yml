@@ -35,7 +35,7 @@ run:
     - echo -e "#!/bin/bash\n\nhostname | grep nid" > script.sh
     - firecrest submit --system eiger --account $CSCS_CI_DEFAULT_SLURM_ACCOUNT script.sh
   variables:
-    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:4d52443a
+    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:5bec98c4
     CSCS_GLR_F7T_URL_PREFIX: /citest/glr_f7t
     MODE: 'f7t-controller'
 
