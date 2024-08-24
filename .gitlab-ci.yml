@@ -34,7 +34,7 @@ run uenv:
     - g++ --version
   variables:
     UENV: '$$SCRATCH/PrgEnv-gnu-23.11.squashfs'
-    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:17c48a50
+    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:c7e14208
     CSCS_GLR_WSS_PREFIX: citest/glr_f7t/wss
 
 run:
@@ -50,5 +50,5 @@ run:
     SLURM_NTASKS: 2
     GIT_STRATEGY: 'fetch'
     USE_MPI: 'YES'
-    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:17c48a50
+    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:c7e14208
     CSCS_GLR_WSS_PREFIX: citest/glr_f7t/wss
