@@ -11,7 +11,7 @@ variables:
   PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/my_cool_image:${CI_COMMIT_SHORT_SHA}
 
 build base:
-  extends: .container-builder-dynamic-name
+  extends: [.container-builder-cscs-zen2, .dynamic-image-name]
   stage: build_base
   variables:
     DOCKERFILE: docker/Dockerfile.base
@@ -28,6 +28,7 @@ build:
 
 run uenv:
   extends: .baremetal-runner-eiger-mc-f7t
+  tags: [f7t-runner-tds]
   stage: run
   script:
     - g++ --version
@@ -36,6 +37,7 @@ run uenv:
 
 run:
   extends: .container-runner-eiger-mc-f7t
+  tags: [f7t-runner-tds]
   stage: run
   image: ${PERSIST_IMAGE_NAME}
   script:
@@ -46,49 +48,3 @@ run:
     SLURM_NTASKS: 2
     GIT_STRATEGY: 'fetch'
     USE_MPI: 'YES'
-
-run daint 1:
-  extends: .baremetal-runner-daint-mc-f7t
-  stage: run
-  script:
-    - ls -alh $SCRATCH > mylog
-    - env >> mylog
-    - env
-    - pwd
-  variables:
-    SLURM_JOB_NUM_NODES: 1
-    SLURM_PARTITION: normal
-    SLURM_NTASKS: 1
-    SLURM_TIMELIMIT: '00:15:00'
-    GIT_STRATEGY: 'fetch'
-    GIT_SUBMODULE_STRATEGY: 'recursive'
-    CSCS_REWRITE_RELATIVE_SUBMODULES: 'YES'
-  artifacts:
-    paths:
-      - mylog
-
-run daint 2:
-  extends: .baremetal-runner-daint-mc-f7t
-  stage: run
-  script:
-    - ls -alh $SCRATCH
-    - pwd
-  variables:
-    SLURM_JOB_NUM_NODES: 1
-    SLURM_PARTITION: normal
-    SLURM_NTASKS: 1
-    GIT_STRATEGY: 'fetch'
-    SLURM_TIMELIMIT: '00:15:00'
-
-run daint 3:
-  extends: .baremetal-runner-daint-mc-f7t
-  stage: run
-  script:
-    - ls -alh $SCRATCH
-    - pwd
-  variables:
-    SLURM_JOB_NUM_NODES: 1
-    SLURM_PARTITION: normal
-    SLURM_NTASKS: 1
-    GIT_STRATEGY: 'fetch'
-    SLURM_TIMELIMIT: '00:15:00'
