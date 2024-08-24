@@ -33,7 +33,7 @@ run:
   script:
     - set -x
     - echo -e "#!/bin/bash\n\nhostname | grep nid" > script.sh
-    - SUBMISSION="$(firecrest submit --system eiger --account $CSCS_CI_DEFAULT_SLURM_ACCOUNT script.sh)"
+    - SUBMISSION="$(firecrest submit --raw --system eiger --account $CSCS_CI_DEFAULT_SLURM_ACCOUNT script.sh)"
     - echo "$SUBMISSION"
     - JOBID=$(echo "$SUBMISSION" | jq -r '.jobid')
 
