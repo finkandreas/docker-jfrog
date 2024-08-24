@@ -34,7 +34,7 @@ run baremetal:
     - g++ --version
   variables:
     CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:e8f68741
-    CSCS_WSS_GLR_PREFIX: /citest/glr_f7t
+    CSCS_GLR_F7T_URL_PREFIX: /citest/glr_f7t
 
   #run:
   #  extends: .container-runner-eiger-mc-f7t
