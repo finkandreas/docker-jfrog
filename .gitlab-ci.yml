@@ -27,25 +27,19 @@ variables:
 
 
 run:
-  extends: .f7t-runner
+  extends: .f7t-reframe-runner
   tags: [f7t-runner-tds]
   stage: run
-  script:
-    - set -x
-    - echo -e "#!/bin/bash\n\nhostname | grep nid" > script.sh
-    - SUBMISSION="$(firecrest submit --system eiger --account $CSCS_CI_DEFAULT_SLURM_ACCOUNT script.sh)"
-    - echo "$SUBMISSION"
-    - JOBID=$(echo "$SUBMISSION" | grep "jobid" | sed -e 's/.*jobid[^0-9]*\([0-9]\+\),/\1/')
-
-    - |
-      while firecrest poll-active --raw --system eiger | grep $JOBID ; do
-        echo "job is still in queue/running"
-        sleep 30
-      done
+  before_script:
+    - git clone -b https://github.com/eth-cscs/cscs-reframe-tests
   variables:
     CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:00b7475f
     CSCS_GLR_F7T_URL_PREFIX: /citest/glr_f7t
-    MODE: 'f7t-controller'
+    FIRECREST_SYSTEM: 'eiger'
+    FIRECREST_BASEDIR: /capstor/scratch/cscs/jenkssl/reframe-runner
+    RFM_FIRECREST: '1'
+    RFM_CONFIG: cscs-reframe-tests/config/cscs.py
+    RFM_CHECKPATH: cscs-reframe-tests/checks/microbenchmarks/cpu/alloc_speed
 
   #run:
   #  extends: .container-runner-eiger-mc-f7t
