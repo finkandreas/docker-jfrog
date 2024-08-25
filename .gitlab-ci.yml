@@ -33,7 +33,7 @@ run:
   before_script:
     - git clone -b alps https://github.com/eth-cscs/cscs-reframe-tests
     - pip install -r cscs-reframe-tests/config/utilities/requirements.txt
-    - sed -i -e "s/account=csstaff/account=$CSCS_CI_DEFAULT_SLURM_ACCOUNT/" cscs-reframe-tests/config/firecrest-systems/eiger.py
+    - sed -i -e "s/account=csstaff/account=$CSCS_CI_DEFAULT_SLURM_ACCOUNT/" cscs-reframe-tests/config/systems-firecrest/eiger.py
   variables:
     CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:ed0dd4d4
     CSCS_GLR_F7T_URL_PREFIX: /citest/glr_f7t
