@@ -32,14 +32,15 @@ run:
   stage: run
   before_script:
     - git clone -b alps https://github.com/eth-cscs/cscs-reframe-tests
+    - pip install -r cscs-reframe-tests/config/utilities/requirements.txt
   variables:
-    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:00b7475f
+    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:ed0dd4d4
     CSCS_GLR_F7T_URL_PREFIX: /citest/glr_f7t
     FIRECREST_SYSTEM: 'eiger'
     FIRECREST_BASEDIR: /capstor/scratch/cscs/jenkssl/reframe-runner
     RFM_FIRECREST: '1'
     RFM_CONFIG: cscs-reframe-tests/config/cscs.py
-    RFM_CHECKPATH: cscs-reframe-tests/checks/microbenchmarks/cpu/alloc_speed
+    RFM_CHECKPATH: cscs-reframe-tests/checks/microbenchmarks/cpu
 
   #run:
   #  extends: .container-runner-eiger-mc-f7t
