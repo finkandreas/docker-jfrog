@@ -31,7 +31,7 @@ run:
   tags: [f7t-runner-tds]
   stage: run
   before_script:
-    - git clone -b https://github.com/eth-cscs/cscs-reframe-tests
+    - git clone -b alps https://github.com/eth-cscs/cscs-reframe-tests
   variables:
     CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:00b7475f
     CSCS_GLR_F7T_URL_PREFIX: /citest/glr_f7t
