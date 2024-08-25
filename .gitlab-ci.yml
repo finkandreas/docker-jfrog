@@ -43,7 +43,7 @@ run:
     FIRECREST_BASEDIR: /capstor/scratch/cscs/jenkssl/reframe-runner
     RFM_FIRECREST: '1'
     RFM_CONFIG: cscs-reframe-tests/config/cscs.py
-    RFM_CHECKPATH: cscs-reframe-tests/checks/microbenchmarks/mpi
+    RFM_CHECKPATH: cscs-reframe-tests/checks/microbenchmarks/mpi/halo_exchange
 
   #run:
   #  extends: .container-runner-eiger-mc-f7t
