@@ -27,23 +27,12 @@ variables:
 
 
 run:
-  extends: .f7t-reframe-runner
-  tags: [f7t-runner-tds]
+  extends: .container-runner-lightweight-zen2
   stage: run
-  before_script:
-    - git clone -b alps https://github.com/eth-cscs/cscs-reframe-tests
-    - pip install -r cscs-reframe-tests/config/utilities/requirements.txt
-    - sed -i -e "s/account=csstaff/account=$CSCS_CI_DEFAULT_SLURM_ACCOUNT/" cscs-reframe-tests/config/systems-firecrest/eiger.py
-  after_script:
-    - ls --recursive
-  variables:
-    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:ed0dd4d4
-    CSCS_GLR_F7T_URL_PREFIX: /citest/glr_f7t
-    FIRECREST_SYSTEM: 'eiger'
-    FIRECREST_BASEDIR: /capstor/scratch/cscs/jenkssl/reframe-runner
-    RFM_FIRECREST: '1'
-    RFM_CONFIG: cscs-reframe-tests/config/cscs.py
-    RFM_CHECKPATH: cscs-reframe-tests/checks/microbenchmarks/mpi/halo_exchange
+  image: quay.io/skopeo/stable:latest
+  script:
+    - !reference [.fetch-registry-tokens, script]
+    - echo "$CSCS_REGISTRY_PASSWORD" | skopeo login --username "$CSCS_REGISTRY_USERNAME" --password-stdin "$CSCS_REGISTRY"
 
   #run:
   #  extends: .container-runner-eiger-mc-f7t
