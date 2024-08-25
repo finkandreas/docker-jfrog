@@ -32,6 +32,7 @@ run:
   image: quay.io/skopeo/stable:latest
   script:
     - !reference [.fetch-registry-tokens, script]
+    - echo "$CSCS_REGISTRY_USERNAME"
     - echo "$CSCS_REGISTRY_PASSWORD" | skopeo login --username "$CSCS_REGISTRY_USERNAME" --password-stdin "$CSCS_REGISTRY"
 
   #run:
