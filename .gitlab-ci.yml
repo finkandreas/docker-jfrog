@@ -27,13 +27,13 @@ variables:
 
 
 run:
-  extends: .container-runner-lightweight-zen2
+  extends: .container-builder-cscs-gh200
   stage: run
-  image: quay.io/skopeo/stable:latest
-  script:
-    - !reference [.fetch-registry-tokens, script]
-    - echo "$CSCS_REGISTRY_USER"
-    - echo "$CSCS_REGISTRY_PASSWORD" | skopeo login --username "$CSCS_REGISTRY_USER" --password-stdin "$CSCS_REGISTRY"
+  variables:
+    DOCKERFILE: docker/Dockerfile.base
+    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/daint.alps/my_image:$CI_COMMIT_SHORT_SHA
+    FIRECREST_SYSTEM: daint
+    F7T_URL: 'https://firecrest-hpc.v1.svc.cscs.ch'
 
   #run:
   #  extends: .container-runner-eiger-mc-f7t
