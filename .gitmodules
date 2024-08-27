@@ -1,3 +1,6 @@
 [submodule "tutorial"]
 	path = tutorial
 	url = ../containerised_ci_helloworld
+[submodule "my_submodule"]
+	path = my_submodule
+	url = git@gitlab.com:cscs-ci/gitlab-runner-slurm-sarus
