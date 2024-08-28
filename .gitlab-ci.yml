@@ -33,7 +33,7 @@ run:
     - ls -alh my_submodule
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
-    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:22230bd5
+    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:5c95df87
 
   #run:
   #  extends: .container-runner-eiger-mc-f7t
