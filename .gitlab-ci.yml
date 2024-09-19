@@ -30,10 +30,10 @@ run:
   extends: .baremetal-runner-todi-gh200
   stage: run
   script:
-    - ls -alh my_submodule
+    - uenv image pull prgenv-gnu/24.7:v3
+    - srun --uenv=prgenv-gnu/24.7:v3 uenv --view=default run -- gcc --version
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
-    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:5c95df87
 
   #run:
   #  extends: .container-runner-eiger-mc-f7t
