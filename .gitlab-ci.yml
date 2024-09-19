@@ -31,7 +31,7 @@ run:
   stage: run
   script:
     - uenv image pull prgenv-gnu/24.7:v3
-    - srun --uenv=prgenv-gnu/24.7:v3 bash --view=default gcc --version
+    - srun --uenv=prgenv-gnu/24.7:v3 --view=default gcc --version
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
     SLURM_PARTITION: debug
