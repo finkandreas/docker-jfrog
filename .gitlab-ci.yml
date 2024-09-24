@@ -37,6 +37,7 @@ run:
     UENV_VIEW: default
     SLURM_PARTITION: debug
     CSCS_RUNNER_MODE: uenv-runner
+    PULL_IMAGE: 'YES'
 
   #run:
   #  extends: .container-runner-eiger-mc-f7t
