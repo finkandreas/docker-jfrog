@@ -33,9 +33,10 @@ run:
   script:
     - gcc --version
   variables:
-    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:e5f836d5
+    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:7c805a74
     UENV_VIEW: default
     SLURM_PARTITION: debug
+    GIT_STRATEGY: 'fetch'
     CSCS_RUNNER_MODE: uenv-runner
     PULL_IMAGE: 'YES'
 
