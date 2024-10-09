@@ -31,11 +31,11 @@ run:
   stage: run
   image: prgenv-gnu/23.11:latest
   script:
-    - uenv view default
-    - gcc --version
     - echo $UENV_REPO_PATH
     - ls -alh $UENV_REPO_PATH || true
     - env | grep UENV_REPO
+    - uenv view default
+    - gcc --version
   variables:
     SLURM_PARTITION: debug
     UENV_REPO_PATH: $SCRATCH/.uenv-images-ci-$CLUSTER_NAME
