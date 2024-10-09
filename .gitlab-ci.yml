@@ -38,7 +38,7 @@ run:
     - gcc --version
   variables:
     SLURM_PARTITION: debug
-    UENV_REPO_PATH: $SCRATCH/.uenv-images-ci-$CLUSTER_NAME
+    UENV_REPO_PATH: $$SCRATCH/.uenv-images-ci-$$CLUSTER_NAME
 
   #run:
   #  extends: .container-runner-eiger-mc-f7t
