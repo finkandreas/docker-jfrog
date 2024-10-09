@@ -27,18 +27,14 @@ variables:
 
 
 run:
-  extends: .baremetal-runner-todi-gh200
+  extends: .uenv-runner-eiger-mc
   stage: run
-  image: prgenv-gnu/24.7:v3
+  image: prgenv-gnu/23.11:latest
   script:
     - gcc --version
   variables:
-    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:c4bb4034
     UENV_VIEW: default
     SLURM_PARTITION: debug
-    GIT_STRATEGY: 'fetch'
-    CSCS_RUNNER_MODE: uenv-runner
-    PULL_IMAGE: 'YES'
 
   #run:
   #  extends: .container-runner-eiger-mc-f7t
