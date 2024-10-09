@@ -31,9 +31,9 @@ run:
   stage: run
   image: prgenv-gnu/23.11:latest
   script:
+    - uenv view default
     - gcc --version
   variables:
-    UENV_VIEW: default
     SLURM_PARTITION: debug
 
   #run:
