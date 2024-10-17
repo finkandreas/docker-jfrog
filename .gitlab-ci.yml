@@ -10,4 +10,4 @@ test:
   variables:
     DOCKERFILE: docker/Dockerfile.test
     PERSIST_IMAGE_NAME: discard
-    DOCKER_BUILD_ARGS: '[CI_JOB_ID]'
+    DOCKER_BUILD_ARGS: '["CI_JOB_ID"]'
