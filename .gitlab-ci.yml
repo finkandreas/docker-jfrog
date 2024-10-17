@@ -2,56 +2,11 @@ include:
   - remote: 'https://gitlab.com/cscs-ci/recipes/-/raw/master/templates/v2/.ci-ext-devel.yml'
 
 stages:
-  - build_base
-  - build
   - run
 
-variables:
-  # CI_PROJECT_NAME==docker-jfrog - 1:0 is the version tag, if you want to tag each run, also use CI_COMMIT_SHA
-  PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/my_cool_image:${CI_COMMIT_SHORT_SHA}
-
-  #build base:
-  #  extends: [.container-builder-cscs-zen2, .dynamic-image-name]
-  #  stage: build_base
-  #  variables:
-  #    DOCKERFILE: docker/Dockerfile.base
-  #    WATCH_FILECHANGES: $DOCKERFILE
-  #    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/base/base_image
-  #
-  #build:
-  #  extends: .container-builder
-  #  stage: build
-  #  variables:
-  #    DOCKERFILE: docker/Dockerfile
-  #    DOCKER_BUILD_ARGS: '["BASE_IMG=$BASE_IMAGE"]'
-
-
-run:
-  extends: .uenv-runner-eiger-mc
+test:
+  extends: .container-builder-cscs-zen2
   stage: run
-  image: prgenv-gnu/23.11:latest
-  script:
-    - echo $UENV_REPO_PATH
-    - ls -alh $UENV_REPO_PATH || true
-    - env | grep UENV_REPO
-    - uenv view default
-    - gcc --version
   variables:
-    SLURM_PARTITION: debug
-    UENV_REPO_PATH: $$SCRATCH/.uenv-images-ci-$$CLUSTER_NAME
-
-  #run:
-  #  extends: .container-runner-eiger-mc-f7t
-  #  tags: [f7t-runner-tds]
-  #  stage: run
-  #  image: ${PERSIST_IMAGE_NAME}
-  #  script:
-  #    - /opt/hello/bin/hello
-  #  variables:
-  #    SLURM_JOB_NUM_NODES: 2
-  #    SLURM_PARTITION: debug
-  #    SLURM_NTASKS: 2
-  #    GIT_STRATEGY: 'fetch'
-  #    USE_MPI: 'YES'
-  #    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:e8f68741
-  #    CSCS_WSS_GLR_PREFIX: /citest/glr_f7t
+    DOCKERFILE: docker/Dockerfile.test
+    PERSIST_IMAGE_NAME: discard
