@@ -6,7 +6,7 @@ stages:
 
 test:
   extends: .uenv-runner-eiger-mc
-  tag: [f7t-runner-tds]
+  tags: [f7t-runner-tds]
   stage: run
   script:
     - echo test
