@@ -8,6 +8,8 @@ test:
   extends: .uenv-runner-eiger-mc
   tag: [f7t-runner-tds]
   stage: run
+  script:
+    - echo test
   variables:
     CSCS_RUNNER_MODE: 'uenv-builder'
     RECIPE_PATH: uenv_recipes/prgenv-gnu
