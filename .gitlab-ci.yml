@@ -5,9 +5,9 @@ stages:
   - run
 
 test:
-  extends: .container-builder-cscs-zen2
+  extends: .uenv-runner-eiger-mc
+  tag: [f7t-runner-tds]
   stage: run
   variables:
-    DOCKERFILE: docker/Dockerfile.test
-    PERSIST_IMAGE_NAME: discard
-    DOCKER_BUILD_ARGS: '["CI_JOB_ID"]'
+    CSCS_RUNNER_MODE: 'uenv-builder'
+    RECIPE_PATH: uenv_recipes/prgenv-gnu
