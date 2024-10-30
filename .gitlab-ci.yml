@@ -17,5 +17,4 @@ test:
     STACK_UARCH: 'zen2'
     STACK_RECIPE: uenv-recipes/prgenv-gnu/24.7
     STACK_NAME: prgenv-gnu/$CI_COMMIT_SHORT_SHA
-    SLURM_PARTITION: debug
-    SLURM_TIMELIMIT: '00:30:00'
+    SLURM_TIMELIMIT: '01:30:00'
