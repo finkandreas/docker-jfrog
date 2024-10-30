@@ -16,5 +16,14 @@ test:
     UENV_LOCAL: 'YES'
     STACK_UARCH: 'zen2'
     STACK_RECIPE: uenv-recipes/prgenv-gnu/24.7
-    STACK_NAME: prgenv-gnu/$CI_COMMIT_SHORT_SHA
+    STACK_NAME: prgenv-gnu:$CI_COMMIT_SHORT_SHA
     SLURM_TIMELIMIT: '01:30:00'
+
+test uenv run:
+  extends: .uenv-runner-eiger-mc
+  tags: [f7t-runner-tds]
+  stage: run
+  image: $SCRATCH/gitlab-runner/uenv-images/$CI_PROJECT_NAME/prgenv-gnu-CI_COMMIT_SHORT_SHA.sqfs
+  script:
+    - uenv view develop
+    - mpic++
