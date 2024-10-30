@@ -22,6 +22,7 @@ test:
 test uenv run:
   extends: .uenv-runner-eiger-mc
   tags: [f7t-runner-tds]
+  needs: ['test']
   stage: run
   image: $SCRATCH/gitlab-runner/uenv-images/$CI_PROJECT_NAME/prgenv-gnu-CI_COMMIT_SHORT_SHA.sqfs
   script:
