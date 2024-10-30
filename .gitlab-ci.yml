@@ -27,4 +27,4 @@ test uenv run:
   image: /capstor/scratch/cscs/jenkssl/gitlab-runner/uenv-images/$CI_PROJECT_NAME/prgenv-gnu/$CI_COMMIT_SHORT_SHA.sqfs
   script:
     - uenv view develop
-    - mpic++
+    - mpic++ --version
