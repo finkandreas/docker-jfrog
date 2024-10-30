@@ -9,7 +9,11 @@ test:
   tags: [f7t-runner-tds]
   stage: run
   script:
+    - echo $(id -un)
     - echo test
   variables:
     CSCS_RUNNER_MODE: 'uenv-builder'
-    RECIPE_PATH: uenv_recipes/prgenv-gnu
+    UENV_LOCAL: 'YES'
+    STACK_UARCH: 'zen2'
+    STACK_RECIPE: uenv-recipes/prgenv-gnu/24.7
+    SLURM_PARTITION: debug
