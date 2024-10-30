@@ -18,3 +18,4 @@ test:
     STACK_RECIPE: uenv-recipes/prgenv-gnu/24.7
     STACK_NAME: prgenv-gnu/$CI_COMMIT_SHORT_SHA
     SLURM_PARTITION: debug
+    SLURM_TIMELIMIT: '00:30:00'
