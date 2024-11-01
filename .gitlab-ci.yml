@@ -26,7 +26,7 @@ test uenv run:
   tags: [f7t-runner-tds]
   needs: ['test']
   stage: run
-  image: prgenv-gnu/$CI_COMMIT_SHORT_SHA
+  image: prgenv-gnu/24.7
   script:
     - uenv view develop
     - mpic++ --version
