@@ -26,7 +26,7 @@ test uenv run:
   tags: [f7t-runner-tds]
   needs: ['test']
   stage: run
-  image: prgenv-gnu/24.7
+  image: 'prgenv-gnu/24.7:$CI_PIPELINE_ID'
   script:
     - uenv view develop
     - mpic++ --version
