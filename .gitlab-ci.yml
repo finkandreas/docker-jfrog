@@ -19,8 +19,6 @@ test:
     STACK_RECIPE: uenv-recipes/prgenv-gnu/24.7
     STACK_NAME: prgenv-gnu
     STACK_VERSION: '2024'
-    NO_BWRAP: '--no-bwrap'
-    SPACK_DEVELOP: '--develop'
     SLURM_PARTITION: 'debug'
     SLURM_TIMELIMIT: '00:30:00'
 
