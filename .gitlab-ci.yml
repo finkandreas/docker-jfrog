@@ -17,7 +17,10 @@ test:
     UENV_REPO_PATH: '$$SCRATCH/.uenv-images-ci-$$CLUSTER_NAME-tds'
     STACK_UARCH: 'zen2'
     STACK_RECIPE: uenv-recipes/prgenv-gnu/24.7
-    STACK_NAME: prgenv-gnu/$CI_COMMIT_SHORT_SHA
+    STACK_NAME: prgenv-gnu
+    STACK_VERSION: '2024'
+    NO_BWRAP: '--no-bwrap'
+    SPACK_DEVELOP: '--develop'
     SLURM_PARTITION: 'debug'
     SLURM_TIMELIMIT: '00:30:00'
 
@@ -31,4 +34,5 @@ test uenv run:
     - uenv view develop
     - mpic++ --version
   variables:
+    SLURM_PARTITION: debug
     UENV_REPO_PATH: '$$SCRATCH/.uenv-images-ci-$$CLUSTER_NAME-tds'
