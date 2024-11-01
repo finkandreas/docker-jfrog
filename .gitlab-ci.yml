@@ -17,8 +17,7 @@ test:
     UENV_REPO_PATH: '$$SCRATCH/.uenv-images-ci-$$CLUSTER_NAME-tds'
     STACK_UARCH: 'zen2'
     STACK_RECIPE: uenv-recipes/prgenv-gnu/24.7
-    STACK_NAME: prgenv-gnu
-    STACK_VERSION: '2024'
+    STACK_NAME: prgenv-gnu/24.7
     SLURM_PARTITION: 'debug'
     SLURM_TIMELIMIT: '00:30:00'
 
