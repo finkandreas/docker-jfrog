@@ -14,7 +14,7 @@ test:
   variables:
     CSCS_RUNNER_MODE: 'uenv-builder'
     UENV_LOCAL: 'YES'
-    UENV_REPO_PATH: '$$SCRATCH/.uenv-images-ci-$$CLUSTER-tds'
+    UENV_REPO_PATH: '$$SCRATCH/.uenv-images-ci-$$CLUSTER_NAME-tds'
     STACK_UARCH: 'zen2'
     STACK_RECIPE: uenv-recipes/prgenv-gnu/24.7
     STACK_NAME: prgenv-gnu/$CI_COMMIT_SHORT_SHA
@@ -31,4 +31,4 @@ test uenv run:
     - uenv view develop
     - mpic++ --version
   variables:
-    UENV_REPO_PATH: '$$SCRATCH/.uenv-images-ci-$$CLUSTER-tds'
+    UENV_REPO_PATH: '$$SCRATCH/.uenv-images-ci-$$CLUSTER_NAME-tds'
