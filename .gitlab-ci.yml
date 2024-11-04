@@ -5,17 +5,13 @@ stages:
   - run
 
 test:
-  extends: .uenv-runner-eiger-mc
+  extends: .uenv-builder-eiger-mc
   tags: [f7t-runner-tds]
   stage: run
   script:
     - echo $(id -un)
     - echo test
   variables:
-    CSCS_RUNNER_MODE: 'uenv-builder'
-    UENV_LOCAL: 'YES'
-    UENV_REPO_PATH: '$$SCRATCH/.uenv-images-ci-$$CLUSTER_NAME-tds'
-    STACK_UARCH: 'zen2'
     STACK_RECIPE: uenv-recipes/prgenv-gnu/24.7
     STACK_NAME: prgenv-gnu/24.7
     SLURM_PARTITION: 'debug'
