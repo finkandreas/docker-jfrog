@@ -6,6 +6,7 @@ stages:
 
 test:
   extends: .container-builder-cscs-zen2
+  stage: run
   variables:
     DOCKERFILE: docker/Dockerfile.test
     PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/my_image:$CI_COMMIT_SHORT_SHA
