@@ -4,35 +4,26 @@ include:
 stages:
   - run
 
+  #test:
+  #  extends: .container-builder-cscs-zen2
+  #  stage: run
+  #  variables:
+  #    DOCKERFILE: docker/Dockerfile.test
+  #    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/my_image:$CI_COMMIT_SHORT_SHA
+
 test:
-  extends: .container-builder-cscs-zen2
+  extends: .uenv-builder-eiger-zen2
   stage: run
   variables:
-    DOCKERFILE: docker/Dockerfile.test
-    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/my_image:$CI_COMMIT_SHORT_SHA
+    UENV_RECIPE: uenv-recipes/prgenv-gnu/24.7
+    UENV_NAME: prgenv-gnu
+    UENV_VERSION: 24.7
 
-  #test:
-  #  extends: .uenv-builder-eiger-mc
-  #  tags: [f7t-runner-tds]
-  #  stage: run
-  #  script:
-  #    - echo $(id -un)
-  #    - echo test
-  #  variables:
-  #    STACK_RECIPE: uenv-recipes/prgenv-gnu/24.7
-  #    STACK_NAME: prgenv-gnu/24.7
-  #    SLURM_PARTITION: 'debug'
-  #    SLURM_TIMELIMIT: '00:30:00'
-  #
-  #test uenv run:
-  #  extends: .uenv-runner-eiger-mc
-  #  tags: [f7t-runner-tds]
-  #  needs: ['test']
-  #  stage: run
-  #  image: 'prgenv-gnu/24.7:$CI_PIPELINE_ID'
-  #  script:
-  #    - uenv view develop
-  #    - mpic++ --version
-  #  variables:
-  #    SLURM_PARTITION: debug
-  #    UENV_REPO_PATH: '$$SCRATCH/.uenv-images-ci-$$CLUSTER_NAME-tds'
+test uenv run:
+  extends: .uenv-runner-eiger-zen2
+  needs: ['test']
+  stage: run
+  image: 'prgenv-gnu/24.7:$CI_PIPELINE_ID'
+  script:
+    - uenv view develop
+    - mpic++ --version
