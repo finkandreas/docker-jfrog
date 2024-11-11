@@ -4,26 +4,28 @@ include:
 stages:
   - run
 
+test:
+  extends: .baremetal-runner-eiger-zen2
+  tags: [f7t-runner-tds]
+  stage: run
+  script:
+    - sleep 600
+  variables:
+    SLURM_TIMELIMIT: '00:00:20'
+
   #test:
-  #  extends: .container-builder-cscs-zen2
+  #  extends: .uenv-builder-eiger-zen2
   #  stage: run
   #  variables:
-  #    DOCKERFILE: docker/Dockerfile.test
-  #    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/my_image:$CI_COMMIT_SHORT_SHA
-
-test:
-  extends: .uenv-builder-eiger-zen2
-  stage: run
-  variables:
-    UENV_RECIPE: uenv-recipes/prgenv-gnu/24.7
-    UENV_NAME: prgenv-gnu
-    UENV_VERSION: 24.7
-
-test uenv run:
-  extends: .uenv-runner-eiger-zen2
-  needs: ['test']
-  stage: run
-  image: 'prgenv-gnu/24.7:$CI_PIPELINE_ID'
-  script:
-    - uenv view develop
-    - mpic++ --version
+  #    UENV_RECIPE: uenv-recipes/prgenv-gnu/24.7
+  #    UENV_NAME: prgenv-gnu
+  #    UENV_VERSION: 24.7
+  #
+  #test uenv run:
+  #  extends: .uenv-runner-eiger-zen2
+  #  needs: ['test']
+  #  stage: run
+  #  image: 'prgenv-gnu/24.7:$CI_PIPELINE_ID'
+  #  script:
+  #    - uenv view develop
+  #    - mpic++ --version
