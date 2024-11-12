@@ -20,7 +20,8 @@ test:
     - sleep 600
   variables:
     CSCS_GLR_F7T_URL_PREFIX: /citest/glr_f7t
-    SLURM_TIMELIMIT: '00:00:20'
+    SLURM_TIMELIMIT: '00:09:20'
+    SLURM_PARTITION: 'debug'
 
   #test:
   #  extends: .uenv-builder-eiger-zen2
