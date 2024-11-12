@@ -4,22 +4,23 @@ include:
 stages:
   - run
 
-test:
-  extends: .container-runner-todi-gh200
-  tags: [f7t-runner-tds]
-  stage: run
-  image: docker.io/ubuntu:24.04
-  script:
-    - cat /etc/os-release
-
   #test:
-  #  extends: .baremetal-runner-eiger-zen2
+  #  extends: .container-runner-todi-gh200
   #  tags: [f7t-runner-tds]
   #  stage: run
+  #  image: docker.io/ubuntu:24.04
   #  script:
-  #    - sleep 600
-  #  variables:
-  #    SLURM_TIMELIMIT: '00:00:20'
+  #    - cat /etc/os-release
+
+test:
+  extends: .baremetal-runner-eiger-zen2
+  tags: [f7t-runner-tds]
+  stage: run
+  script:
+    - sleep 600
+  variables:
+    CSCS_GLR_F7T_URL_PREFIX: /citest/glr_f7t
+    SLURM_TIMELIMIT: '00:00:20'
 
   #test:
   #  extends: .uenv-builder-eiger-zen2
