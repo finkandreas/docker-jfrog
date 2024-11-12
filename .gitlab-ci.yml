@@ -5,13 +5,21 @@ stages:
   - run
 
 test:
-  extends: .baremetal-runner-eiger-zen2
+  extends: .container-runner-todi-gh200
   tags: [f7t-runner-tds]
   stage: run
+  image: docker.io/ubuntu:24.04
   script:
-    - sleep 600
-  variables:
-    SLURM_TIMELIMIT: '00:00:20'
+    - cat /etc/os-release
+
+  #test:
+  #  extends: .baremetal-runner-eiger-zen2
+  #  tags: [f7t-runner-tds]
+  #  stage: run
+  #  script:
+  #    - sleep 600
+  #  variables:
+  #    SLURM_TIMELIMIT: '00:00:20'
 
   #test:
   #  extends: .uenv-builder-eiger-zen2
