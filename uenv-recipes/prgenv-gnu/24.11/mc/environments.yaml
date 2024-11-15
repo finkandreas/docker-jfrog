@@ -20,7 +20,7 @@ gcc-env:
   - kokkos-kernels +blas +execspace_openmp +execspace_serial +lapack +openmp scalars=float,double,complex_float,complex_double +serial +shared +superlu
   - kokkos-tools +mpi +papi
   - metis
-  - mumps +parmetis +ptscotsch
+  - mumps +parmetis +ptscotch
   - netcdf-c
   - netlib-scalapack
   - lua
