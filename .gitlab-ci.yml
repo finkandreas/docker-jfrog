@@ -31,6 +31,7 @@ test:
     UENV_RECIPE: uenv-recipes/prgenv-gnu/24.11/mc
     UENV_NAME: linalg
     UENV_VERSION: 24.11
+    SPACK_DEVELOP: '-d'
 
   #test uenv run:
   #  extends: .uenv-runner-eiger-zen2
