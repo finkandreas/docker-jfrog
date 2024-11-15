@@ -12,26 +12,26 @@ stages:
   #  script:
   #    - cat /etc/os-release
 
-test:
-  extends: .baremetal-runner-eiger-zen2
-  tags: [f7t-runner-tds]
-  timeout: 2m
-  stage: run
-  script:
-    - sleep 1000
-  variables:
-    CSCS_GLR_F7T_URL_PREFIX: /citest/glr_f7t
-    SLURM_TIMELIMIT: '00:20:00'
-    SLURM_JOB_NUM_NODES: 100
-
   #test:
-  #  extends: .uenv-builder-eiger-zen2
+  #  extends: .baremetal-runner-eiger-zen2
+  #  tags: [f7t-runner-tds]
+  #  timeout: 2m
   #  stage: run
+  #  script:
+  #    - sleep 1000
   #  variables:
-  #    UENV_RECIPE: uenv-recipes/prgenv-gnu/24.7
-  #    UENV_NAME: prgenv-gnu
-  #    UENV_VERSION: 24.7
-  #
+  #    CSCS_GLR_F7T_URL_PREFIX: /citest/glr_f7t
+  #    SLURM_TIMELIMIT: '00:20:00'
+  #    SLURM_JOB_NUM_NODES: 100
+
+test:
+  extends: .uenv-builder-eiger-zen2
+  stage: run
+  variables:
+    UENV_RECIPE: uenv-recipes/prgenv-gnu/24.11/mc
+    UENV_NAME: linalg
+    UENV_VERSION: 24.11
+
   #test uenv run:
   #  extends: .uenv-runner-eiger-zen2
   #  needs: ['test']
