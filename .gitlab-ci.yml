@@ -25,10 +25,10 @@ stages:
   #    SLURM_JOB_NUM_NODES: 100
 
 test:
-  extends: .uenv-builder-eiger-zen2
+  extends: .uenv-builder-todi-gh200
   stage: run
   variables:
-    UENV_RECIPE: uenv-recipes/prgenv-gnu/24.11/mc
+    UENV_RECIPE: uenv-recipes/prgenv-gnu/24.11/gh200
     UENV_NAME: linalg
     UENV_VERSION: 24.11
     SPACK_DEVELOP: '-d'

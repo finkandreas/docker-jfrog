@@ -7,12 +7,16 @@ gcc-env:
       gpu: cuda
   unify: true
   specs:
+  - arpack-ng
   - boost +chrono +filesystem +iostreams +mpi +python +regex +serialization +shared +system +timer
   - cmake
+  - eigen
   - fftw
   - fmt
   - gsl
   - hdf5+hl
+  - hwloc
+  - hypre +superlu-dist
   - kokkos +aggressive_vectorization ~alloc_async +cuda_constexpr +cuda_lambda ~cuda_relocatable_device_code ~cuda_uvm cxxstd=17 +openmp +pic +serial +shared +tuning +wrapper
   - kokkos-kernels +blas +cublas +cusparse +cusolver +execspace_cuda +execspace_openmp +execspace_serial +lapack +memspace_cudaspace +openmp scalars=float,double,complex_float,complex_double +serial +shared +superlu
   - kokkos-tools +mpi +papi
@@ -24,8 +28,14 @@ gcc-env:
   - ninja
   - openblas threads=openmp
   - osu-micro-benchmarks@5.9
+  - p4est +mpi
   - papi ~cuda
+  - petsc +batch +hwloc +hypre +kokkos +libyaml +metis +mumps +openmp +ptscotch +suite-sparse
   - python@3.12
+  - suite-sparse
+  - superlu
+  - superlu-dist
+  - swig
   - zlib-ng
   # add GPU-specific packages here, for easier comparison with mc version
   - nccl
