@@ -29,7 +29,7 @@ test:
   image: ghcr.io/ankitpokhrel/jira-cli:latest
   stage: test
   script:
-    - jira init --installation 'Local' --server https://jira.cscs.ch --login anfink --project VCUE --board 'None'
+    - jira init --installation local --server 'https://jira.cscs.ch' --login anfink --project VCUE --board None
     - jira issue create --no-input -t Task -p VCUE -s "anfink: Test Jira Ticket from Pipeline" -b "Body for ticket"
   variables:
     JIRA_AUTH_TYPE: bearer
