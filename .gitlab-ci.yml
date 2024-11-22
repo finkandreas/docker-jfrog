@@ -27,7 +27,7 @@ stages:
 test:
   extends: .container-runner-lightweight-zen2
   image: ghcr.io/ankitpokhrel/jira-cli:latest
-  stage: test
+  stage: run
   script:
     - |
       jira init
