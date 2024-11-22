@@ -25,13 +25,24 @@ stages:
   #    SLURM_JOB_NUM_NODES: 100
 
 test:
-  extends: .uenv-builder-todi-gh200
-  stage: run
+  extends: .container-runner-lightweight-zen2
+  image: ghcr.io/ankitpokhrel/jira-cli:latest
+  stage: test
+  script:
+    - jira init --installation 'Local' --server https://jira.cscs.ch --login anfink --project VCUE --board 'None'
+    - jira issue create --no-input -t Task -p VCUE -s "anfink: Test Jira Ticket from Pipeline" -b "Body for ticket"
   variables:
-    UENV_RECIPE: uenv-recipes/prgenv-gnu/24.11/gh200
-    UENV_NAME: linalg
-    UENV_VERSION: 24.11
-    SPACK_DEVELOP: '-d'
+    JIRA_AUTH_TYPE: bearer
+    JIRA_API_TOKEN: $JIRA_TOKEN
+
+    #test:
+    #  extends: .uenv-builder-todi-gh200
+    #  stage: run
+    #  variables:
+    #    UENV_RECIPE: uenv-recipes/prgenv-gnu/24.11/gh200
+    #    UENV_NAME: linalg
+    #    UENV_VERSION: 24.11
+    #    SPACK_DEVELOP: '-d'
 
   #test uenv run:
   #  extends: .uenv-runner-eiger-zen2
