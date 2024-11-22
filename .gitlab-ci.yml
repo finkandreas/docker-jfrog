@@ -29,14 +29,14 @@ test:
   image: ghcr.io/ankitpokhrel/jira-cli:latest
   stage: run
   script:
-    - |
+    - >
       jira init
-      --installation local
+      --installation Local
       --server 'https://jira.cscs.ch'
       --login anfink
       --project VCUE
       --board None
-    - |
+    - >
       jira issue create
       --no-input
       -t Task
