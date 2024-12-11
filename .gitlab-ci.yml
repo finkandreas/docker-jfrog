@@ -26,6 +26,7 @@ stages:
 
 test:
   extends: .container-builder-cscs-zen2
+  stage: run
   tags: [rosa-k8s-development]
   variables:
     DOCKERFILE: docker/Dockerfile.base
