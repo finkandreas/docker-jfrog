@@ -32,7 +32,7 @@ test:
     DOCKERFILE: docker/Dockerfile.base
     PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/test:$CI_COMMIT_SHORT_SHA
     DOCKER_BUILD_ARGS: '["CI_JOB_ID=$CI_JOB_ID"]'
-    KUBERNETES_NODE_SELECTOR_ARCH: "kubernetes.io/arch=amd64"
+    KUBERNETES_NODE_SELECTOR_ARCH: "kubernetes.io/arch=arm64"
 
     #test:
     #  extends: .uenv-builder-todi-gh200
