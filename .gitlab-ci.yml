@@ -31,6 +31,7 @@ test:
   script:
     - sleep 600
   variables:
+    CSCS_GLR_F7T_ADDR: cicd-ext.tds.cscs.ch
     SLURM_TIMELIMIT: '00:00:02'
     SLURM_PARTITION: debug
 
