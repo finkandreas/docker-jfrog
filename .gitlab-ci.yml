@@ -32,7 +32,8 @@ test:
     - sleep 600
   variables:
     CSCS_GLR_F7T_ADDR: cicd-ext.tds.cscs.ch
-    SLURM_TIMELIMIT: '00:05:02'
+    GLR_F7T_IMPL: $CI_REGISTRY_IMAGE/glr-f7t-impl:0742a980
+    SLURM_TIMELIMIT: '00:01:00'
     SLURM_PARTITION: debug
 
     #test:
