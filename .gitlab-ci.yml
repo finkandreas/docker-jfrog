@@ -25,16 +25,25 @@ stages:
   #    SLURM_JOB_NUM_NODES: 100
 
 test:
-  extends: .baremetal-runner-eiger-zen2
-  tags: [f7t-runner-tds]
+  extends: .container-builder-cscs-zen2
+  tags: [rosa-k8s-development]
   stage: run
-  script:
-    - sleep 600
+  image: jfrog.svc.cscs.ch/proxy-dockerhub/finkandreas/cicd-ext-k8s-container-image-builder:podman-5.3.1
   variables:
-    CSCS_GLR_F7T_ADDR: cicd-ext.tds.cscs.ch
-    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:0742a980
-    SLURM_TIMELIMIT: '00:01:00'
-    SLURM_PARTITION: debug
+    PERSIST_IMAGE_NAME: discard
+    DOCKERFILE: docker/Dockerfile.test
+
+#test:
+#  extends: .baremetal-runner-eiger-zen2
+#  tags: [f7t-runner-tds]
+#  stage: run
+#  script:
+#    - sleep 600
+#  variables:
+#    CSCS_GLR_F7T_ADDR: cicd-ext.tds.cscs.ch
+#    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:0742a980
+#    SLURM_TIMELIMIT: '00:01:00'
+#    SLURM_PARTITION: debug
 
     #test:
     #  extends: .uenv-builder-todi-gh200
