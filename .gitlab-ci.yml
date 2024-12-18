@@ -28,6 +28,9 @@ test:
   extends: .container-builder-cscs-zen2
   tags: [rosa-k8s-development]
   stage: run
+  script:
+    - sleep 3600
+    - build_new_container
   image: jfrog.svc.cscs.ch/proxy-dockerhub/finkandreas/cicd-ext-k8s-container-image-builder:podman-5.3.1
   variables:
     PERSIST_IMAGE_NAME: discard
