@@ -26,6 +26,7 @@ stages:
 
 test:
   tags: [zinal-login-baremetal]
+  stage: run
   script:
     - hostname
     - pwd
