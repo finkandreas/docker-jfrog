@@ -1,4 +1,4 @@
-FROM jfrog.svc.cscs.ch/proxy-dockerhub/library/ubuntu:24.04
+FROM docker.io/ubuntu:24.04
 
 ARG NUM_PROCS
 
