@@ -2,4 +2,4 @@ FROM docker.io/ubuntu:24.04
 
 ARG NUM_PROCS
 
-RUN echo NUM_PROCS=$NUM_PROCS
+RUN cat /proc/cpuinfo && echo NUM_PROCS=$NUM_PROCS && uname -m
