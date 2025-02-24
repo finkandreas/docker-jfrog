@@ -24,23 +24,21 @@ stages:
   #    SLURM_TIMELIMIT: '00:20:00'
   #    SLURM_JOB_NUM_NODES: 100
 
-test:
-  tags: [zinal-login-baremetal]
-  stage: run
-  script:
-    - hostname
-    - pwd
-    - env
 #test:
-#  extends: .container-builder-cscs-zen2
-#  tags: [rosa-k8s-development]
+#  tags: [zinal-login-baremetal]
 #  stage: run
 #  script:
-#    - build_new_container
-#  image: jfrog.svc.cscs.ch/proxy-dockerhub/finkandreas/cicd-ext-k8s-container-image-builder:podman-5.3.1
-#  variables:
-#    PERSIST_IMAGE_NAME: discard
-#    DOCKERFILE: docker/Dockerfile.test
+#    - hostname
+#    - pwd
+#    - env
+test:
+  extends: .container-builder-cscs-zen2
+  tags: [languard-k8s]
+  stage: run
+  variables:
+    PERSIST_IMAGE_NAME: discard
+    DOCKERFILE: docker/Dockerfile.test
+    KUBERNETES_NODE_SELECTOR_ARCH: "kubernetes.io/arch=arm64"
 
 #test:
 #  extends: .baremetal-runner-eiger-zen2
