@@ -4,13 +4,13 @@ include:
 stages:
   - run
 
-  #test:
-  #  extends: .container-runner-todi-gh200
-  #  tags: [f7t-runner-tds]
-  #  stage: run
-  #  image: docker.io/ubuntu:24.04
-  #  script:
-  #    - cat /etc/os-release
+test:
+  extends: .container-runner-daint-gh200
+  stage: run
+  image: docker.io/ubuntu:24.04
+  script:
+    - env | grep -iv token
+    - cat /etc/os-release
 
   #test:
   #  extends: .baremetal-runner-eiger-zen2
@@ -31,14 +31,14 @@ stages:
 #    - hostname
 #    - pwd
 #    - env
-test:
-  extends: .container-builder-cscs-zen2
-  tags: [languard-k8s]
-  stage: run
-  variables:
-    PERSIST_IMAGE_NAME: discard
-    DOCKERFILE: docker/Dockerfile.test
-    KUBERNETES_NODE_SELECTOR_ARCH: "kubernetes.io/arch=arm64"
+#test:
+#  extends: .container-builder-cscs-zen2
+#  tags: [languard-k8s]
+#  stage: run
+#  variables:
+#    PERSIST_IMAGE_NAME: discard
+#    DOCKERFILE: docker/Dockerfile.test
+#    KUBERNETES_NODE_SELECTOR_ARCH: "kubernetes.io/arch=arm64"
 
 #test:
 #  extends: .baremetal-runner-eiger-zen2
