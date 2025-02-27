@@ -4,25 +4,25 @@ include:
 stages:
   - run
 
-test:
-  extends: .container-runner-daint-gh200
-  stage: run
-  image: docker.io/ubuntu:24.04
-  script:
-    - env | grep -iv token
-    - cat /etc/os-release
+#test:
+#  extends: .container-runner-daint-gh200
+#  stage: run
+#  image: docker.io/ubuntu:24.04
+#  script:
+#    - env | grep -iv token
+#    - cat /etc/os-release
 
-  #test:
-  #  extends: .baremetal-runner-eiger-zen2
-  #  tags: [f7t-runner-tds]
-  #  timeout: 2m
-  #  stage: run
-  #  script:
-  #    - sleep 1000
-  #  variables:
-  #    CSCS_GLR_F7T_URL_PREFIX: /citest/glr_f7t
-  #    SLURM_TIMELIMIT: '00:20:00'
-  #    SLURM_JOB_NUM_NODES: 100
+test:
+  extends: .baremetal-runner-eiger-zen2
+  stage: run
+  script:
+    - pwd
+    - ls -alh
+    - touch test
+  variables:
+    GIT_STRATEGY: none
+    SLURM_TIMELIMIT: '00:20:00'
+    SLURM_PARTITION: debug
 
 #test:
 #  tags: [zinal-login-baremetal]
