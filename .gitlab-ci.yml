@@ -34,10 +34,16 @@ stages:
 #    - env
 
 test:
+  extends: .container-runner-lightweight-zen2
+  image: docker.io/ubuntu:24.04
+  script:
+    - env | grep JOB
+test:
   extends: .container-builder-cscs-zen2
   tags: [languard-k8s]
   stage: run
   before_script:
+    - env | grep JOB
     - sleep 300
   variables:
     PERSIST_IMAGE_NAME: discard
@@ -46,17 +52,15 @@ test:
   when: manual
   allow_failure: true
 test2:
-  extends: .container-builder-cscs-zen2
-  tags: [languard-k8s]
-  stage: run
-  before_script:
-    - sleep 300
-  variables:
-    PERSIST_IMAGE_NAME: discard
-    DOCKERFILE: docker/Dockerfile.test
-    KUBERNETES_NODE_SELECTOR_ARCH: "kubernetes.io/arch=arm64"
-  when: manual
-  allow_failure: true
+  extends: test
+test3:
+  extends: test
+test4:
+  extends: test
+test5:
+  extends: test
+test6:
+  extends: test
 
 #test:
 #  extends: .baremetal-runner-eiger-zen2
