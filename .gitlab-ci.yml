@@ -43,6 +43,20 @@ test:
     PERSIST_IMAGE_NAME: discard
     DOCKERFILE: docker/Dockerfile.test
     KUBERNETES_NODE_SELECTOR_ARCH: "kubernetes.io/arch=arm64"
+  when: manual
+  allow_failure: true
+test2:
+  extends: .container-builder-cscs-zen2
+  tags: [languard-k8s]
+  stage: run
+  before_script:
+    - sleep 300
+  variables:
+    PERSIST_IMAGE_NAME: discard
+    DOCKERFILE: docker/Dockerfile.test
+    KUBERNETES_NODE_SELECTOR_ARCH: "kubernetes.io/arch=arm64"
+  when: manual
+  allow_failure: true
 
 #test:
 #  extends: .baremetal-runner-eiger-zen2
