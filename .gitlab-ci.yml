@@ -33,8 +33,9 @@ stages:
 #    - pwd
 #    - env
 
-test:
+test-auto-started:
   extends: .container-runner-lightweight-zen2
+  stage: run
   image: docker.io/ubuntu:24.04
   script:
     - env | grep JOB
