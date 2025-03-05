@@ -35,13 +35,10 @@ stages:
 
 test:
   extends: .container-builder-cscs-gh200
-  tags: [languard-k8s]
   stage: run
-  image: jfrog.svc.cscs.ch/proxy-dockerhub/finkandreas/cicd-ext-k8s-container-image-builder:podman-5.3.1
   variables:
     PERSIST_IMAGE_NAME: discard
     DOCKERFILE: docker/Dockerfile.test
-    KUBERNETES_NODE_SELECTOR_ARCH: "kubernetes.io/arch=arm64"
 
 #test:
 #  extends: .baremetal-runner-eiger-zen2
