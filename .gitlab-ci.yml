@@ -35,7 +35,6 @@ stages:
 
 test:
   extends: .baremetal-runner-santis-gh200
-  tags: [f7t-runner-tds]
   stage: run
   script:
     - env | sort
