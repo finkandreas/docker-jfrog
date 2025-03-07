@@ -34,11 +34,11 @@ stages:
 #    - env
 
 test:
-  extends: .container-builder-cscs-gh200
+  extends: .baremetal-runner-santis-gh200
+  tags: [f7t-runner-tds]
   stage: run
-  variables:
-    PERSIST_IMAGE_NAME: discard
-    DOCKERFILE: docker/Dockerfile.test
+  script:
+    - env | sort
 
 #test:
 #  extends: .baremetal-runner-eiger-zen2
