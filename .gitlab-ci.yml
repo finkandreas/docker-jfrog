@@ -39,7 +39,7 @@ test:
   timeout: 23h
   tags: [f7t-runner-tds]
   script:
-    - sleep 600
+    - sleep 36000
 
 #test:
 #  extends: .baremetal-runner-eiger-zen2
