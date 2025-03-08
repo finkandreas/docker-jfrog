@@ -37,6 +37,7 @@ test:
   extends: .f7t-controller
   stage: run
   timeout: 23h
+  tags: [f7t-runner-tds]
   script:
     - sleep 600
 
