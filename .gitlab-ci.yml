@@ -34,12 +34,12 @@ stages:
 #    - env
 
 test:
-  extends: .f7t-controller
+  extends: .container-builder-cscs-zen2
   stage: run
   timeout: 23h
-  tags: [f7t-runner-tds]
+  tags: [languard-k8s-development]
   script:
-    - sleep 36000
+    - sleep 600
 
 #test:
 #  extends: .baremetal-runner-eiger-zen2
