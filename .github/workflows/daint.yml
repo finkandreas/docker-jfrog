@@ -1,0 +1,35 @@
+on: [push]
+
+jobs:
+  job-on-compute-node:
+    runs-on: ubuntu-latest
+    name: A job to run on the compute node
+    steps:
+      # To use this repository's action,
+      # you must check out the repository
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run on compute node
+        uses: finkandreas/actions-playground@main # Uses an action in the root directory
+        id: firecrest
+        with:
+          script: |
+            set -x
+            echo "This is my first line and it is running on hostname=$(hostname)"
+            ls -alh $SCRATCH
+            hostname > some_new_file
+            date
+            env
+            ls -alh
+            pwd
+          firecrest_client_id: ${{ secrets.FIRECREST_CLIENT_ID }}
+          firecrest_client_secret: ${{ secrets.FIRECREST_CLIENT_SECRET }}
+        env:
+          SLURM_ACCOUNT: csstaff
+          SLURM_JOB_NUM_NODES: 1
+          SLURM_PARTITION: debug
+      - name: Inspect workspace
+        run: |
+          ls -alh
+          pwd
+          cat some_new_file
