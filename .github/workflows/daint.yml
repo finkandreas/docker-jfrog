@@ -5,12 +5,10 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to run on the compute node
     steps:
-      # To use this repository's action,
-      # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v4
       - name: Run on compute node
-        uses: finkandreas/actions-playground@main # Uses an action in the root directory
+        uses: finkandreas/actions-playground@main
         id: firecrest
         with:
           script: |
