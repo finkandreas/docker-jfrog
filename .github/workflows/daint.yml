@@ -1,10 +1,16 @@
 on: [push]
 
+permissions:
+  id-token: write # This is required for requesting the JWT
+
 jobs:
   job-on-compute-node:
     runs-on: ubuntu-latest
     name: A job to run on the compute node
     steps:
+      - name: Inspect JWT
+        run: |
+          curl -v -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=https://cicd-ext-mw.cscs.ch"
       - name: Checkout
         uses: actions/checkout@v4
       - name: Run on compute node
