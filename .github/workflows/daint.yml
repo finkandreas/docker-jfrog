@@ -25,6 +25,8 @@ jobs:
             env
             ls -alh
             pwd
+            echo 'some github step summary with `markdown` support' >> $GITHUB_STEP_SUMMARY
+            echo "test_new_env=test_value" >> "$GITHUB_ENV"
             curl -v -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=https://cicd-ext-mw.cscs.ch" > test.jwt
           firecrest_client_id: ${{ secrets.FIRECREST_CLIENT_ID }}
           firecrest_client_secret: ${{ secrets.FIRECREST_CLIENT_SECRET }}
@@ -36,4 +38,5 @@ jobs:
         run: |
           ls -alh
           pwd
+          env
           cat some_new_file
