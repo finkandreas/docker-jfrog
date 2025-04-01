@@ -45,7 +45,7 @@ test:
   tags: [f7t-runner]
   stage: run
   interruptible: true
-  image: "docker.io/rocm/dev-ubuntu-22.04:6.0.2"
+  image: "docker.io/ubuntu:24.04"
   script:
     - hostname
     - cat /etc/os-release
