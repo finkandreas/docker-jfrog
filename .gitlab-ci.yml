@@ -42,15 +42,19 @@ stages:
 #    - sleep 600
 
 test:
-  extends: .baremetal-runner-eiger-zen2
+  extends: .container-runner-eiger-zen2
   stage: run
+  image: docker.io/ubuntu:24.04
   script:
-    - sleep 60
+    - hostname
+    - cat /etc/os-release
   variables:
-    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:2af537bc
-    F7T_URL: 'https://api.cscs.ch/hpc/firecrest/v2'
+    SLURM_CONSTRAINT: ""
+    FIRECREST_SYSTEM: beverin
+    F7T_URL: "https://api.tds.cscs.ch/stp/firecrest/v2'"
+    F7T_CLIENT_ID: $F7T_TDS_CLIENT_ID
+    F7T_CLIENT_SECRET: $F7T_TDS_CLIENT_SECRET
     SLURM_TIMELIMIT: '00:05:00'
-    SLURM_PARTITION: debug
 
     #test:
     #  extends: .uenv-builder-todi-gh200
