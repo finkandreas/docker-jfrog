@@ -42,14 +42,17 @@ stages:
 #    - sleep 600
 
 test:
-  extends: .container-runner-eiger-zen2
+  tags: [f7t-runner]
   stage: run
+  interruptible: true
   image: docker.io/ubuntu:24.04
   script:
     - hostname
     - cat /etc/os-release
   variables:
-    SLURM_CONSTRAINT: ""
+    GIT_CLONE_PATH: "$CI_BUILDS_DIR/$CI_PROJECT_NAME"
+    CSCS_RUNNER_MODE: container-runner
+    ARCH: x86_64
     FIRECREST_SYSTEM: beverin
     F7T_URL: "https://api.tds.cscs.ch/stp/firecrest/v2"
     F7T_TOKEN_URL: "https://auth-tds.cscs.ch/auth/realms/firecrest-clients/protocol/openid-connect/token"
