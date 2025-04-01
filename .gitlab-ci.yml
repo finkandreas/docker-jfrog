@@ -50,7 +50,7 @@ test:
     - cat /etc/os-release
   variables:
     GIT_CLONE_PATH: "$CI_BUILDS_DIR/$CI_PROJECT_NAME"
-    CSCS_RUNNER_MODE: baremetal-runner
+    CSCS_RUNNER_MODE: baremetal
     ARCH: x86_64
     FIRECREST_SYSTEM: beverin
     F7T_URL: "https://api.tds.cscs.ch/stp/firecrest/v2"
