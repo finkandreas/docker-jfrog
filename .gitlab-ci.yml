@@ -52,6 +52,7 @@ test:
     SLURM_CONSTRAINT: ""
     FIRECREST_SYSTEM: beverin
     F7T_URL: "https://api.tds.cscs.ch/stp/firecrest/v2'"
+    F7T_TOKEN_URL: "https://auth-tds.cscs.ch/auth/realms/firecrest-clients/protocol/openid-connect/token"
     F7T_CLIENT_ID: $F7T_TDS_CLIENT_ID
     F7T_CLIENT_SECRET: $F7T_TDS_CLIENT_SECRET
     SLURM_TIMELIMIT: '00:05:00'
