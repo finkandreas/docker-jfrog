@@ -42,26 +42,18 @@ stages:
 #    - sleep 600
 
 test:
-  tags: [f7t-runner]
+  extends: .baremetal-runner-daint-gh200
   stage: run
-  interruptible: true
-  image: "docker.io/ubuntu:24.04"
+  hooks:
+    pre_get_sources_script:
+      - echo "This is from the pre_get_sources_script"
+      - pwd
   script:
     - hostname
     - cat /etc/os-release
   variables:
-    GIT_CLONE_PATH: "$CI_BUILDS_DIR/$CI_PROJECT_NAME"
-    CSCS_RUNNER_MODE: container-runner
-    USE_CE: 'YES'
-    PULL_IMAGE: 'YES'
-    ARCH: x86_64
-    FIRECREST_SYSTEM: beverin
-    F7T_URL: "https://api.tds.cscs.ch/stp/firecrest/v2"
-    F7T_TOKEN_URL: "https://auth-tds.cscs.ch/auth/realms/firecrest-clients/protocol/openid-connect/token"
-    F7T_CLIENT_ID: $F7T_TDS_CLIENT_ID
-    F7T_CLIENT_SECRET: $F7T_TDS_CLIENT_SECRET
-    SLURM_ACCOUNT: "csstaff"
     SLURM_TIMELIMIT: '00:05:00'
+    SLURM_PARTITION: debug
 
     #test:
     #  extends: .uenv-builder-todi-gh200
