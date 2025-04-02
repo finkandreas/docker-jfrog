@@ -42,8 +42,9 @@ stages:
 #    - sleep 600
 
 test:
-  extends: .baremetal-runner-daint-gh200
+  extends: .container-runner-daint-gh200
   stage: run
+  image: docker.io/ubuntu:24.04
   hooks:
     pre_get_sources_script:
       - echo "This is from the pre_get_sources_script"
