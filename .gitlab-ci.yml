@@ -44,6 +44,7 @@ stages:
 test lightweight aarch64:
   tags: [languard-k8s-lightweight-gh200]
   image: opensuse/leap:15.5
+  stage: run
   script:
     - zypper install -y skopeo tar gzip wget gcc make
     - cp /usr/bin/skopeo /hostdir/skopeo.$ARCH
