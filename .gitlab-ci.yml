@@ -41,20 +41,39 @@ stages:
 #  script:
 #    - sleep 600
 
-test:
-  extends: .container-runner-daint-gh200
-  stage: run
-  image: docker.io/ubuntu:24.04
-  hooks:
-    pre_get_sources_script:
-      - echo "This is from the pre_get_sources_script"
-      - pwd
+test lightweight aarch64:
+  tags: [languard-k8s-lightweight-gh200]
+  image: opensuse/leap:15.5
   script:
-    - hostname
-    - cat /etc/os-release
+    - zypper install -y skopeo tar gzip wget gcc make
+    - cp /usr/bin/skopeo /hostdir/skopeo.$ARCH
+    - wget -O empty.tgz https://sourceforge.net/projects/empty/files/latest/download
+    - tar -xf empty.tgz
+    - cd empty-*
+    - make
+    - mv empty /hostdir/empty.$ARCH"
   variables:
-    SLURM_TIMELIMIT: '00:05:00'
-    SLURM_PARTITION: debug
+    ARCH: aarch64
+    KUBERNETES_CPU_REQUEST: "1"
+    KUBERNETES_CPU_LIMIT: "1"
+    KUBERNETES_MEMORY_REQUEST: "1Gi"
+    KUBERNETES_MEMORY_LIMIT: "1Gi"
+
+
+#test:
+#  extends: .container-runner-daint-gh200
+#  stage: run
+#  image: docker.io/ubuntu:24.04
+#  hooks:
+#    pre_get_sources_script:
+#      - echo "This is from the pre_get_sources_script"
+#      - pwd
+#  script:
+#    - hostname
+#    - cat /etc/os-release
+#  variables:
+#    SLURM_TIMELIMIT: '00:05:00'
+#    SLURM_PARTITION: debug
 
     #test:
     #  extends: .uenv-builder-todi-gh200
