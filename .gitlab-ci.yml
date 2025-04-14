@@ -33,13 +33,17 @@ stages:
 #    - pwd
 #    - env
 
-#test:
-#  extends: .container-builder-cscs-zen2
-#  stage: run
-#  timeout: 23h
-#  tags: [languard-k8s-development]
-#  script:
-#    - sleep 600
+test:
+  extends: .container-builder-cscs-gh200
+  stage: run
+  timeout: 1h
+  tags: [languard-k8s-development]
+  script:
+    - env | grep -i proxy
+    - build_new_container
+  variables:
+    DOCKERFILE: docker/Dockerfile.test
+    PERSIST_IMAGE_NAME: discard
 
 test lightweight aarch64:
   tags: [languard-k8s-lightweight-gh200]
