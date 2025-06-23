@@ -8,10 +8,11 @@ cleanup rfm:
   extends: .baremetal-runner-daint-gh200
   stage: cleanup
   script:
+    - cd $SCRATCH
     - |
-      for dir in $(find $SCRATCH -maxdepth 1 -name "rfm*" -type d) ; do
+      for dir in $(find . -maxdepth 1 -name "rfm*" -type d) ; do
           echo "Creating tar archive of $dir"
-          tar -czf "$dir" "$dir.tar.gz"
+          tar -czf "$dir.tar.gz" "$dir"
           rm -Rf "$dir"
       done
   variables:
