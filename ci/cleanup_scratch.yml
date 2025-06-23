@@ -9,7 +9,8 @@ cleanup rfm:
   stage: cleanup
   script:
     - |
-      for dir in $(find $SCRATCH -maxdepth 1 -name "rfm*" -type d ; do
+      for dir in $(find $SCRATCH -maxdepth 1 -name "rfm*" -type d) ; do
+          echo "Creating tar archive of $dir"
           tar -czf "$dir" "$dir.tar.gz"
           rm -Rf "$dir"
       done
