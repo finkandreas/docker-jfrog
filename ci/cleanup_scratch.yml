@@ -10,7 +10,11 @@ cleanup rfm:
   script:
     - cd $SCRATCH
     - |
-      for dir in $(find . -maxdepth 1 -name "rfm*" -ctime +1 -type d) ; do
+      for dir in $(find . -maxdepth 1 -name "rfm_mlperf*" -ctime +1 -type d) ; do
+          echo "Cleaning up mlperf directory at $dir"
+          rm -Rf "$dir"
+      done
+      for dir in $(find . -maxdepth 1 -name "rfm-*" -ctime +1 -type d) ; do
           echo "Creating tar archive of $dir"
           tar -czf "$dir.tar.gz" "$dir"
           rm -Rf "$dir"
