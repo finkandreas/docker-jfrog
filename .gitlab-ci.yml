@@ -33,36 +33,28 @@ stages:
 #    - pwd
 #    - env
 
-test:
-  extends: .container-builder-cscs-gh200
-  stage: run
-  timeout: 1h
-  tags: [languard-k8s-development]
-  script:
-    - env | grep -i proxy
-    - build_new_container
-  variables:
-    DOCKERFILE: docker/Dockerfile.test
-    PERSIST_IMAGE_NAME: discard
+#test:
+#  extends: .container-builder-cscs-gh200
+#  stage: run
+#  timeout: 1h
+#  tags: [languard-k8s-development]
+#  script:
+#    - env | grep -i proxy
+#    - build_new_container
+#  variables:
+#    DOCKERFILE: docker/Dockerfile.test
+#    PERSIST_IMAGE_NAME: discard
 
 test lightweight aarch64:
   tags: [languard-k8s-lightweight-gh200]
   image: opensuse/leap:15.5
   stage: run
   script:
-    - zypper install -y skopeo tar gzip wget gcc make
-    - cp /usr/bin/skopeo /hostdir/skopeo.$ARCH
-    - wget -O empty.tgz https://sourceforge.net/projects/empty/files/latest/download
-    - tar -xf empty.tgz
-    - cd empty-*
-    - make
-    - mv empty /hostdir/empty.$ARCH"
+    - echo "With quotes: $VAR_IN_QUOTES"
+    - echo "Without quotes: $VAR_NO_QUOTES"
   variables:
-    ARCH: aarch64
-    KUBERNETES_CPU_REQUEST: "1"
-    KUBERNETES_CPU_LIMIT: "1"
-    KUBERNETES_MEMORY_REQUEST: "1Gi"
-    KUBERNETES_MEMORY_LIMIT: "1Gi"
+    VAR_IN_QUOTES: "00:30:00"
+    VAR_NO_QUOTES: 00:30:00
 
 
 #test:
