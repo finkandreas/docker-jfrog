@@ -53,8 +53,8 @@ test lightweight aarch64:
     - 'echo "With quotes: $VAR_IN_QUOTES"'
     - 'echo "Without quotes: $VAR_NO_QUOTES"'
   variables:
-    VAR_IN_QUOTES: "01:00:00"
-    VAR_NO_QUOTES: 01:00:00
+    VAR_IN_QUOTES: "04:00:00"
+    VAR_NO_QUOTES: 04:00:00
 
 
 #test:
