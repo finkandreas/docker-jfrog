@@ -46,12 +46,12 @@ stages:
 #    PERSIST_IMAGE_NAME: discard
 
 test lightweight aarch64:
-  tags: [languard-k8s-lightweight-gh200]
-  image: opensuse/leap:15.5
+  extends: .container-runner-lightweight-gh200
+  image: jfrog.svc.cscs.ch/dockerhub/opensuse/leap:15.5
   stage: run
   script:
-    - echo "With quotes: $VAR_IN_QUOTES"
-    - echo "Without quotes: $VAR_NO_QUOTES"
+    - 'echo "With quotes: $VAR_IN_QUOTES"'
+    - 'echo "Without quotes: $VAR_NO_QUOTES"'
   variables:
     VAR_IN_QUOTES: "00:30:00"
     VAR_NO_QUOTES: 00:30:00
