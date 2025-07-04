@@ -19,6 +19,12 @@ cleanup rfm:
           tar -czf "$dir.tar.gz" "$dir"
           rm -Rf "$dir"
       done
+      git clone https://github.com/bcumming/spack-cache-util
+      cd spack-cache-util
+      export PATH=/capstor/scratch/cscs/anfink/shared:$PATH
+      ./signatures.sh $SCRATCH/uenv-cache/user-environment/build_cache
+      ./signatures.sh $SCRATCH/uenv-cache/user-environment/build_cache
+      quota
   variables:
     SLURM_PARTITION: xfer
     SLURM_TIMELIMIT: '02:00:00'
