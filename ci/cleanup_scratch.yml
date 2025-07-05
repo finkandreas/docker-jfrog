@@ -19,7 +19,15 @@ cleanup rfm:
           tar -czf "$dir.tar.gz" "$dir"
           rm -Rf "$dir"
       done
-      popd
+    - quota
+  variables:
+    SLURM_PARTITION: xfer
+    SLURM_TIMELIMIT: '02:00:00'
+
+cleanup spack-cache:
+  extends: .baremetal-runner-daint-gh200
+  stage: cleanup
+  script:
     - git clone https://github.com/bcumming/spack-cache-util
     - cd spack-cache-util
     - export PATH=/capstor/scratch/cscs/anfink/shared:$PATH
