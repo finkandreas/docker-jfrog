@@ -25,6 +25,7 @@ cleanup rfm:
     - export PATH=/capstor/scratch/cscs/anfink/shared:$PATH
     - ./signatures.sh $SCRATCH/uenv-cache/user-environment/build_cache
     - ./signatures.sh $SCRATCH/uenv-cache/user-environment/build_cache
+    - find $SCRATCH/firecrest/ -type f -atime +40 | wc -l
     - quota
   variables:
     SLURM_PARTITION: xfer
