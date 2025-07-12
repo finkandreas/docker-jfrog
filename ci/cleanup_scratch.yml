@@ -34,6 +34,12 @@ cleanup spack-cache:
     - ./signatures.sh $SCRATCH/uenv-cache/user-environment/build_cache
     - ./signatures.sh $SCRATCH/uenv-cache/user-environment/build_cache
     - find $SCRATCH/firecrest/ -type f -atime +40 | wc -l
+    - |
+      if [[ (date '+%u') -eq 6 ]] ; then
+        echo "Cleaning up empty directories and broken symlinks"
+        find $SCRATCH -xtype l -ctime +30 -delete
+        find $SCRATCH -type d -empty -ctime +30 -delete
+      fi
     - quota
   variables:
     SLURM_PARTITION: xfer
