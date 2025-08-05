@@ -19,10 +19,20 @@ cleanup rfm:
           tar -czf "$dir.tar.gz" "$dir"
           rm -Rf "$dir"
       done
+      pushd /iopsstor/scratch/cscs/$(id -un)
+      for dir in $(find . -maxdepth 1 -name "rfm_mlperf*" -ctime +1 -type d) ; do
+          echo "Cleaning up mlperf directory at $dir"
+          rm -Rf "$dir"
+      done
+      for dir in $(find . -maxdepth 1 -name "rfm-*" -ctime +1 -type d) ; do
+          echo "Creating tar archive of $dir"
+          tar -czf "$dir.tar.gz" "$dir"
+          rm -Rf "$dir"
+      done
     - quota
   variables:
     SLURM_PARTITION: xfer
-    SLURM_TIMELIMIT: '02:00:00'
+    SLURM_TIMELIMIT: '16:00:00'
 
 cleanup spack-cache:
   extends: .baremetal-runner-daint-gh200
