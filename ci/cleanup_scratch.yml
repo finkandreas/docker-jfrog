@@ -6,6 +6,7 @@ stages:
 
 cleanup rfm:
   extends: .baremetal-runner-daint-gh200
+  timeout: 40h
   stage: cleanup
   script:
     - |
