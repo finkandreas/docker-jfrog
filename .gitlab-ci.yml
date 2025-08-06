@@ -46,12 +46,11 @@ stages:
 #    PERSIST_IMAGE_NAME: discard
 
 test lightweight aarch64:
-  extends: .container-runner-lightweight-gh200
-  image: jfrog.svc.cscs.ch/dockerhub/opensuse/leap:15.5
+  extends: .container-runner-lightweight-eiger-zen2
+  image: $CSCS_REGISTRY_PATH/jfrog.svc.cscs.ch/cpu-gcc-mkl-dlaff:test
   stage: run
   script:
-    - 'echo "With quotes: $VAR_IN_QUOTES"'
-    - 'echo "Without quotes: $VAR_NO_QUOTES"'
+    - hostname
   variables:
     VAR_IN_QUOTES: "04:00:00"
     VAR_NO_QUOTES: 04:00:00
