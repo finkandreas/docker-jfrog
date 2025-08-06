@@ -47,7 +47,7 @@ stages:
 
 test lightweight aarch64:
   extends: .container-runner-eiger-zen2
-  image: $CSCS_REGISTRY_PATH/jfrog.svc.cscs.ch/cpu-gcc-mkl-dlaff:test
+  image: $CSCS_REGISTRY_PATH/cpu-gcc-mkl-dlaff:test
   stage: run
   script:
     - hostname
