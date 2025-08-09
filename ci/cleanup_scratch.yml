@@ -48,7 +48,7 @@ cleanup spack-cache:
     - |
       if [[ $(date '+%u') -eq 6 ]] ; then
         echo "Cleaning up empty directories and broken symlinks"
-  find $SCRATCH -mindepth 1 -maxdepth 1 -type d -ctime +30 -exec bash -c 'if [[ $(find {} -type f | wc -l) -eq 0 ]] ; then echo Deleting directory {} ; rm -Rf {} ; else touch {} ; fi' \;
+        find $SCRATCH -mindepth 1 -maxdepth 1 -type d -ctime +30 -exec bash -c 'if [[ $(find {} -type f | wc -l) -eq 0 ]] ; then echo Deleting directory {} ; rm -Rf {} ; else touch {} ; fi' \;
       fi
     - quota
   variables:
