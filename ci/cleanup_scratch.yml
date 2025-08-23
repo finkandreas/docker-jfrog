@@ -17,7 +17,7 @@ cleanup rfm:
       done
       for dir in $(find . -maxdepth 1 -name "rfm-*" -ctime +1 -type d) ; do
           echo "Creating tar archive of $dir"
-          tar -czf "$dir.tar.gz" "$dir"
+          tar -czf --exclude="checkpoints/iter*" "$dir.tar.gz" "$dir"
           rm -Rf "$dir"
       done
       pushd /iopsstor/scratch/cscs/$(id -un)
@@ -27,7 +27,7 @@ cleanup rfm:
       done
       for dir in $(find . -maxdepth 1 -name "rfm-*" -ctime +1 -type d) ; do
           echo "Creating tar archive of $dir"
-          tar -czf "$dir.tar.gz" "$dir"
+          tar -czf --exclude="checkpoints/iter*" "$dir.tar.gz" "$dir"
           rm -Rf "$dir"
       done
     - quota
