@@ -47,6 +47,7 @@ stages:
 
 test lightweight aarch64:
   extends: .container-runner-daint-gh200
+  tags: [f7t-runner-tds]
   image: $CSCS_REGISTRY_PATH/cpu-gcc-mkl-dlaff:test
   stage: run
   script:
