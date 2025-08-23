@@ -46,7 +46,7 @@ stages:
 #    PERSIST_IMAGE_NAME: discard
 
 test lightweight aarch64:
-  extends: .container-runner-eiger-zen2
+  extends: .container-runner-daint-gh200
   image: $CSCS_REGISTRY_PATH/cpu-gcc-mkl-dlaff:test
   stage: run
   script:
