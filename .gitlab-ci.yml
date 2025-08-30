@@ -1,34 +1,80 @@
 include:
-  - remote: 'https://gitlab.com/cscs-ci/recipes/-/raw/master/templates/v2/.ci-ext.yml'
+  - remote: 'https://gitlab.com/cscs-ci/recipes/-/raw/master/templates/v2/.ci-ext-devel.yml'
+
+.container-builder-k8s:
+  tags: [rosa-k8s-development]
+  image: docker.io/finkandreas/cicd-ext-k8s-container-image-builder:podman-4.3.1
+  script:
+    - build_new_container
 
 stages:
+  - build_base
   - build
   - run
 
 variables:
   # CI_PROJECT_NAME==docker-jfrog - 1:0 is the version tag, if you want to tag each run, also use CI_COMMIT_SHA
-  PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/my_cool_image:1.0
+  PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/subdirectory/my_cool_image:$CI_COMMIT_SHA
+
+
+test mounts daint:
+  extends: .container-runner-daint-gpu
+  stage: build_base
+  image: ubuntu:22.04
+  script:
+    - ls -lh /users/icontest/pool/data
+  variables:
+    CSCS_NEEDED_DATA: icondata
+
+build baseimage:
+  extends: .container-builder-k8s
+  stage: build_base
+  before_script:
+    - DOCKER_TAG=`sha256sum docker/Dockerfile.base | head -c 16`
+    - export PERSIST_IMAGE_NAME=$CSCS_REGISTRY_PATH/baseimage/cpu_base:$DOCKER_TAG
+    - echo "BASE_IMAGE=$PERSIST_IMAGE_NAME" >> build.env
+    - id
+  artifacts:
+    reports:
+      dotenv: build.env
+  variables:
+    DOCKERFILE: docker/Dockerfile.base
+
 
 build:
-    extends: .container-builder
-    stage: build
-    image: ubuntu:22.04
-    script:
-      - apt-get update
-      - env DEBIAN_FRONTEND=noninteractive TZ=Europe/Zurich apt-get -yqq install --no-install-recommends build-essential cmake
-      - mkdir build
-      - cd build
-      - cmake -DCMAKE_INSTALL_PREFIX=/opt/hello ..
-      - make -j2
-      - make install
+  extends: .container-builder-k8s
+  stage: build
+  before_script:
+    - env
+    - capsh --print
+    - podman run --rm ubuntu:22.04
+  variables:
+    DOCKERFILE: docker/Dockerfile.ubuntu
+    DOCKER_BUILD_ARGS: '["BASE_IMAGE=$BASE_IMAGE"]'
+    GIT_SUBMODULE_STRATEGY: recursive
+    CSCS_REBUILD_POLICY: always
+
 
 run:
-  extends: .container-runner-muttler
+  extends: .container-runner-hohgant
   stage: run
   image: ${PERSIST_IMAGE_NAME}
   script:
+    - echo $CSCS_SKIP_GIT_CLONE_SARUS_RUNNER
     - /opt/hello/bin/hello
   variables:
-    SLURM_JOB_NUM_NODES: 2
-    SLURM_PARTITION: normal
+    USE_MPI: 'YES'
+    SLURM_JOB_NUM_NODES: 1
+    SLURM_PARTITION: amdgpu
     SLURM_NTASKS: 2
+
+# clone:
+#   tags: ['docker_jfrog']
+#   stage: run
+#   script:
+#     - 'true'
+#   when: manual
+#   variables:
+#     CLONE_IMAGE_NAME: finkandreas/skopeo_copy_test:1.0
+#     CLONE_REGISTRY_USER: finkandreas
+#     RUNNER_MODE: CLONE_IMAGE
