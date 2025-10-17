@@ -52,7 +52,9 @@ test container-runner aarch64:
   stage: run
   script:
     - hostname
+    - sleep 600
   variables:
+    GIT_STRATEGY: fetch
     SLURM_PARTITION: debug
     CSCS_GLR_F7T_IMPL: 'registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:b59af30e'
     CSCS_OVERRIDE_BASE_DIR: '/dev/shm'
