@@ -48,7 +48,7 @@ stages:
 test container-runner aarch64:
   extends: .container-runner-daint-gh200
   tags: [f7t-runner-tds]
-  image: jforg.svc.cscs.ch/dockerhub/ubuntu:24.40
+  image: jfrog.svc.cscs.ch/dockerhub/ubuntu:24.04
   stage: run
   script:
     - hostname
