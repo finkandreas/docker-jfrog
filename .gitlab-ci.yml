@@ -45,14 +45,17 @@ stages:
 #    DOCKERFILE: docker/Dockerfile.test
 #    PERSIST_IMAGE_NAME: discard
 
-test lightweight aarch64:
+test container-runner aarch64:
   extends: .container-runner-daint-gh200
   tags: [f7t-runner-tds]
-  image: $CSCS_REGISTRY_PATH/cpu-gcc-mkl-dlaff:test
+  image: jforg.svc.cscs.ch/dockerhub/ubuntu:24.40
   stage: run
   script:
     - hostname
   variables:
+    SLURM_PARTITION: debug
+    GLR_F7T_IMPL: 'registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:b59af30e'
+    CSCS_OVERRIDE_BASE_DIR: '/dev/shm'
     VAR_IN_QUOTES: "04:00:00"
     VAR_NO_QUOTES: 04:00:00
 
