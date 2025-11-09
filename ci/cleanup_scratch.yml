@@ -57,8 +57,6 @@ cleanup spack-cache:
         find $SCRATCH/gitlab-runner/cache -mindepth 2 -maxdepth 2 -type d -ctime +30 -exec bash -c 'if [[ $(find {} -type f | wc -l) -eq 0 ]] ; then echo Deleting directory {} ; rm -Rf {} ; else touch {} ; fi' \;
         find $SCRATCH/gitlab-runner/f7t -mindepth 2 -maxdepth 2 -type d -empty -delete
         find $SCRATCH/gitlab-runner/f7t -mindepth 2 -maxdepth 2 -type d -ctime +30 -exec bash -c 'if [[ $(find {} -type f | wc -l) -eq 0 ]] ; then echo Deleting directory {} ; rm -Rf {} ; else touch {} ; fi' \;
-        find $SCRATCH/gitlab-runner/builds -mindepth 3 -maxdepth 3 -type d -empty -delete
-        find $SCRATCH/gitlab-runner/builds -mindepth 3 -maxdepth 3 -type d -ctime +30 -exec bash -c 'if [[ $(find {} -type f | wc -l) -eq 0 ]] ; then echo Deleting directory {} ; rm -Rf {} ; else touch {} ; fi' \;
         set +x
       fi
     - quota
