@@ -2,33 +2,88 @@ include:
   - remote: 'https://gitlab.com/cscs-ci/recipes/-/raw/master/templates/v2/.ci-ext.yml'
 
 stages:
+  - build_base
   - build
   - run
 
 variables:
   # CI_PROJECT_NAME==docker-jfrog - 1:0 is the version tag, if you want to tag each run, also use CI_COMMIT_SHA
-  PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/my_cool_image:1.0
+  PERSIST_IMAGE_NAME_HOHGANT: $CSCS_REGISTRY_PATH/osu-micro-benchmarks:hohgant-$CI_COMMIT_SHA
+  PERSIST_IMAGE_NAME_DAINT: $CSCS_REGISTRY_PATH/osu-micro-benchmarks:daint-$CI_COMMIT_SHA
 
-build:
-    extends: .container-builder
-    stage: build
-    image: ubuntu:22.04
-    script:
-      - apt-get update
-      - env DEBIAN_FRONTEND=noninteractive TZ=Europe/Zurich apt-get -yqq install --no-install-recommends build-essential cmake
-      - mkdir build
-      - cd build
-      - cmake -DCMAKE_INSTALL_PREFIX=/opt/hello ..
-      - make -j2
-      - make install
-
-run:
-  extends: .container-runner-muttler
-  stage: run
-  image: ${PERSIST_IMAGE_NAME}
-  script:
-    - /opt/hello/bin/hello
+build base hohgant:
+  extends: .container-builder-dynamic-name
+  stage: build_base
   variables:
-    SLURM_JOB_NUM_NODES: 2
-    SLURM_PARTITION: normal
+    DOCKERFILE: docker/Dockerfile.base
+    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/base/osu-micro-benchmarks-hohgant
+    WATCH_FILECHANGES: 'docker/Dockerfile.base'
+    DOCKER_BUILD_ARGS: '["SYSTEM=hohgant-cpu"]'
+
+
+build hohgant:
+  extends: .container-builder
+  stage: build
+  dependencies: ['build base hohgant']
+  variables:
+    DOCKERFILE: docker/Dockerfile
+    PERSIST_IMAGE_NAME: $PERSIST_IMAGE_NAME_HOHGANT
+    DOCKER_BUILD_ARGS: '["BASE_IMAGE=$BASE_IMAGE"]'
+
+build base daint:
+  extends: .container-builder-dynamic-name
+  stage: build_base
+  variables:
+    DOCKERFILE: docker/Dockerfile.base
+    WATCH_FILECHANGES: 'docker/Dockerfile.base'
+    PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/base/osu-micro-benchmarks-daint
+    DOCKER_BUILD_ARGS: '["SYSTEM=daint-mc"]'
+
+build daint:
+  extends: .container-builder
+  stage: build
+  dependencies: ['build base daint']
+  before_script:
+    - env | grep MY_TEST_VAR || true
+  variables:
+    DOCKERFILE: docker/Dockerfile
+    PERSIST_IMAGE_NAME: $PERSIST_IMAGE_NAME_DAINT
+    DOCKER_BUILD_ARGS: '["BASE_IMAGE=$BASE_IMAGE"]'
+
+test osu hohgant:
+  extends: .container-runner-hohgant-zen2
+  stage: run
+  image: $PERSIST_IMAGE_NAME_HOHGANT
+  script:
+    - /opt/hello_mpi
+    - /opt/hello_mpi
+    - sleep 800
+    - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_latency
+    - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_latency
+    - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_bw
+    - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_bw
+  variables:
+    SLURM_JOB_NUM_NODES: 1
     SLURM_NTASKS: 2
+    SLURM_CPUS_PER_TASK: 8
+    USE_MPI: 'YES'
+  rules:
+    - if: $CRON_RUN != "true"
+
+test osu daint:
+  extends: .container-runner-daint-mc
+  stage: run
+  image: $PERSIST_IMAGE_NAME_DAINT
+  script:
+    - env | grep $CI_RUNNER_SHORT_TOKEN
+    - /opt/hello_mpi
+    - /opt/hello_mpi
+    - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_latency
+    - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_latency
+    - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_bw
+    - /opt/view/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_bw
+  variables:
+    SLURM_JOB_NUM_NODES: 1
+    SLURM_NTASKS: 2
+    SLURM_CPUS_PER_TASK: 8
+    USE_MPI: 'YES'
