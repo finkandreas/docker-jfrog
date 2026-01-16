@@ -12,23 +12,40 @@ variables:
 build:
     extends: .container-builder
     stage: build
-    image: ubuntu:22.04
-    script:
-      - apt-get update
-      - env DEBIAN_FRONTEND=noninteractive TZ=Europe/Zurich apt-get -yqq install --no-install-recommends build-essential cmake
-      - mkdir build
-      - cd build
-      - cmake -DCMAKE_INSTALL_PREFIX=/opt/hello ..
-      - make -j2
-      - make install
+    variables:
+      DOCKERFILE: docker/Dockerfile
+      CSCS_REBUILD_POLICY: always
 
-run:
-  extends: .container-runner-muttler
+run container:
   stage: run
-  image: ${PERSIST_IMAGE_NAME}
-  script:
-    - /opt/hello/bin/hello
+  tags: [clariden-container-runner]
+  image: $PERSIST_IMAGE_NAME
   variables:
-    SLURM_JOB_NUM_NODES: 2
-    SLURM_PARTITION: normal
-    SLURM_NTASKS: 2
+    PULL_IMAGE: 'YES'
+    SLURM_PARTITION: amdgpu
+  script:
+    - pwd
+    - ls -alh
+    - hostname
+    - cat /etc/os-release
+
+run baremetal slurm:
+  stage: run
+  tags: [clariden-slurm-baremetal]
+  variables:
+    SLURM_PARTITION: nvgpu
+  script:
+    - pwd
+    - ls -alh
+    - env | grep SLURM_
+    - hostname
+    - cat /etc/os-release
+
+run baremetal:
+  stage: run
+  tags: [clariden-login-baremetal]
+  script:
+    - pwd
+    - ls -alh
+    - hostname
+    - cat /etc/os-release

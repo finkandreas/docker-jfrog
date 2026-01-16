@@ -9,24 +9,24 @@ variables:
   # CI_PROJECT_NAME==docker-jfrog - 1:0 is the version tag, if you want to tag each run, also use CI_COMMIT_SHA
   PERSIST_IMAGE_NAME: ${CSCS_REGISTRY_PATH}/my_p100_image:1.0
 
-build:
-    tags: ["buildah-jfrog"]
-    stage: build
-    image: $CSCS_REGISTRY_PATH/baseimage:1.0
-    script:
-      - mkdir build
-      - cd build
-      - cmake -DCMAKE_INSTALL_PREFIX=/opt/hello2 ..
-      - make -j2
-      - make install
-
-run:
-  extends: .container-runner-muttler
-  stage: run
-  image: ${PERSIST_IMAGE_NAME}
-  script:
-    - /opt/hello2/bin/hello
-  variables:
-    SLURM_JOB_NUM_NODES: 2
-    SLURM_PARTITION: normal
-    SLURM_NTASKS: 2
+    #build:
+    #    tags: ["buildah-jfrog"]
+    #    stage: build
+    #    image: $CSCS_REGISTRY_PATH/baseimage:1.0
+    #    script:
+    #      - mkdir build
+    #      - cd build
+    #      - cmake -DCMAKE_INSTALL_PREFIX=/opt/hello2 ..
+    #      - make -j2
+    #      - make install
+    #
+    #run:
+    #  extends: .container-runner-muttler
+    #  stage: run
+    #  image: ${PERSIST_IMAGE_NAME}
+    #  script:
+    #    - /opt/hello2/bin/hello
+    #  variables:
+    #    SLURM_JOB_NUM_NODES: 2
+    #    SLURM_PARTITION: normal
+    #    SLURM_NTASKS: 2
