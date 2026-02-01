@@ -46,9 +46,8 @@ stages:
 #    PERSIST_IMAGE_NAME: discard
 
 test container-runner aarch64:
-  extends: .container-runner-daint-gh200
+  extends: .baremetal-runner-eiger-zen2
   tags: [f7t-runner-tds]
-  image: jfrog.svc.cscs.ch/dockerhub/ubuntu:24.04
   stage: run
   script:
     - hostname
@@ -57,8 +56,7 @@ test container-runner aarch64:
     GIT_STRATEGY: fetch
     SLURM_PARTITION: debug
     CSCS_OVERRIDE_BASE_DIR: '/dev/shm'
-    VAR_IN_QUOTES: "04:00:00"
-    VAR_NO_QUOTES: 04:00:00
+    GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:138a7e07
 
 
 #test:
