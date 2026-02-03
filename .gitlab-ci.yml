@@ -60,7 +60,7 @@ test container-runner aarch64:
     GIT_STRATEGY: fetch
     SLURM_PARTITION: debug
     CSCS_OVERRIDE_BASE_DIR: '/dev/shm'
-    GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:29e4e362
+    GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:0b315b4e
     SLURM_TIMELIMIT: '00:15:30'
 
 
