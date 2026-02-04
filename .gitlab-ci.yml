@@ -52,18 +52,18 @@ test container-runner aarch64:
   stage: run
   script:
     - hostname
-#    - |
-#      for i in {1..1000} ; do
-#        sleep 0.1
-#        echo "test $i"
-#      done
+    - |
+      for i in {1..1000} ; do
+        sleep 0.1
+        echo "test $i"
+      done
   variables:
     GIT_STRATEGY: fetch
     SLURM_PARTITION: debug
     CSCS_OVERRIDE_BASE_DIR: '/dev/shm'
     CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:2c3f1671
     CSCS_GLR_F7T_ADDR: cicd-ext.tds.cscs.ch
-    SLURM_TIMELIMIT: '00:30:30'
+    SLURM_TIMELIMIT: '00:01:30'
 
 
 #test:
