@@ -59,7 +59,7 @@ test container-runner aarch64:
       done
   variables:
     GIT_STRATEGY: fetch
-    SLURM_PARTITION: debug
+    #SLURM_PARTITION: debug
     CSCS_OVERRIDE_BASE_DIR: '/dev/shm'
     CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:2c3f1671
     CSCS_GLR_F7T_ADDR: cicd-ext.tds.cscs.ch
