@@ -47,7 +47,7 @@ stages:
 
 
 ippl-build-rocm6_3-debug:
-  stage: ippl_build
+  stage: run
   image: "${ROCM6_3_UENV}"
   extends: [.uenv-runner-beverin-mi300]
   variables:
