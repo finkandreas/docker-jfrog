@@ -72,7 +72,7 @@ cleanup ciext logs:
     # delete log files and only keep tar archive in case inspection is needed at a later time
     # do not delete tar archives and leave this to the cleanup policy of scratch
     - cd $SCRATCH/ciext_logs
-    - TIMESTAMP=$(date +"%Y-%m-%d")
+    - TIMESTAMP=$(date +"%s")
     - mkdir -p $TIMESTAMP
     - find . -mindepth 1 -maxdepth 1 -mtime +1 -name "*.log" -exec mv --target $TIMESTAMP {} +
     - tar -cvzf $TIMESTAMP.tar.gz $TIMESTAMP
