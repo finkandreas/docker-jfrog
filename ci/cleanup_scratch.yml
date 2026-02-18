@@ -63,3 +63,22 @@ cleanup spack-cache:
   variables:
     SLURM_PARTITION: xfer
     SLURM_TIMELIMIT: '02:00:00'
+
+cleanup ciext logs:
+  extends: .baremetal-runner-daint-gh200
+  stage: cleanup
+  script:
+    # get all log files older than 1 day, and pack into a tar-archive
+    # delete log files and only keep tar archive in case inspection is needed at a later time
+    # do not delete tar archives and leave this to the cleanup policy of scratch
+    - cd $SCRATCH/ciext_logs
+    - TIMESTAMP=$(date +"%Y-%m-%d")
+    - mkdir -p $TIMESTAMP
+    - find . -mindepth 1 -maxdepth 1 -mtime +1 -name "*.log" -exec mv --target $TIMESTAMP {} +
+    - tar -cvzf $TIMESTAMP.tar.gz $TIMESTAMP
+    - rm -Rf $TIMESTAMP
+  variables:
+    F7T_CLIENT_ID: $F7T_ANFINK_CLIENT_ID
+    F7T_CLIENT_SECRET: $F7T_ANFINK_CLIENT_SECRET
+    SLURM_PARTITION: xfer
+    SLURM_TIMELIMIT: '00:30:00'
