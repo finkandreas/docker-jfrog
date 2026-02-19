@@ -77,7 +77,7 @@ cleanup ciext logs:
     - find . -mindepth 1 -maxdepth 1 -mtime +1 -name "*.log" -exec mv --target $TIMESTAMP {} +
     - grep WARN $TIMESTAMP/*.log
     - grep ERROR $TIMESTAMP/*.log
-    - tar -cvzf $TIMESTAMP.tar.gz $TIMESTAMP
+    - tar -czf $TIMESTAMP.tar.gz $TIMESTAMP
     - rm -Rf $TIMESTAMP
   variables:
     F7T_CLIENT_ID: $F7T_ANFINK_CLIENT_ID
