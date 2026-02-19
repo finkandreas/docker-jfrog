@@ -75,8 +75,8 @@ cleanup ciext logs:
     - TIMESTAMP=$(date +"%s")
     - mkdir -p $TIMESTAMP
     - find . -mindepth 1 -maxdepth 1 -mtime +1 -name "*.log" -exec mv --target $TIMESTAMP {} +
-    - grep WARN $TIMESTAMP/*.log
-    - grep ERROR $TIMESTAMP/*.log
+    - grep WARN $TIMESTAMP/*.log || true # non fatal if nothing found
+    - grep ERROR $TIMESTAMP/*.log || true # non fatal if nothing found
     - tar -czf $TIMESTAMP.tar.gz $TIMESTAMP
     - rm -Rf $TIMESTAMP
   variables:
