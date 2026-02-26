@@ -1,34 +1,104 @@
 include:
-  - remote: 'https://gitlab.com/cscs-ci/recipes/-/raw/master/templates/v2/.ci-ext.yml'
+  - remote: 'https://gitlab.com/cscs-ci/recipes/-/raw/master/templates/v2/.ci-ext-devel.yml'
 
 stages:
-  - build
   - run
 
-variables:
-  # CI_PROJECT_NAME==docker-jfrog - 1:0 is the version tag, if you want to tag each run, also use CI_COMMIT_SHA
-  PERSIST_IMAGE_NAME: $CSCS_REGISTRY_PATH/my_cool_image:1.0
+#test:
+#  extends: .container-runner-daint-gh200
+#  stage: run
+#  image: docker.io/ubuntu:24.04
+#  script:
+#    - env | grep -iv token
+#    - cat /etc/os-release
 
-build:
-    extends: .container-builder
-    stage: build
-    image: ubuntu:22.04
-    script:
-      - apt-get update
-      - env DEBIAN_FRONTEND=noninteractive TZ=Europe/Zurich apt-get -yqq install --no-install-recommends build-essential cmake
-      - mkdir build
-      - cd build
-      - cmake -DCMAKE_INSTALL_PREFIX=/opt/hello ..
-      - make -j2
-      - make install
+#test:
+#  extends: .baremetal-runner-santis-gh200
+#  stage: run
+#  script:
+#    - uenv repo create || true
+#    - uenv image pull prgenv-gnu/24.11:v1
+#    - env | grep SLURM_
+#    - srun --uenv=prgenv-gnu/24.11:v1 bash -c 'hostname ; env | grep SLURM_ ; srun -n 288 --threads-per-core=1 --distribution=block:block:block hostname'
+#  variables:
+#    GIT_STRATEGY: none
+#    SLURM_TIMELIMIT: '00:20:00'
+#    SLURM_PARTITION: debug
 
-run:
-  extends: .container-runner-muttler
+#test:
+#  tags: [zinal-login-baremetal]
+#  stage: run
+#  script:
+#    - hostname
+#    - pwd
+#    - env
+
+#test:
+#  extends: .container-builder-cscs-gh200
+#  stage: run
+#  timeout: 1h
+#  tags: [languard-k8s-development]
+#  script:
+#    - env | grep -i proxy
+#    - build_new_container
+#  variables:
+#    DOCKERFILE: docker/Dockerfile.test
+#    PERSIST_IMAGE_NAME: discard
+
+
+test container-runner aarch64:
+  extends: .baremetal-runner-daint-gh200
+  tags: [f7t-runner-tds]
   stage: run
-  image: ${PERSIST_IMAGE_NAME}
   script:
-    - /opt/hello/bin/hello
+    - declare -x
+    - uenv -vv run --view=default prgenv-gnu/24.7:v3 -- gcc --version
+    - hostname
+#    - |
+#      for i in {1..30} ; do
+#        sleep 0.3
+#        echo "test $i"
+#      done
   variables:
-    SLURM_JOB_NUM_NODES: 2
-    SLURM_PARTITION: normal
-    SLURM_NTASKS: 2
+    GIT_STRATEGY: fetch
+    SLURM_PARTITION: debug
+    SLURM_JOB_NUM_NODES: 1
+    CSCS_OVERRIDE_BASE_DIR: '/dev/shm'
+    #CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:2c3f1671
+    CSCS_GLR_F7T_ADDR: cicd-ext.tds.cscs.ch
+    SLURM_TIMELIMIT: '00:10:30'
+    #SLURM_ACCOUNT: 'a-djenkssl'
+
+
+#test:
+#  extends: .container-runner-daint-gh200
+#  stage: run
+#  image: docker.io/ubuntu:24.04
+#  hooks:
+#    pre_get_sources_script:
+#      - echo "This is from the pre_get_sources_script"
+#      - pwd
+#  script:
+#    - hostname
+#    - cat /etc/os-release
+#  variables:
+#    SLURM_TIMELIMIT: '00:05:00'
+#    SLURM_PARTITION: debug
+
+    #test:
+    #  extends: .uenv-builder-todi-gh200
+    #  stage: run
+    #  variables:
+    #    UENV_RECIPE: uenv-recipes/prgenv-gnu/24.11/gh200
+    #    UENV_NAME: linalg
+    #    UENV_VERSION: 24.11
+    #    SPACK_DEVELOP: '-d'
+
+  #test uenv run:
+  #  extends: .uenv-runner-eiger-zen2
+  #  needs: ['test']
+  #  stage: run
+  #  image: 'prgenv-gnu/24.7:$CI_PIPELINE_ID'
+  #  script:
+  #    - uenv view develop
+  #    - mpic++ --version
