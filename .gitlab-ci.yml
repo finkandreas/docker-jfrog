@@ -53,11 +53,15 @@ test container-runner aarch64:
   script:
     - uenv -vv run --view=default prgenv-gnu/24.7:v3 -- gcc --version
     - hostname
+    - exit 2
 #    - |
 #      for i in {1..30} ; do
 #        sleep 0.3
 #        echo "test $i"
 #      done
+  retry:
+    max: 1
+    exit_codes: 2
   variables:
     GIT_STRATEGY: fetch
     SLURM_PARTITION: debug
