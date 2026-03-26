@@ -71,6 +71,8 @@ test container-runner aarch64:
     #CSCS_GLR_F7T_ADDR: cicd-ext.tds.cscs.ch
     SLURM_TIMELIMIT: '00:10:30'
     #SLURM_ACCOUNT: 'a-djenkssl'
+    F7T_CLIENT_ID: 'api-key'
+    F7T_CLIENT_SECRET: $API_KEY
 
 
 #test:
