@@ -52,7 +52,7 @@ test-daint:
   script:
     - uenv -vv run --view=default prgenv-gnu/24.7:v3 -- gcc --version
     - hostname
-    - exit 2
+    - exit 3
 #    - |
 #      for i in {1..30} ; do
 #        sleep 0.3
