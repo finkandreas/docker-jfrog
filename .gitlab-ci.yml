@@ -59,7 +59,7 @@ test-daint:
 #        echo "test $i"
 #      done
   retry:
-    max: 1
+    max: 2
     exit_codes: 2
   variables:
     GIT_STRATEGY: fetch
