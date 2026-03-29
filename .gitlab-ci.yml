@@ -47,6 +47,7 @@ stages:
 
 test-daint:
   tags: [f7t-runner-tds]
+  extends: .baremetal-runner-daint-gh200
   stage: run
   script:
     - uenv -vv run --view=default prgenv-gnu/24.7:v3 -- gcc --version
