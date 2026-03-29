@@ -45,8 +45,6 @@ stages:
 #    DOCKERFILE: docker/Dockerfile.test
 #    PERSIST_IMAGE_NAME: discard
 
-.test-api-key:
-
 test-daint:
   tags: [f7t-runner-tds]
   stage: run
