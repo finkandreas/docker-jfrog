@@ -47,25 +47,24 @@ stages:
 
 test-daint:
   tags: [f7t-runner-tds]
-  extends: .baremetal-runner-daint-gh200
+  extends: .f7t-controller
   stage: run
   script:
-    - uenv -vv run --view=default prgenv-gnu/24.7:v3 -- gcc --version
-    - hostname
-    - exit 3
-#    - |
-#      for i in {1..30} ; do
-#        sleep 0.3
-#        echo "test $i"
-#      done
+    - set -x
+    - echo -e "#!/bin/bash\n#SBATCH -Cmc\n#SBATCH --account $CSCS_CI_DEFAULT_SLURM_ACCOUNT\n\nhostname | grep nid" > script.sh
+    - SUBMISSION="$(firecrest --debug submit --system eiger --working-dir=/capstor/scratch/cscs/svc_cicd_ext/firecrest/$CI_JOB_ID script.sh)"
+    - echo "$SUBMISSION"
+    - JOBID=$(echo "$SUBMISSION" | jq -r '.jobId')
+    - firecrest wait-for-job --system eiger $JOBID
   variables:
     GIT_STRATEGY: fetch
     SLURM_PARTITION: debug
     SLURM_JOB_NUM_NODES: 1
     #CSCS_OVERRIDE_BASE_DIR: '/dev/shm'
-    #CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:2c3f1671
+    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:8c970ef9
     CSCS_GLR_F7T_ADDR: cicd-ext.tds.cscs.ch
     SLURM_TIMELIMIT: '00:10:30'
+    F7T_URL: 'https://api.cscs.ch/hpc/firecrest/v2'
     #SLURM_ACCOUNT: 'a-djenkssl'
 
 
