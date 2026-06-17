@@ -52,7 +52,7 @@ test-daint:
   script:
     - set -x
     - echo -e "#!/bin/bash\n#SBATCH -Cmc\n#SBATCH --account $CSCS_CI_DEFAULT_SLURM_ACCOUNT\n\nhostname | grep nid" > script.sh
-    - SUBMISSION="$(firecrest --debug submit --system eiger --working-dir=/capstor/scratch/cscs/svc_cicd_ext/firecrest/$CI_JOB_ID script.sh)"
+    - SUBMISSION="$(firecrest submit --system eiger --working-dir=/capstor/scratch/cscs/svc_cicd_ext/firecrest/$CI_JOB_ID script.sh)"
     - echo "$SUBMISSION"
     - JOBID=$(echo "$SUBMISSION" | jq -r '.jobId')
     - firecrest wait-for-job --system eiger $JOBID
