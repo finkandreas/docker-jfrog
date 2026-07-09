@@ -52,7 +52,7 @@ test-daint:
   script:
     - unset F7T_TDS_CLIENT_SECRET
     - declare -x
-    - srun --gpus-per-node=1 hostname
+    - srun --verbose hostname
   variables:
     SLURM_PARTITION: shared
     SLURM_JOB_NUM_NODES: 1
