@@ -46,11 +46,11 @@ stages:
 #    PERSIST_IMAGE_NAME: discard
 
 test-daint:
-  extends: .container-runner-santis-gh200
+  extends: .baremetal-runner-santis-gh200
   image: jfrog.svc.cscs.ch/docker-ci-ext/4455690602105886/public/aarch64/base/gt4py-ci-3.10:8285f8da6125aa6b
   stage: run
   script:
-    - hostname
+    - srun hostname
   variables:
     SLURM_PARTITION: shared
     SLURM_JOB_NUM_NODES: 1
