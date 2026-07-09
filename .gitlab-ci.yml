@@ -50,6 +50,7 @@ test-daint:
   #image: jfrog.svc.cscs.ch/docker-ci-ext/4455690602105886/public/aarch64/base/gt4py-ci-3.10:8285f8da6125aa6b
   stage: run
   script:
+    - declare -x
     - srun hostname
   variables:
     SLURM_PARTITION: shared
