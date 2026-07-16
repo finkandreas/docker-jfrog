@@ -4,37 +4,6 @@ include:
 stages:
   - cleanup
 
-cleanup rfm:
-  extends: .baremetal-runner-daint-gh200
-  timeout: 40h
-  stage: cleanup
-  script:
-    - |
-      pushd $SCRATCH
-      for dir in $(find . -maxdepth 1 -name "rfm_mlperf*" -ctime +1 -type d) ; do
-          echo "Cleaning up mlperf directory at $dir"
-          rm -Rf "$dir"
-      done
-      for dir in $(find . -maxdepth 1 -name "rfm-*" -ctime +1 -type d) ; do
-          echo "Creating tar archive of $dir"
-          tar --exclude="checkpoints/iter*" -czf "$dir.tar.gz" "$dir"
-          rm -Rf "$dir"
-      done
-      pushd /iopsstor/scratch/cscs/$(id -un)
-      for dir in $(find . -maxdepth 1 -name "rfm_mlperf*" -ctime +1 -type d) ; do
-          echo "Cleaning up mlperf directory at $dir"
-          rm -Rf "$dir"
-      done
-      for dir in $(find . -maxdepth 1 -name "rfm-*" -ctime +1 -type d) ; do
-          echo "Creating tar archive of $dir"
-          tar --exclude="checkpoints/iter*" -czf "$dir.tar.gz" "$dir"
-          rm -Rf "$dir"
-      done
-    - quota
-  variables:
-    SLURM_PARTITION: xfer
-    SLURM_TIMELIMIT: '16:00:00'
-
 cleanup spack-cache:
   extends: .baremetal-runner-daint-gh200
   stage: cleanup
@@ -44,21 +13,6 @@ cleanup spack-cache:
     - export PATH=/capstor/scratch/cscs/anfink/shared:$PATH
     - ./signatures.sh $SCRATCH/uenv-cache/user-environment/build_cache
     - ./signatures.sh $SCRATCH/uenv-cache/user-environment/build_cache
-    - find $SCRATCH/firecrest/ -type f -atime +40 | wc -l
-    - |
-      if [[ $(date '+%u') -eq 6 ]] ; then
-        set -x
-        echo "Cleaning up empty directories and broken symlinks"
-        find $SCRATCH -mindepth 1 -maxdepth 1 -type d -ctime +30 -empty -delete
-        find $SCRATCH -mindepth 1 -maxdepth 1 -type d -ctime +30 -exec bash -c 'if [[ $(find {} -type f | wc -l) -eq 0 ]] ; then echo Deleting directory {} ; rm -Rf {} ; else touch {} ; fi' \;
-        find $SCRATCH/firecrest -type d -empty -delete
-        find $SCRATCH/firecrest -mindepth 1 -maxdepth 1 -type d -ctime +30 -exec bash -c 'if [[ $(find {} -type f | wc -l) -eq 0 ]] ; then echo Deleting directory {} ; rm -Rf {} ; else touch {} ; fi' \;
-        find $SCRATCH/gitlab-runner/cache -mindepth 2 -maxdepth 2 -type d -empty -delete
-        find $SCRATCH/gitlab-runner/cache -mindepth 2 -maxdepth 2 -type d -ctime +30 -exec bash -c 'if [[ $(find {} -type f | wc -l) -eq 0 ]] ; then echo Deleting directory {} ; rm -Rf {} ; else touch {} ; fi' \;
-        find $SCRATCH/gitlab-runner/f7t -mindepth 2 -maxdepth 2 -type d -empty -delete
-        find $SCRATCH/gitlab-runner/f7t -mindepth 2 -maxdepth 2 -type d -ctime +30 -exec bash -c 'if [[ $(find {} -type f | wc -l) -eq 0 ]] ; then echo Deleting directory {} ; rm -Rf {} ; else touch {} ; fi' \;
-        set +x
-      fi
     - quota
   variables:
     SLURM_PARTITION: xfer
@@ -78,6 +32,7 @@ cleanup ciext logs:
     - tar -czf $TIMESTAMP.tar.gz $TIMESTAMP
     - tar -xzf $TIMESTAMP.tar.gz --to-command='grep --label=$TAR_FILENAME -H "\(WARN\|ERROR\)" ; true'
     - rm -Rf $TIMESTAMP
+    - echo "Number of tar.gz files: $(ls *.tar.gz | wc -l)"
   variables:
     F7T_CLIENT_ID: $F7T_ANFINK_CLIENT_ID
     F7T_CLIENT_SECRET: $F7T_ANFINK_CLIENT_SECRET
