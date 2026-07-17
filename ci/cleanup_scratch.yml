@@ -32,7 +32,7 @@ cleanup ciext logs:
     - tar -czf $TIMESTAMP.tar.gz $TIMESTAMP
     - tar -xzf $TIMESTAMP.tar.gz --to-command='grep --label=$TAR_FILENAME -H "\(WARN\|ERROR\)" ; true'
     - rm -Rf $TIMESTAMP
-    - echo "Number of tar.gz files: $(ls *.tar.gz | wc -l)"
+    - 'echo "Number of tar.gz files: $(ls *.tar.gz | wc -l)"'
   variables:
     F7T_CLIENT_ID: $F7T_ANFINK_CLIENT_ID
     F7T_CLIENT_SECRET: $F7T_ANFINK_CLIENT_SECRET
