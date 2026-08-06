@@ -57,6 +57,7 @@ stages:
     SLURM_PARTITION: mi300
 
 test-daint:
+  tags: [f7t-runner-tds]
   extends: .container-builder-cscs-mi300
   stage: run
   variables:
