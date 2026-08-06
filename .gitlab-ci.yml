@@ -45,25 +45,40 @@ stages:
 #    DOCKERFILE: docker/Dockerfile.test
 #    PERSIST_IMAGE_NAME: discard
 
-test-daint:
-  extends: .baremetal-runner-daint-gh200
-  tags: [f7t-runner-tds]
-  #image: jfrog.svc.cscs.ch/docker-ci-ext/4455690602105886/public/aarch64/base/gt4py-ci-3.10:8285f8da6125aa6b
-  stage: run
+.container-builder-cscs-mi300:
+  extends: [.f7t-runner, .beverin]
+  interruptible: true
   script:
-    - sleep 600
-    - unset F7T_TDS_CLIENT_SECRET
-    - declare -x
-    - srun --verbose hostname
+    - build_new_container
   variables:
-    SLURM_PARTITION: debug
-    SLURM_JOB_NUM_NODES: 1
-    #CSCS_OVERRIDE_BASE_DIR: '/dev/shm'
-    #CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:8c970ef9
-    #CSCS_GLR_F7T_ADDR: cicd-ext.tds.cscs.ch
-    SLURM_TIMELIMIT: '00:15:30'
-    #F7T_URL: 'https://api.cscs.ch/hpc/firecrest/v2'
-    #SLURM_ACCOUNT: 'a-djenkssl'
+    CSCS_RUNNER_MODE: 'container-builder'
+    CSCS_REBUILD_POLICY: "if-not-exists"
+    FIRECREST_SYSTEM: 'beverin'
+    SLURM_PARTITION: mi300
+
+test-daint:
+  extends: .container-builder-cscs-mi300
+  variables:
+    DOCKERFILE: docker/Dockerfile.test
+    PERSIST_IMAGE_NAME: discard
+
+  #tags: [f7t-runner-tds]
+  ##image: jfrog.svc.cscs.ch/docker-ci-ext/4455690602105886/public/aarch64/base/gt4py-ci-3.10:8285f8da6125aa6b
+  #stage: run
+  #script:
+  #  - sleep 600
+  #  - unset F7T_TDS_CLIENT_SECRET
+  #  - declare -x
+  #  - srun --verbose hostname
+  #variables:
+  #  SLURM_PARTITION: debug
+  #  SLURM_JOB_NUM_NODES: 1
+  #  #CSCS_OVERRIDE_BASE_DIR: '/dev/shm'
+  #  #CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-f7t-impl:8c970ef9
+  #  #CSCS_GLR_F7T_ADDR: cicd-ext.tds.cscs.ch
+  #  SLURM_TIMELIMIT: '00:15:30'
+  #  #F7T_URL: 'https://api.cscs.ch/hpc/firecrest/v2'
+  #  #SLURM_ACCOUNT: 'a-djenkssl'
 
 
 #test:
