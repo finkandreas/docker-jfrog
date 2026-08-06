@@ -63,8 +63,6 @@ test-daint:
   variables:
     DOCKERFILE: docker/Dockerfile.test
     PERSIST_IMAGE_NAME: discard
-    CSCS_GLR_F7T_IMPL: registry.gitlab.com/cscs-ci/ci-testing/webhook-ci/mirrors/1577408848687868/5855000443724573/glr-master:301c5e09
-    CONTAINER_NAME: ci-$CI_JOB_ID
 
   #tags: [f7t-runner-tds]
   ##image: jfrog.svc.cscs.ch/docker-ci-ext/4455690602105886/public/aarch64/base/gt4py-ci-3.10:8285f8da6125aa6b
