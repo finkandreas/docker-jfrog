@@ -58,6 +58,7 @@ stages:
 
 test-daint:
   extends: .container-builder-cscs-mi300
+  stage: run
   variables:
     DOCKERFILE: docker/Dockerfile.test
     PERSIST_IMAGE_NAME: discard
