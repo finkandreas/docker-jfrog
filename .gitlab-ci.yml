@@ -50,7 +50,7 @@ test-daint:
   extends: .baremetal-runner-daint-gh200
   stage: run
   script:
-    - hostname
+    - sleep 300
 
   #tags: [f7t-runner-tds]
   ##image: jfrog.svc.cscs.ch/docker-ci-ext/4455690602105886/public/aarch64/base/gt4py-ci-3.10:8285f8da6125aa6b
