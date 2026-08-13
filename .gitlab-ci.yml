@@ -45,24 +45,12 @@ stages:
 #    DOCKERFILE: docker/Dockerfile.test
 #    PERSIST_IMAGE_NAME: discard
 
-.container-builder-cscs-mi300:
-  extends: [.f7t-runner, .beverin]
-  interruptible: true
-  script:
-    - build_new_container
-  variables:
-    CSCS_RUNNER_MODE: 'container-builder'
-    CSCS_REBUILD_POLICY: "if-not-exists"
-    FIRECREST_SYSTEM: 'beverin'
-    SLURM_PARTITION: mi300
-
 test-daint:
   tags: [f7t-runner-tds]
-  extends: .container-builder-cscs-mi300
+  extends: .baremetal-runner-daint-gh200
   stage: run
-  variables:
-    DOCKERFILE: docker/Dockerfile.test
-    PERSIST_IMAGE_NAME: discard
+  script:
+    - hostname
 
   #tags: [f7t-runner-tds]
   ##image: jfrog.svc.cscs.ch/docker-ci-ext/4455690602105886/public/aarch64/base/gt4py-ci-3.10:8285f8da6125aa6b
