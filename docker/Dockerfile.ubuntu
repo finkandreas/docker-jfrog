@@ -1,0 +1,13 @@
+ARG BASE_IMAGE
+FROM $BASE_IMAGE
+
+ARG NUM_PROCS=1
+
+RUN cd /sourcecode \
+  && ls -lh --recursive \
+  && ls -lh test_submodule/test_file
+
+RUN mkdir /tmp/build && cd /tmp/build \
+  && cmake -DCMAKE_INSTALL_PREFIX=/opt/hello -DCMAKE_CXX_COMPILER=mpic++ /sourcecode \
+  && make -j$NUM_PROCS \
+  && make install
