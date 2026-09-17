@@ -33,26 +33,22 @@ stages:
 #    - pwd
 #    - env
 
-#test:
-#  extends: .container-builder-cscs-gh200
-#  stage: run
-#  timeout: 1h
-#  tags: [languard-k8s-development]
-#  script:
-#    - env | grep -i proxy
-#    - build_new_container
-#  variables:
-#    DOCKERFILE: docker/Dockerfile.test
-#    PERSIST_IMAGE_NAME: discard
-
-test-daint:
-  tags: [f7t-runner-tds]
-  extends: .baremetal-runner-daint-gh200
+test:
+  extends: .container-builder-cscs-gh200
   stage: run
-  script:
-    - hostname
+  timeout: 1h
   variables:
-    SLURM_PARTITION: debug
+    DOCKERFILE: docker/Dockerfile.test
+    PERSIST_IMAGE_NAME: discard
+
+#test-daint:
+#  tags: [f7t-runner-tds]
+#  extends: .baremetal-runner-daint-gh200
+#  stage: run
+#  script:
+#    - hostname
+#  variables:
+#    SLURM_PARTITION: debug
 
   #tags: [f7t-runner-tds]
   ##image: jfrog.svc.cscs.ch/docker-ci-ext/4455690602105886/public/aarch64/base/gt4py-ci-3.10:8285f8da6125aa6b

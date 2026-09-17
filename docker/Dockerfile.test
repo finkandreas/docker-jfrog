@@ -1,6 +1,9 @@
-FROM jfrog.svc.cscs.ch/dockerhub/opensuse/leap:15.5
+FROM jfrog.svc.cscs.ch/dockerhub/opensuse/leap:15.6
 
 ARG NUM_PROCS
 
-RUN cat /proc/cpuinfo && echo NUM_PROCS=$NUM_PROCS && uname -m
-RUN cat /etc/os-release
+RUN zypper install -y git
+RUN git clone https://github.com/pytorch/pytorch.git \
+  && cd pytorch \
+  && git checkout cf30153c4c131c8164ee7798e5022d810682e2cb \
+  && git -c advice.detachedHead=false submodule --quiet update --init --recursive
