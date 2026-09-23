@@ -38,3 +38,4 @@ cleanup ciext logs:
     F7T_CLIENT_SECRET: $F7T_ANFINK_CLIENT_SECRET
     SLURM_PARTITION: xfer
     SLURM_TIMELIMIT: '00:30:00'
+    SCRATCH: /capstor/scratch/cscs/anfink
