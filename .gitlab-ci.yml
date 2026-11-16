@@ -36,6 +36,9 @@ stages:
 .baremetal-runner-lumi:
   extends: [.f7t-baremetal-runner]
   tags: [f7t-runner-tds]
+  id_tokens:
+    JWT_CICD_EXT_MW:
+      aud: "https://cicd-ext.tds.cscs.ch"
   variables:
     F7T_URL: 'https://api.lumi.csc.fi/v1'
     F7T_CLIENT_ID: "jwt"
