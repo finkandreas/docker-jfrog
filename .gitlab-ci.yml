@@ -45,7 +45,7 @@ stages:
     F7T_CLIENT_SECRET: $F7T_JWT_LUMI
     FIRECREST_SYSTEM: lumi
     FIRECREST_WORKDIR: /scratch/project_465002808/anfink/gitlab-runner/firecrest
-    OVERRIDE_BASEDIR: /scratch/project_465002808/anfink
+    CSCS_OVERRIDE_BASE_DIR: /scratch/project_465002808/anfink
 
 test:
   extends: .baremetal-runner-lumi
