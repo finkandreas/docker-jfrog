@@ -44,15 +44,15 @@ stages:
     F7T_CLIENT_ID: "jwt"
     F7T_CLIENT_SECRET: $F7T_JWT_LUMI
     FIRECREST_SYSTEM: lumi
-    FIRECREST_WORKDIR: /scratch/project_465002808/anfink/gitlab-runner/firecrest
-    CSCS_OVERRIDE_BASE_DIR: /scratch/project_465002808/anfink
+    SCRATCH: /scratch/project_465002808/ci
+    FIRECREST_SUBMIT_HELPER: http://firecrest-submit-helper-tds
 
 test:
   extends: .baremetal-runner-lumi
   stage: run
   timeout: 1h
   script:
-    - echo $SLURM_CLUSTER_NAME
+    - declare -x | grep SLURM
   variables:
     SLURM_PARTITION: debug
     SLURM_ACCOUNT: project_465002808
